@@ -1,7 +1,7 @@
 from tkinter import Label, Button, Frame, Entry
 from app_state import app_state
 
-def branch_features_menu(W, go_back):
+def branch_features_menu(W, go_back, go_next):
     for widget in W.winfo_children():
         widget.destroy()
     
@@ -34,7 +34,7 @@ def branch_features_menu(W, go_back):
     # Header label
     Label(W, text="Ingrese los valores de caudal y longitud de ramal", 
         font=('Arial', 30, 'bold'),
-        bg='grey12', fg='grey80').pack(pady=10)
+        bg='grey5', fg='grey80').pack(pady=10)
 
     selected = app_state.selected_option.get()
     duct_number = app_state.duct_number.get()
@@ -53,10 +53,10 @@ def branch_features_menu(W, go_back):
     if selected in headers:
         Label(middle_frame, text=headers[selected][0],
             font=('Arial', 16,'bold'),
-            bg='grey12', fg='grey80').grid(row=0, column=1, padx=5, pady=5)
+            bg='grey5', fg='grey80').grid(row=0, column=1, padx=5, pady=5)
         Label(middle_frame, text=headers[selected][1],
             font=('Arial', 16,'bold'),
-            bg='grey12', fg='grey80').grid(row=0, column=2, padx=5, pady=5)
+            bg='grey5', fg='grey80').grid(row=0, column=2, padx=5, pady=5)
 
     # Create input fields for each branch
     flowrate_entries = []
@@ -67,16 +67,16 @@ def branch_features_menu(W, go_back):
         if app_state.main_branch.get() == i + 1:
             Label(middle_frame, text=f'Ramal {i+1} (Principal):',
                 font=('Arial', 14),
-                bg='grey12', fg='OrangeRed2').grid(row=i+1, column=0, padx=3, pady=1)
+                bg='grey5', fg='OrangeRed2').grid(row=i+1, column=0, padx=3, pady=1)
         else:
             Label(middle_frame, text=f'Ramal {i+1}:', 
                 font=('Arial', 14), 
-                bg='grey12', fg='white').grid(row=i+1, column=0, padx=3, pady=1)
+                bg='grey5', fg='grey80').grid(row=i+1, column=0, padx=3, pady=1)
 
         # Flowrate entry with placeholder
-        flowrate_entry = Entry(middle_frame, font=('Arial', 12), bg='grey40', width=10, fg='gray')
+        flowrate_entry = Entry(middle_frame, font=('Arial', 12),
+                            width=10, bg='grey40', fg='gray80')
         flowrate_entry.grid(row=i+1, column=1, padx=5, pady=1)
-        flowrate_entry.insert(0, placeholder)
         flowrate_entries.append(flowrate_entry)
 
         def on_focus_in(event, entry=flowrate_entry):
@@ -88,12 +88,17 @@ def branch_features_menu(W, go_back):
             if entry.get() == '':
                 entry.insert(0, placeholder)
                 entry.config(fg='gray')
-
+                
+        # Bind focus events
         flowrate_entry.bind('<FocusIn>', on_focus_in)
         flowrate_entry.bind('<FocusOut>', on_focus_out)
+        
+        # Auto-focus for caret visibility
+        flowrate_entry.focus()
 
         # Length entry
-        length_entry = Entry(middle_frame, font=('Arial', 12), bg='grey40', width=10)
+        length_entry = Entry(middle_frame, font=('Arial', 12),
+                            width=10, bg='grey40', fg='gray80')
         length_entry.grid(row=i+1, column=2, padx=5, pady=1)
         length_entries.append(length_entry)
 
@@ -116,7 +121,7 @@ def branch_features_menu(W, go_back):
                     activebackground='DodgerBlue2', 
                     activeforeground='OrangeRed2', 
                     font=('Arial', 20, 'bold'),
-                    command=lambda: [save_branch_data(), branches_features()])
+                    command=lambda: [save_branch_data(), go_next(W)])
     next_btn.pack(side='right', padx=10, pady=10)
 
 

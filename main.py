@@ -6,6 +6,7 @@ from menus.file_name_menu import file_name_menu
 from menus.duct_number_menu import duct_number_menu
 from menus.units_menu import units_menu
 from menus.branch_features_menu import branch_features_menu
+from menus.alt_temp_menu import alt_temp_menu
 
 
 def main():
@@ -36,8 +37,10 @@ def main():
         units_menu(W, go_back=go_to_duct_number, go_next=go_to_branch_features)
         
     def go_to_branch_features(W):
-        branch_features_menu(W, go_back=go_to_units)
-        
+        branch_features_menu(W, go_back=go_to_units, go_next=go_to_alt_temp)
+
+    def go_to_alt_temp(W):
+        alt_temp_menu(W, go_back=go_to_branch_features)
 
     # Start with Start Menu
     go_to_start(W)

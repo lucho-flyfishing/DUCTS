@@ -5,15 +5,15 @@ def alt_temp_menu(W, go_back, go_next):
     for widget in W.winfo_children():
         widget.destroy()
     
-    top_frame = Frame(W, bg='gray12')
+    top_frame = Frame(W, bg='gray5')
     top_frame.pack(side='top', fill='x')
     alt_temp_lbl = Label(top_frame, text=' Ingrese la altitud y '
                         'temperatura del \n lugar de la instalación',
-                        font=('Arial', 30), bg='gray12', fg='gray80')
+                        font=('Arial', 30), bg='gray5', fg='gray80')
     alt_temp_lbl.pack(side='top', pady=1)
     
     
-    middle_frame = Frame(W, bg='grey12')
+    middle_frame = Frame(W, bg='gray5')
     middle_frame.pack(pady=20)
 
     selected = app_state.selected_option.get()
@@ -22,7 +22,7 @@ def alt_temp_menu(W, go_back, go_next):
 
         temp_lbl = Label(middle_frame, text='Temperatura (F°)', 
                         font=('Arial', 25, 'bold'), 
-                        bg='gray12', fg='gray80')
+                        bg='gray5', fg='OrangeRed2')
         temp_lbl.grid(row=1, column=0)
         
         temp_entry = Entry(middle_frame, font=('Arial', 15), 
@@ -34,7 +34,7 @@ def alt_temp_menu(W, go_back, go_next):
     
         alt_lbl = Label(middle_frame, text='Altitud (ft)', 
                         font=('Arial', 25, 'bold'),
-                        bg='gray12', fg='gray80')
+                        bg='gray5', fg='OrangeRed2')
         alt_lbl.grid(row=0, column=0)
         alt_entry = Entry(middle_frame, font=('Arial', 15), 
                         bg='white', fg='gray', 
@@ -46,7 +46,7 @@ def alt_temp_menu(W, go_back, go_next):
     else:
         temp_lbl = Label(middle_frame, text='Temperatura (C°)', 
                         font=('Arial', 25, 'bold'), 
-                        bg='gray12', fg='gray80')
+                        bg='gray5', fg='OrangeRed2')
         temp_lbl.grid(row=1, column=0)
         
         temp_entry = Entry(middle_frame, font=('Arial', 15),
@@ -58,7 +58,7 @@ def alt_temp_menu(W, go_back, go_next):
     
         alt_lbl = Label(middle_frame, text='Altitud (m)',
                         font=('Arial', 25, 'bold'),
-                        bg='gray12', fg='gray80')
+                        bg='gray5', fg='OrangeRed2')
         alt_lbl.grid(row=0, column=0)
         
         alt_entry = Entry(middle_frame, font=('Arial', 15),
@@ -94,9 +94,9 @@ def alt_temp_menu(W, go_back, go_next):
     def get_values():
         app_state.get_alt = alt_entry.get()
         app_state.get_temp = temp_entry.get()
-        print(f"Altitude: {app_state.get_alt}, Temperature: {app_state.get_temp}")  # Print values to check
+        print(f"Altitud: {app_state.get_alt}, Temperatura: {app_state.get_temp}")  # Print values to check
 
-    bottom_frame = Frame(W, bg='grey5')
+    bottom_frame = Frame(W, bg='gray5')
     bottom_frame.pack(side='bottom', fill='x')
 
     back_btn = Button(bottom_frame, text='Volver', 

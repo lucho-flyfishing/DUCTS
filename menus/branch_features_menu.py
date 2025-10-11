@@ -26,13 +26,10 @@ def branch_features_menu(W, go_back, go_next):
     def branches_features():
         for widget in W.winfo_children():
             widget.destroy()
-        # Aquí va el siguiente menú o pantalla
-        Label(W, text="Siguiente pantalla (a definir)", 
-            font=('Arial', 20, 'bold'),
-            bg='grey12', fg='white').pack(pady=20)
+
 
     # Header label
-    Label(W, text="Ingrese los valores de caudal y longitud de ramal", 
+    Label(W, text="Ingrese los valores de caudal y longitud de cada ramal", 
         font=('Arial', 30, 'bold'),
         bg='grey5', fg='grey80').pack(pady=10)
 
@@ -53,10 +50,10 @@ def branch_features_menu(W, go_back, go_next):
     if selected in headers:
         Label(middle_frame, text=headers[selected][0],
             font=('Arial', 16,'bold'),
-            bg='grey5', fg='grey80').grid(row=0, column=1, padx=5, pady=5)
+            bg='grey5', fg='OrangeRed2').grid(row=0, column=1, padx=5, pady=5)
         Label(middle_frame, text=headers[selected][1],
             font=('Arial', 16,'bold'),
-            bg='grey5', fg='grey80').grid(row=0, column=2, padx=5, pady=5)
+            bg='grey5', fg='OrangeRed2').grid(row=0, column=2, padx=5, pady=5)
 
     # Create input fields for each branch
     flowrate_entries = []

@@ -8,12 +8,12 @@ from menus.units_menu import units_menu
 from menus.branch_features_menu import branch_features_menu
 from menus.alt_temp_menu import alt_temp_menu
 from menus.velocity_range_menu import velocity_range_menu
-
+from menus.velocity_entry_menu import velocity_entry_menu
 
 def main():
     # Create the single root window
     W = Tk()
-    W.geometry("1200x700")
+    W.geometry("1200x900")
     W.configure(bg="gray5")
 
     # Init app_state variables
@@ -45,7 +45,10 @@ def main():
         alt_temp_menu(W, go_back=go_to_branch_features, go_next=go_to_velocity_range)
     
     def go_to_velocity_range(W):
-        velocity_range_menu(W, go_back=go_to_alt_temp)
+        velocity_range_menu(W, go_back=go_to_alt_temp, go_next=go_to_velocity_entry)
+    
+    def go_to_velocity_entry(W):
+        velocity_entry_menu(W, go_back=go_to_velocity_range)
     
     
 

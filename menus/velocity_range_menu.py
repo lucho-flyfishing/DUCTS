@@ -1,7 +1,7 @@
 from tkinter import Label, Button, Frame, Entry
 from app_state import app_state
 
-def velocity_range_menu(W, go_back):
+def velocity_range_menu(W, go_back, go_next):
     for widget in W.winfo_children():
         widget.destroy()
     
@@ -48,7 +48,7 @@ def velocity_range_menu(W, go_back):
                 label.grid(row=i+3, column=j+1, padx=2, pady=2)
 
         #table 1 titles
-        max_V_main = Label(middle_frame, text='Velocidades máximas del flujo de aire del conducto '
+        max_V_main = Label(middle_frame, text='Velocidad máxima del flujo de aire del conducto '
                         'principal para alcanzar los criterios de diseño acústico', 
                         font=('Arial', 20, 'bold'),  borderwidth=2, relief="solid",bg='gray5', fg='OrangeRed2')
         max_V_main.grid(row=0, column=0, columnspan=4, padx=5, pady=3, sticky="nsew")
@@ -165,7 +165,7 @@ def velocity_range_menu(W, go_back):
                 label.grid(row=i+3, column=j+1, padx=2, pady=2)
 
         #table 1 titles
-        max_V_main = Label(middle_frame, text='Velocidades máximas del flujo de aire del conducto '
+        max_V_main = Label(middle_frame, text='Velocidad máxima del flujo de aire del conducto '
                         'principal para alcanzar los criterios de diseño acústico', 
                         font=('Arial', 20, 'bold'),  borderwidth=2, relief="solid",bg='gray5', fg='OrangeRed2')
         max_V_main.grid(row=0, column=0, columnspan=4, padx=5, pady=3, sticky="nsew")
@@ -275,5 +275,14 @@ def velocity_range_menu(W, go_back):
                     font=('Arial', 20, 'bold'),
                     command=lambda: go_back(W))
     back_btn.pack(side='left', padx=10, pady=10)
+    
+    next_btn = Button(bottom_frame, text='Siguiente',
+                    bg='White', fg='black',
+                    relief='raised',
+                    activebackground='DodgerBlue2',
+                    activeforeground='OrangeRed2',
+                    font=('Arial', 20, 'bold'),
+                    command=lambda: go_next(W))
+    next_btn.pack(side='right', padx=10, pady=10)
 
     

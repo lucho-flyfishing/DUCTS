@@ -21,13 +21,7 @@ def branch_features_menu(W, go_back, go_next):
 
         print("Caudales guardados:", app_state.flowrate_entries)
         print("Longitudes guardadas:", app_state.length_entries)
-
-    # Function placeholder for the next menu
-    def branches_features():
-        for widget in W.winfo_children():
-            widget.destroy()
-
-
+        
     # Header label
     Label(W, text="Ingrese los valores de caudal y longitud de cada ramal", 
         font=('Arial', 30, 'bold'),

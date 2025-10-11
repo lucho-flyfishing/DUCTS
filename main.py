@@ -7,6 +7,7 @@ from menus.duct_number_menu import duct_number_menu
 from menus.units_menu import units_menu
 from menus.branch_features_menu import branch_features_menu
 from menus.alt_temp_menu import alt_temp_menu
+from menus.velocity_range_menu import velocity_range_menu
 
 
 def main():
@@ -21,7 +22,8 @@ def main():
     app_state.filename = StringVar(W)
     app_state.main_branch = IntVar(W)
     app_state.selected_option = IntVar(W)
-    
+    app_state.get_alt = StringVar(W)
+    app_state.get_temp = StringVar(W)
 
     # Define navigation
     def go_to_start(W):
@@ -40,7 +42,12 @@ def main():
         branch_features_menu(W, go_back=go_to_units, go_next=go_to_alt_temp)
 
     def go_to_alt_temp(W):
-        alt_temp_menu(W, go_back=go_to_branch_features)
+        alt_temp_menu(W, go_back=go_to_branch_features, go_next=go_to_velocity_range)
+    
+    def go_to_velocity_range(W):
+        velocity_range_menu(W, go_back=go_to_alt_temp)
+    
+    
 
     # Start with Start Menu
     go_to_start(W)

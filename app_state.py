@@ -9,7 +9,10 @@ class AppState:
         self.selected_option = None
         self.flowrate_entries = []
         self.length_entries = []
-        # add more shared variables here later (plain Python types)
+        self.get_alt = None
+        self.get_temp = None
+        self.velocity = None
+        
 
 # Create one global instance to import everywhere
 app_state = AppState()

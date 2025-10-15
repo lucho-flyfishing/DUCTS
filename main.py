@@ -9,6 +9,7 @@ from menus.branch_features_menu import branch_features_menu
 from menus.alt_temp_menu import alt_temp_menu
 from menus.velocity_range_menu import velocity_range_menu
 from menus.velocity_entry_menu import velocity_entry_menu
+from menus.results_menu import results_menu
 
 def main():
     # Create the single root window
@@ -24,6 +25,7 @@ def main():
     app_state.selected_option = IntVar(W)
     app_state.get_alt = StringVar(W)
     app_state.get_temp = StringVar(W)
+    app_state.velocity = StringVar(W)
 
     # Define navigation
     def go_to_start(W):
@@ -48,9 +50,10 @@ def main():
         velocity_range_menu(W, go_back=go_to_alt_temp, go_next=go_to_velocity_entry)
     
     def go_to_velocity_entry(W):
-        velocity_entry_menu(W, go_back=go_to_velocity_range)
+        velocity_entry_menu(W, go_back=go_to_velocity_range, go_next=go_to_results )
     
-    
+    def go_to_results(W):
+        results_menu(W, go_back=go_to_velocity_entry)
 
     # Start with Start Menu
     go_to_start(W)

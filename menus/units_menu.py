@@ -10,8 +10,8 @@ def units_menu(W, go_back, go_next):
     
     units_opt_lbl = Label(top_frame, bg='gray5', fg='gray60', 
                         text='El programa permite escoger entre '
-                        'tres sistemas \n de unidades. Seleccione'
-                        'las unidades para: caudal, \n pérdidas,'
+                        'tres sistemas \n de unidades. Seleccione '
+                        'las unidades para: caudal, \n pérdidas, '
                         'diámetro y velocidad, respectivamente.',
                         font=('Arial', 30))
     units_opt_lbl.pack(side='top', pady=1)

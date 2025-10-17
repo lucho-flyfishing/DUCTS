@@ -7,7 +7,7 @@ def branch_features_menu(W, go_back, go_next):
     
     def save_branch_data():
         """Save the flow rate and length for each branch in app_state."""
-        app_state.flowrate_entries = []  # Reset stored values
+        app_state.flowrate_entries = [] 
         app_state.length_entries = []
 
         for i in range(app_state.duct_number.get()):
@@ -22,19 +22,17 @@ def branch_features_menu(W, go_back, go_next):
         print("Caudales guardados:", app_state.flowrate_entries)
         print("Longitudes guardadas:", app_state.length_entries)
         
-    # Header label
+        
     Label(W, text="Ingrese los valores de caudal y longitud de cada ramal", 
         font=('Arial', 30, 'bold'),
         bg='grey5', fg='grey80').pack(pady=10)
 
     selected = app_state.selected_option.get()
     duct_number = app_state.duct_number.get()
-
-    # Frame to hold entry fields
+    
     middle_frame = Frame(W, bg='grey5')
     middle_frame.pack(pady=10)
-
-    # Header Labels depending on selected units
+    
     headers = {
         1: ("Caudal (L/s)", "Longitud (m)"),
         2: ("Caudal (m³/h)", "Longitud (m)"),
@@ -48,8 +46,8 @@ def branch_features_menu(W, go_back, go_next):
         Label(middle_frame, text=headers[selected][1],
             font=('Arial', 16,'bold'),
             bg='grey5', fg='OrangeRed2').grid(row=0, column=2, padx=5, pady=5)
-
-    # Create input fields for each branch
+    
+    
     flowrate_entries = []
     length_entries = []
     placeholder = 'Escribe aquí...'
@@ -63,8 +61,8 @@ def branch_features_menu(W, go_back, go_next):
             Label(middle_frame, text=f'Ramal {i+1}:', 
                 font=('Arial', 14), 
                 bg='grey5', fg='grey80').grid(row=i+1, column=0, padx=3, pady=1)
-
-        # Flowrate entry with placeholder
+            
+            
         flowrate_entry = Entry(middle_frame, font=('Arial', 12),
                             width=10, bg='grey40', fg='gray80')
         flowrate_entry.grid(row=i+1, column=1, padx=5, pady=1)
@@ -80,20 +78,18 @@ def branch_features_menu(W, go_back, go_next):
                 entry.insert(0, placeholder)
                 entry.config(fg='gray')
                 
-        # Bind focus events
+        
         flowrate_entry.bind('<FocusIn>', on_focus_in)
         flowrate_entry.bind('<FocusOut>', on_focus_out)
         
-        # Auto-focus for caret visibility
         flowrate_entry.focus()
-
-        # Length entry
+        
         length_entry = Entry(middle_frame, font=('Arial', 12),
                             width=10, bg='grey40', fg='gray80')
         length_entry.grid(row=i+1, column=2, padx=5, pady=1)
         length_entries.append(length_entry)
-
-    # Bottom buttons
+        
+        
     bottom_frame = Frame(W, bg='gray12')
     bottom_frame.pack(side='bottom', fill='x')
         

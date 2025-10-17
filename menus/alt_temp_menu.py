@@ -67,34 +67,31 @@ def alt_temp_menu(W, go_back, go_next):
                         highlightthickness=2,
                         highlightbackground='black')
         alt_entry.grid(row=0, column=1)
-
-    # Placeholder text
+        
     placeholder = 'Escribe aquí...'
     alt_entry.insert(0, placeholder)
-
-    # Functions to handle placeholder behavior
+    
+    
     def on_focus_in(event):
         if alt_entry.get() == placeholder:
             alt_entry.delete(0, 'end')
             alt_entry.config(fg='black')
-
+            
     def on_focus_out(event):
         if alt_entry.get() == '':
             alt_entry.insert(0, placeholder)
             alt_entry.config(fg='gray')
-
-    # Bind focus events
+            
     alt_entry.bind('<FocusIn>', on_focus_in)
     alt_entry.bind('<FocusOut>', on_focus_out)
-
-    # Auto-focus for caret visibility
+    
     alt_entry.focus()
     
-    # Function to get values from entry fields
+    
     def get_values():
         app_state.get_alt = alt_entry.get()
         app_state.get_temp = temp_entry.get()
-        print(f"Altitud: {app_state.get_alt}, Temperatura: {app_state.get_temp}")  # Print values to check
+        print(f"Altitud: {app_state.get_alt}, Temperatura: {app_state.get_temp}") 
 
     bottom_frame = Frame(W, bg='gray5')
     bottom_frame.pack(side='bottom', fill='x')

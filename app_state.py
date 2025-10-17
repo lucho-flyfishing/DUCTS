@@ -12,7 +12,5 @@ class AppState:
         self.get_alt = None
         self.get_temp = None
         self.velocity = None
-        
 
-# Create one global instance to import everywhere
 app_state = AppState()

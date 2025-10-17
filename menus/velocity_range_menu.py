@@ -284,5 +284,3 @@ def velocity_range_menu(W, go_back, go_next):
                     font=('Arial', 20, 'bold'),
                     command=lambda: go_next(W))
     next_btn.pack(side='right', padx=10, pady=10)
-
-    

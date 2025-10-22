@@ -75,11 +75,9 @@ def velocity_entry_menu(W, go_back, go_next):
     
     
     def save_velocity():
-        velocity = velocity_entry.get()
-        app_state.velocity.set(velocity)
-        print(f"Guardando velocidad: {app_state.velocity.get()}")
-        
-        
+        app_state.velocity = velocity_entry.get()
+        print(f"Velocidad: {app_state.velocity}")
+
     bottom_frame = Frame(W, bg='gray12')
     bottom_frame.pack(side='bottom', fill='x')
     

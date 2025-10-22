@@ -27,7 +27,7 @@ def main():
     app_state.get_temp = StringVar(W)
     app_state.velocity = StringVar(W)
 
-    # Define navigation
+    # navigation
     def go_to_start(W):
         start_menu(W, go_next=go_to_file_name)
 
@@ -55,10 +55,9 @@ def main():
     def go_to_results(W):
         results_menu(W, go_back=go_to_velocity_entry)
 
-    # Start with Start Menu
+    
     go_to_start(W)
-
-    # Run Tkinter loop
+    
     W.mainloop()
 
 

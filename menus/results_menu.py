@@ -1,4 +1,5 @@
-from tkinter import *
+from tkinter import Button, Label, Frame, StringVar
+from app_state import app_state
 
 def results_menu(W, go_back):
     # Clear the window
@@ -10,11 +11,36 @@ def results_menu(W, go_back):
     top_frame.pack(side='top', fill='x')
     
     
-    results_lbl = Label(top_frame, text='Resultados generados y guardados con éxito.', 
-                        font=('Arial', 30), bg='gray5', fg='gray80')
-    results_lbl.pack(pady=20)
+    pre_result_main = Label(top_frame, text='Dimensionamiento preliminar', font=('Arial', 30), bg='gray12', fg='gray80')
+    pre_result_main.pack(side='top', pady=1)
     
+    selected =  app_state.selected_option.get()
+    T = StringVar(value=app_state.get_temp)
+    H = StringVar(value=app_state.get_alt)
+    V = StringVar(value=app_state.velocity)
     
+    if selected == 1:
+        T_lbl = Label(top_frame, text=f'Temperatura: {T.get()} °F', font=('Arial', 20), bg='gray12', fg='gray80')
+        T_lbl.pack(side='top', pady=5)
+        
+        H_lbl = Label(top_frame, text=f'Altitud: {H.get()} ft', font=('Arial', 20), bg='gray12', fg='gray80')
+        H_lbl.pack(side='top', pady=5)
+        
+        V_lbl = Label(top_frame, text=f'Velocidad: {V.get()} ft/s', font=('Arial', 20), bg='gray12', fg='gray80')
+        V_lbl.pack(side='top', pady=5)
+        
+    else:
+        
+        T_lbl = Label(top_frame, text=f'Temperatura: {T.get()} °C', font=('Arial', 20), bg='gray12', fg='gray80')
+        T_lbl.pack(side='top', pady=5)
+        
+        H_lbl = Label(top_frame, text=f'Altitud: {H.get()} m', font=('Arial', 20), bg='gray12', fg='gray80')
+        H_lbl.pack(side='top', pady=5)
+        
+        V_lbl = Label(top_frame, text=f'Velocidad: {V.get()} m/s', font=('Arial', 20), bg='gray12', fg='gray80')
+        V_lbl.pack(side='top', pady=5)
+        
+        
     bottom_frame = Frame(W, bg='gray5')
     bottom_frame.pack(pady=20)
     

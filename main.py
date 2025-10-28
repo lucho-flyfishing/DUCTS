@@ -26,6 +26,9 @@ def main():
     app_state.get_alt = StringVar(W)
     app_state.get_temp = StringVar(W)
     app_state.velocity = StringVar(W)
+    app_state.viscosity = StringVar(W)
+    app_state.P = StringVar(W)
+    app_state.rho = StringVar(W)
 
     # navigation
     def go_to_start(W):

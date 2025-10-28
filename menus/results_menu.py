@@ -25,9 +25,83 @@ def results_menu(W, go_back):
 
     main_branch_flowrate = app_state.flowrate_entries[app_state.main_branch.get() - 1]
     main_branch_length = app_state.length_entries[app_state.main_branch.get() - 1]
+    
+    # visocity
+    
+    if selected == 1 or selected == 2:
+
+        T_K = float(T.get()) + 273.15
+        mu_0 = 1.716e-5  # viscosidad de referencia en Pa·s
+        T_0 = 273.15  # temperatura de referencia en k
+        Su = 111  # constante Sutherlan en K
+        
+        mu = mu_0 * (T_K / T_0) ** 1.5 * (T_0 + Su) / (T_K + Su)  # formula viscosidad del aire
+        viscosity = mu # en Pa·s
+        app_state.viscosity = viscosity 
+
+    else:
+        
+        T_K= (float(T.get()) - 32) * 5/9 + 273.1
+        T_K= round(T_K, 2)
+        
+        mu0_si = 1.716e-5    
+        T0 = 273.15          
+        Su = 111.0            
+        
+        mu_si = mu0_si * ((T_K / T0) ** 1.5) * (T0 + Su) / (T_K + Su)
+        
+        mu_imperial = mu_si * 0.02088543423  
+        viscosity = mu_imperial # en lb/(ft·s)
+        app_state.viscosity = viscosity
+        
+    
+    #density
+    
+    P0 = 101325  # Pa
+    factor = 0.0000225577
+    exponent = 5.2559
+
+    
+    P_pa = P0 * (1 - factor * float(H.get())) ** exponent # Pa
+
+    
+    if selected == 1 or selected == 2: # conversion y redondeo
+        
+        P = round(P_pa, 2)  # Pa
+    
+    elif selected == 3:
+        
+        P = round(P_pa * 0.0001450377, 2)  # psi
+    
+    else:
+        P = None
+
+    
+    app_state.P = P
+    
+    
+    #densidad
+    
+    if selected == 1 or selected == 2:
+        T_K = float(T.get()) + 273.15  # °C → K
+        R = 287.05  # J/(kg·K) para aire seco
+        rho = P / (R * T_K)  # kg/m³
+
+    elif selected == 3:
+        T_R = float(T.get()) + 459.67  # °F → °R
+        pressure_lbft2 = P * 144  # psi → lb/ft²
+        R = 53.35  # ft·lb/(lb·°R) para aire seco
+        rho = pressure_lbft2 / (R * T_R)  # lb/ft³
+        
+    #store the density value in app_state
+    app_state.rho = rho
+
 
     print("Caudal ducto principal:", main_branch_flowrate)
     print("Longitud ducto principal:", main_branch_length)
+    print("Viscosidad", app_state.viscosity)
+    print("Presion", app_state.P)
+    print("Densidad", app_state.rho)
 
     #############################################################################
     

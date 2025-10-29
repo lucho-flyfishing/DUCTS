@@ -157,6 +157,11 @@ def pre_dim_menu(W, go_back, go_next):
     else:
             diameter = None
             S = None
+            
+    def save_diameter_S():
+        app_state.diameter = diameter
+        app_state.S = S
+    
     print("Caudal ducto principal:", main_branch_flowrate)
     print("Longitud ducto principal:", main_branch_length)
     print("Viscosidad", app_state.viscosity)
@@ -200,12 +205,10 @@ def pre_dim_menu(W, go_back, go_next):
     else:
         
         
-        T_lbl = Label(middle_frame, text=f'Temperatura:                         ' 
-                    f'{T.get()} °C', font=('Arial', 20), bg='gray5', fg='gray80')
+        T_lbl = Label(middle_frame, text=f'Temperatura: {T.get()} °C', font=('Arial', 20), bg='gray5', fg='gray80')
         T_lbl.grid(row=0, column=0, pady=5, sticky='w')
         
-        H_lbl = Label(middle_frame, text=f'Altitud:                             ' 
-                    f'{H.get()} m', font=('Arial', 20), bg='gray5', fg='gray80')
+        H_lbl = Label(middle_frame, text=f'Altitud: {H.get()} m', font=('Arial', 20), bg='gray5', fg='gray80')
         H_lbl.grid(row=1, column=0, pady=5, sticky='w')
         
         V_lbl = Label(middle_frame, text=f'Velocidad: {V.get()} m/s', font=('Arial', 20), bg='gray5', fg='gray80')
@@ -249,5 +252,5 @@ def pre_dim_menu(W, go_back, go_next):
                     activebackground='DodgerBlue2', 
                     activeforeground='OrangeRed2', 
                     font=('Arial', 20, 'bold'),
-                    command=lambda: go_next(W))
+                    command=lambda: (save_diameter_S(), go_next(W)))
     next_btn.pack(side='right', padx=10, pady=10)

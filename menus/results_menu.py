@@ -1,5 +1,6 @@
 from tkinter import Button, Label, Frame, StringVar
 from app_state import app_state
+import math
 
 def results_menu(W, go_back):
     # Clear the window
@@ -93,15 +94,76 @@ def results_menu(W, go_back):
         R = 53.35  # ft·lb/(lb·°R) para aire seco
         rho = pressure_lbft2 / (R * T_R)  # lb/ft³
         
-    #store the density value in app_state
+    
     app_state.rho = rho
+    
+    # Pressure loos per length and diameter calculation
+    if selected == 1:
+            velocity =  float(V.get())# m/s
+            Q = main_branch_flowrate / 1000  # L/s → m³/s
+            diameter_m = math.sqrt((4 * Q) / (math.pi * velocity)) # m
+            diameter = diameter_m * 1000  # m → mm
+            
+            epsilon = 1.5e-7  # roughness for typical duct materials in m
+            
+            D = diameter_m
+            Re = (rho * velocity * D) / viscosity
 
+            # Friction factor (turbulent, Swamee-Jain approximation)
+            f = 0.25 / ( math.log10( (epsilon / (3.7 * D)) + (5.74 / Re**0.9) ) )**2  # friction factor for turbulent flow
 
+            S = f * (1 / diameter_m) * (rho * velocity ** 2) / 2  # Pa per meter
+
+    elif selected == 2:
+            velocity = float(V.get())  # m/s
+            Q = main_branch_flowrate  # m³/s
+            diameter_m = math.sqrt((4 * Q) / (math.pi * velocity)) # m
+            diameter = diameter_m * 1000  # m → mm
+            
+            epsilon = 1.5e-7  # roughness for typical duct materials in m
+            
+            D = diameter_m # already in m
+            Re = (rho * velocity * D) / viscosity # Reynolds number
+
+            # Friction factor (turbulent, Swamee-Jain approximation)
+            f = 0.25 / ( math.log10( (epsilon / (3.7 * D)) + (5.74 / Re**0.9) ) )**2  # friction factor for turbulent flow
+
+            # Friction loss per unit length
+            S = f * (1 / D) * (rho * velocity ** 2) / 2  # Pa per meter
+
+    elif selected == 3:
+            velocity = float(V.get())  # fpm (feet per minute)
+            Q_ft3s = main_branch_flowrate / 60  # CFM → ft³/s
+            D_ft = math.sqrt((4 * Q_ft3s) / (math.pi * velocity))  # ft
+            diameter_in = D_ft * 12  # ft → in
+            diameter = diameter_in
+
+            epsilon_in = 0.0005  # typical roughness in inches
+            epsilon_ft = epsilon_in / 12  # convert in → ft
+            density_ip = app_state.rho  # lb/ft³
+            viscosity_ip = app_state.viscosity  # lb/ft·s
+
+            D = D_ft  # already in ft
+            V_ft_s = velocity / 60  # convert fpm → ft/s
+            Re = (density_ip * V_ft_s * D) / viscosity_ip  # Reynolds number
+
+            # Friction factor (turbulent, Swamee-Jain approximation)
+            f_ip = 0.25 / (math.log10((epsilon_ft / (3.7 * D)) + (5.74 / Re**0.9))) ** 2
+
+            # Friction loss per unit length
+            S_ip = f_ip * (1 / D) * (density_ip * V_ft_s ** 2) / 2  # lb/ft² per ft
+            S = S_ip / 5.202  # convert lb/ft² → in.wg per ft
+
+    else:
+            diameter = None
+            S = None
     print("Caudal ducto principal:", main_branch_flowrate)
     print("Longitud ducto principal:", main_branch_length)
     print("Viscosidad", app_state.viscosity)
     print("Presion", app_state.P)
     print("Densidad", app_state.rho)
+    print("Diametro ducto principal:", diameter)
+    print("Perdida de presion por longitud:", S)
 
     #############################################################################
     

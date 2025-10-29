@@ -12,5 +12,10 @@ class AppState:
         self.get_alt = None
         self.get_temp = None
         self.velocity = None
+        self.viscosity = None
+        self.P = None
+        self.rho = None
+        self.diameter = None
+        self.S = None
 
 app_state = AppState()

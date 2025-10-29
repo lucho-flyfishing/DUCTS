@@ -2,7 +2,7 @@ from tkinter import Button, Label, Frame, StringVar
 from app_state import app_state
 import math
 
-def results_menu(W, go_back):
+def pre_dim_menu(W, go_back, go_next):
     # Clear the window
     for widget in W.winfo_children():
         widget.destroy()
@@ -13,7 +13,7 @@ def results_menu(W, go_back):
     
     
     pre_result_main = Label(top_frame, text='Dimensionamiento preliminar, del ramal principal '
-                            'dadas las condiciones del aire', font=('Arial', 30), bg='gray12', fg='gray80')
+                            'dadas las condiciones del aire', font=('Arial', 30), bg='gray5', fg='gray80')
     pre_result_main.pack(side='top', pady=1)
     
     
@@ -167,51 +167,71 @@ def results_menu(W, go_back):
 
     #############################################################################
     
-    middle_frame = Frame(W, bg='gray12')
+    middle_frame = Frame(W, bg='gray5')
     middle_frame.pack(pady=20)
     
     if selected == 3:
-        T_lbl = Label(middle_frame, text=f'Temperatura: {T.get()} °F', font=('Arial', 20), bg='gray12', fg='gray80')
-        T_lbl.grid(row=0, column=0, pady=5)
-
-        H_lbl = Label(middle_frame, text=f'Altitud: {H.get()} ft', font=('Arial', 20), bg='gray12', fg='gray80')
-        H_lbl.grid(row=1, column=0, pady=5)
-
-        V_lbl = Label(middle_frame, text=f'Velocidad: {V.get()} ft/s', font=('Arial', 20), bg='gray12', fg='gray80')
-        V_lbl.grid(row=2, column=0, pady=5)
+        T_lbl = Label(middle_frame, text=f'Temperatura: {T.get()} °F', font=('Arial', 20), bg='gray5', fg='gray80')
+        T_lbl.grid(row=0, column=0, pady=5, sticky='w')
+        
+        H_lbl = Label(middle_frame, text=f'Altitud: {H.get()} ft', font=('Arial', 20), bg='gray5', fg='gray80')
+        H_lbl.grid(row=1, column=0, pady=5, sticky='w')
+        
+        V_lbl = Label(middle_frame, text=f'Velocidad: {V.get()} ft/s', font=('Arial', 20), bg='gray5', fg='gray80')
+        V_lbl.grid(row=2, column=0, pady=5, sticky='w')
         
         F_lbl = Label(middle_frame, text=f'Caudal ramal principal: {main_branch_flowrate} cfm', 
-                    font=('Arial', 20), bg='gray12', fg='gray80')
-        F_lbl.grid(row=3, column=0, pady=5)
+                    font=('Arial', 20), bg='gray5', fg='gray80')
+        F_lbl.grid(row=3, column=0, pady=5, sticky='w')
         
         L_lbl = Label(middle_frame, text=f'Longitud ramal principal: {main_branch_length} ft',
-                    font=('Arial', 20), bg='gray12', fg='gray80')
-        L_lbl.grid(row=4, column=0, pady=5)
+                    font=('Arial', 20), bg='gray5', fg='gray80')
+        L_lbl.grid(row=4, column=0, pady=5, sticky='w')
+        
+        D_lbl = Label(middle_frame, text=f'Diámetro ramal principal: {round(diameter,2)} in',
+                    font=('Arial', 20), bg='gray5', fg='OrangeRed2')
+        D_lbl.grid(row=5, column=0, pady=5, sticky='w')
+        
+        S_lbl = Label(middle_frame, text=f'Pérdida de presión por longitud: {round(S,4)} in.wg/ft',
+                    font=('Arial', 20), bg='gray5', fg='OrangeRed2')
+        S_lbl.grid(row=6, column=0, pady=5, sticky='w')
+        
         
     else:
-
-        T_lbl = Label(middle_frame, text=f'Temperatura: {T.get()} °C', font=('Arial', 20), bg='gray12', fg='gray80')
-        T_lbl.grid(row=0, column=0, pady=5)
-
-        H_lbl = Label(middle_frame, text=f'Altitud: {H.get()} m', font=('Arial', 20), bg='gray12', fg='gray80')
-        H_lbl.grid(row=1, column=0, pady=5)
-
-        V_lbl = Label(middle_frame, text=f'Velocidad: {V.get()} m/s', font=('Arial', 20), bg='gray12', fg='gray80')
-        V_lbl.grid(row=2, column=0, pady=5)
+        
+        
+        T_lbl = Label(middle_frame, text=f'Temperatura:                         ' 
+                    f'{T.get()} °C', font=('Arial', 20), bg='gray5', fg='gray80')
+        T_lbl.grid(row=0, column=0, pady=5, sticky='w')
+        
+        H_lbl = Label(middle_frame, text=f'Altitud:                             ' 
+                    f'{H.get()} m', font=('Arial', 20), bg='gray5', fg='gray80')
+        H_lbl.grid(row=1, column=0, pady=5, sticky='w')
+        
+        V_lbl = Label(middle_frame, text=f'Velocidad: {V.get()} m/s', font=('Arial', 20), bg='gray5', fg='gray80')
+        V_lbl.grid(row=2, column=0, pady=5, sticky='w')
         
         F_lbl = Label(middle_frame, text=f'Caudal ramal principal: {main_branch_flowrate} L/s', 
-                    font=('Arial', 20), bg='gray12', fg='gray80')
-        F_lbl.grid(row=3, column=0, pady=5)
+                    font=('Arial', 20), bg='gray5', fg='gray80')
+        F_lbl.grid(row=3, column=0, pady=5, sticky='w')
         
         L_lbl = Label(middle_frame, text=f'Longitud ramal principal: {main_branch_length} m',
-                    font=('Arial', 20), bg='gray12', fg='gray80')
-        L_lbl.grid(row=4, column=0, pady=5)
+                    font=('Arial', 20), bg='gray5', fg='gray80')
+        L_lbl.grid(row=4, column=0, pady=5, sticky='w')
+        
+        D_lbl = Label(middle_frame, text=f'Diámetro ramal principal: {round(diameter,2)} mm',
+                    font=('Arial', 20), bg='gray5', fg='OrangeRed2')
+        D_lbl.grid(row=5, column=0, pady=5, sticky='w')
+        
+        S_lbl = Label(middle_frame, text=f'Pérdida de presión por longitud: {round(S,4)} Pa/m',
+                    font=('Arial', 20), bg='gray5', fg='OrangeRed2')
+        S_lbl.grid(row=6, column=0, pady=5, sticky='w')
         
         
     
     
     bottom_frame = Frame(W, bg='gray5')
-    bottom_frame.pack(pady=20)
+    bottom_frame.pack(side='bottom', fill='x')
     
     
     back_btn = Button(bottom_frame, text='Volver', 
@@ -222,3 +242,12 @@ def results_menu(W, go_back):
                     font=('Arial', 20, 'bold'),
                     command=lambda: go_back(W))
     back_btn.pack(side='left', padx=10, pady=10)
+    
+    next_btn = Button(bottom_frame, text='Siguiente',
+                    bg='White', fg='black',
+                    relief='raised', 
+                    activebackground='DodgerBlue2', 
+                    activeforeground='OrangeRed2', 
+                    font=('Arial', 20, 'bold'),
+                    command=lambda: go_next(W))
+    next_btn.pack(side='right', padx=10, pady=10)

@@ -17,7 +17,7 @@ def pre_dim_menu(W, go_back, go_next):
     pre_result_main.pack(side='top', pady=1)
     
     
-    
+    #############################################################################################
     #calculos de los valores a mostrar en la pantalla de resultados
     selected =  app_state.selected_option.get()
     T = StringVar(value=app_state.get_temp)
@@ -27,7 +27,7 @@ def pre_dim_menu(W, go_back, go_next):
     main_branch_flowrate = app_state.flowrate_entries[app_state.main_branch.get() - 1]
     main_branch_length = app_state.length_entries[app_state.main_branch.get() - 1]
     
-    # visocity
+    # viscosidad
     
     if selected == 1 or selected == 2:
 
@@ -56,7 +56,7 @@ def pre_dim_menu(W, go_back, go_next):
         app_state.viscosity = viscosity
         
     
-    #density
+    #presion
     
     P0 = 101325  # Pa
     factor = 0.0000225577
@@ -97,70 +97,92 @@ def pre_dim_menu(W, go_back, go_next):
     
     app_state.rho = rho
     
-    # Pressure loos per length and diameter calculation
+    
+    # Perdida de presion y diametro
     if selected == 1:
+        
+        
             velocity =  float(V.get())# m/s
             Q = main_branch_flowrate / 1000  # L/s → m³/s
             diameter_m = math.sqrt((4 * Q) / (math.pi * velocity)) # m
             diameter = diameter_m * 1000  # m → mm
             
-            epsilon = 1.5e-7  # roughness for typical duct materials in m
+            
+            epsilon = 1.5e-7  # rugosidad para materiales típicos de conductos en m
+            
             
             D = diameter_m
             Re = (rho * velocity * D) / viscosity
-
-            # Friction factor (turbulent, Swamee-Jain approximation)
-            f = 0.25 / ( math.log10( (epsilon / (3.7 * D)) + (5.74 / Re**0.9) ) )**2  # friction factor for turbulent flow
-
-            S = f * (1 / diameter_m) * (rho * velocity ** 2) / 2  # Pa per meter
-
+            
+            
+            f = 0.25 / ( math.log10( (epsilon / (3.7 * D)) + (5.74 / Re**0.9) ) )**2  # factor de fricción para flujo turbulento
+            
+            
+            # perdida de presion por unidad de longitud
+            S = f * (1 / diameter_m) * (rho * velocity ** 2) / 2  # Pa por metro
+            
+            
     elif selected == 2:
+        
+        
             velocity = float(V.get())  # m/s
             Q = main_branch_flowrate  # m³/s
             diameter_m = math.sqrt((4 * Q) / (math.pi * velocity)) # m
             diameter = diameter_m * 1000  # m → mm
             
-            epsilon = 1.5e-7  # roughness for typical duct materials in m
             
-            D = diameter_m # already in m
+            epsilon = 1.5e-7  # rugosidad para materiales típicos de conductos en m
+            
+            
+            D = diameter_m # m
             Re = (rho * velocity * D) / viscosity # Reynolds number
-
-            # Friction factor (turbulent, Swamee-Jain approximation)
-            f = 0.25 / ( math.log10( (epsilon / (3.7 * D)) + (5.74 / Re**0.9) ) )**2  # friction factor for turbulent flow
-
-            # Friction loss per unit length
-            S = f * (1 / D) * (rho * velocity ** 2) / 2  # Pa per meter
-
+            
+            
+            f = 0.25 / ( math.log10( (epsilon / (3.7 * D)) + (5.74 / Re**0.9) ) )**2  # factor de fricción para flujo turbulento
+            
+            
+            # perdida de presion por unidad de longitud
+            S = f * (1 / D) * (rho * velocity ** 2) / 2  # Pa por metro
+            
+            
     elif selected == 3:
+        
+        
             velocity = float(V.get())  # fpm (feet per minute)
             Q_ft3s = main_branch_flowrate / 60  # CFM → ft³/s
             D_ft = math.sqrt((4 * Q_ft3s) / (math.pi * velocity))  # ft
             diameter_in = D_ft * 12  # ft → in
             diameter = diameter_in
-
-            epsilon_in = 0.0005  # typical roughness in inches
-            epsilon_ft = epsilon_in / 12  # convert in → ft
+            
+            
+            epsilon_in = 0.0005  # rugosidad en pulgadas
+            epsilon_ft = epsilon_in / 12  # convertir in → ft
             density_ip = app_state.rho  # lb/ft³
             viscosity_ip = app_state.viscosity  # lb/ft·s
-
-            D = D_ft  # already in ft
-            V_ft_s = velocity / 60  # convert fpm → ft/s
+            
+            
+            D = D_ft  # ya en ft
+            V_ft_s = velocity / 60  # convertir fpm → ft/s
             Re = (density_ip * V_ft_s * D) / viscosity_ip  # Reynolds number
-
-            # Friction factor (turbulent, Swamee-Jain approximation)
-            f_ip = 0.25 / (math.log10((epsilon_ft / (3.7 * D)) + (5.74 / Re**0.9))) ** 2
-
-            # Friction loss per unit length
-            S_ip = f_ip * (1 / D) * (density_ip * V_ft_s ** 2) / 2  # lb/ft² per ft
-            S = S_ip / 5.202  # convert lb/ft² → in.wg per ft
-
+            
+            
+            f_ip = 0.25 / (math.log10((epsilon_ft / (3.7 * D)) + (5.74 / Re**0.9))) ** 2 # factor de fricción para flujo turbulento
+            
+            
+            # perdidas de presion por unidad de longitud
+            S_ip = f_ip * (1 / D) * (density_ip * V_ft_s ** 2) / 2  # lb/ft² por ft
+            S = S_ip / 5.202  # convertir lb/ft² → in.wg por ft
+            
+            
     else:
             diameter = None
             S = None
             
+            
     def save_diameter_S():
         app_state.diameter = diameter
         app_state.S = S
+    
     
     print("Caudal ducto principal:", main_branch_flowrate)
     print("Longitud ducto principal:", main_branch_length)
@@ -169,13 +191,16 @@ def pre_dim_menu(W, go_back, go_next):
     print("Densidad", app_state.rho)
     print("Diametro ducto principal:", diameter)
     print("Perdida de presion por longitud:", S)
-
+    
+    
     #############################################################################
     
     middle_frame = Frame(W, bg='gray5')
     middle_frame.pack(pady=20)
     
     if selected == 3:
+        
+        
         T_lbl = Label(middle_frame, text=f'Temperatura: {T.get()} °F', font=('Arial', 20), bg='gray5', fg='gray80')
         T_lbl.grid(row=0, column=0, pady=5, sticky='w')
         
@@ -245,6 +270,7 @@ def pre_dim_menu(W, go_back, go_next):
                     font=('Arial', 20, 'bold'),
                     command=lambda: go_back(W))
     back_btn.pack(side='left', padx=10, pady=10)
+    
     
     next_btn = Button(bottom_frame, text='Siguiente',
                     bg='White', fg='black',

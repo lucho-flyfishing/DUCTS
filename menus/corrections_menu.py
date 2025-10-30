@@ -1,7 +1,7 @@
 from tkinter import Button, Label, Frame, StringVar
 from app_state import app_state
 
-def corrections_menu(W, go_back):
+def corrections_menu(W, go_back, go_accesories_menu, go_roughness_menu, go_rectangular_eq_menu):
     # Clear the window
     for widget in W.winfo_children():
         widget.destroy()
@@ -13,23 +13,56 @@ def corrections_menu(W, go_back):
     
     pre_result_main = Label(top_frame, text='Menu de correciones', font=('Arial', 30), bg='gray12', fg='gray80')
     pre_result_main.pack(side='top', pady=1)
-
-    test1 = Label(top_frame, text=f'diametro: {app_state.diameter} mm', font=('Arial', 20), bg='gray12', fg='gray80')
-    test1.pack(side='top', pady=10)
-
-    test2 = Label(top_frame, text=f'(pérdidas {app_state.S} mm)', 
-                font=('Arial', 20), bg='gray12', fg='gray80')
-    test2.pack(side='top', pady=10)
+    
+    
+    middle_frame = Frame(W, bg='gray20')
+    middle_frame.pack(side='top', fill='both', expand=True)
+    
+    
+    roughness_btn = Button(middle_frame, text='Correcion por rugosidad del material del ducto',
+                        bg='DarkSlateGray', fg='black', 
+                        relief='raised', 
+                        activebackground='SlateGray',
+                        activeforeground='white', 
+                        highlightbackground='brown4', 
+                        font=('Arial', 25, 'bold'),
+                        command =lambda: go_roughness_menu(W))
+    roughness_btn.pack(padx=5, pady=5, anchor="w", fill="x")
+    
+    
+    accesories_btn = Button(middle_frame, text='Accesorios en el ducto', 
+                            bg='DarkSlateGray', fg='black', 
+                            relief='raised', 
+                            activebackground='SlateGray', 
+                            activeforeground='white', 
+                            highlightbackground='brown4', 
+                            font=('Arial', 25, 'bold'),
+                            command= lambda: go_accesories_menu(W))
+    accesories_btn.pack(padx=5, pady=5, anchor="w", fill="x")
+    
+    
+    rectangular_eq_btn = Button(middle_frame, text='Ductos rectangulares equivalentes', 
+                                bg='DarkSlateGray', fg='black', 
+                                relief='raised', 
+                                activebackground='SlateGray', 
+                                activeforeground='white', 
+                                highlightbackground='brown4', 
+                                font=('Arial', 25, 'bold'),
+                                command = lambda: go_rectangular_eq_menu(W))
+    rectangular_eq_btn.pack(padx=5, pady=5, anchor="w", fill="x")
+    
+    
+    pre_desing_btn = Button(middle_frame, text='Volver a hacer el dimensionamiento preliminar', 
+                            bg='DarkSlateGray', fg='black', 
+                            relief='raised', 
+                            activebackground='SlateGray', 
+                            activeforeground='white', 
+                            highlightbackground='brown4', 
+                            font=('Arial', 25, 'bold'),
+                            command= lambda: go_back(W))
+    pre_desing_btn.pack(padx=5, pady=5, anchor="w", fill="x")
     
     
     bottom_frame = Frame(W, bg='gray5')
     bottom_frame.pack(side='bottom', fill='x')
     
-    back_btn = Button(bottom_frame, text='Volver', 
-                    bg='White', fg='black',
-                    relief='raised', 
-                    activebackground='DodgerBlue2', 
-                    activeforeground='OrangeRed2', 
-                    font=('Arial', 20, 'bold'),
-                    command=lambda: go_back(W))
-    back_btn.pack(side='left', padx=10, pady=10)

@@ -11,6 +11,9 @@ from menus.velocity_range_menu import velocity_range_menu
 from menus.velocity_entry_menu import velocity_entry_menu
 from menus.pre_dim_menu import pre_dim_menu
 from menus.corrections_menu import corrections_menu
+from menus.accesories_menu import accesories_menu
+from menus.roughness_menu import roughness_menu
+from menus.rectangular_eq_menu import rectangular_eq_menu
 
 def main():
     # Create the single root window
@@ -62,7 +65,18 @@ def main():
         pre_dim_menu(W, go_back=go_to_velocity_entry, go_next=go_to_corrections_menu)
     
     def go_to_corrections_menu(W):
-        corrections_menu(W, go_back=go_to_pre_dim)
+        corrections_menu(W, go_back=branch_features_menu, go_accesories_menu=go_to_accesories_menu,
+                        go_roughness_menu=go_to_roughness_menu, go_rectangular_eq_menu=go_to_rectangular_eq_menu)
+        
+    def go_to_accesories_menu(W):
+        accesories_menu(W, go_back=go_to_corrections_menu)
+        
+    def go_to_roughness_menu(W):
+        roughness_menu(W, go_back=go_to_corrections_menu)
+        
+    def go_to_rectangular_eq_menu(W):
+        rectangular_eq_menu(W, go_back=go_to_corrections_menu)
+        
 
     
     go_to_start(W)

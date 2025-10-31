@@ -1,4 +1,4 @@
-from tkinter import Button, Label, Frame, StringVar
+from tkinter import Button, Label, Frame
 from app_state import app_state
 
 def corrections_menu(W, go_back, go_accesories_menu, go_roughness_menu, go_rectangular_eq_menu):
@@ -11,56 +11,66 @@ def corrections_menu(W, go_back, go_accesories_menu, go_roughness_menu, go_recta
     top_frame.pack(side='top', fill='x')
     
     
-    pre_result_main = Label(top_frame, text='Menu de correciones', font=('Arial', 30), bg='gray12', fg='gray80')
+    pre_result_main = Label(top_frame, text='Menu de correciones', font=('Arial', 35), bg='gray5', fg='gray60')
     pre_result_main.pack(side='top', pady=1)
     
     
-    middle_frame = Frame(W, bg='gray20')
-    middle_frame.pack(side='top', fill='both', expand=True)
+    middle_frame = Frame(W, bg='gray5')
+    middle_frame.pack(expand=True, anchor='center')
     
     
     roughness_btn = Button(middle_frame, text='Correcion por rugosidad del material del ducto',
                         bg='DarkSlateGray', fg='black', 
                         relief='raised', 
-                        activebackground='SlateGray',
-                        activeforeground='white', 
-                        highlightbackground='brown4', 
+                        activebackground='DodgerBlue2',
+                        activeforeground='OrangeRed2', 
                         font=('Arial', 25, 'bold'),
+                        width=40,
                         command =lambda: go_roughness_menu(W))
-    roughness_btn.pack(padx=5, pady=5, anchor="w", fill="x")
+    roughness_btn.pack(padx=5, pady=10, anchor='n')
     
     
-    accesories_btn = Button(middle_frame, text='Accesorios en el ducto', 
+    accesories_btn = Button(middle_frame, text='Calcular perdidas en accesorios', 
                             bg='DarkSlateGray', fg='black', 
                             relief='raised', 
-                            activebackground='SlateGray', 
-                            activeforeground='white', 
-                            highlightbackground='brown4', 
+                            activebackground='DodgerBlue2', 
+                            activeforeground='OrangeRed2', 
                             font=('Arial', 25, 'bold'),
+                            width=40,
                             command= lambda: go_accesories_menu(W))
-    accesories_btn.pack(padx=5, pady=5, anchor="w", fill="x")
+    accesories_btn.pack(padx=5, pady=5)
     
     
     rectangular_eq_btn = Button(middle_frame, text='Ductos rectangulares equivalentes', 
                                 bg='DarkSlateGray', fg='black', 
                                 relief='raised', 
-                                activebackground='SlateGray', 
-                                activeforeground='white', 
-                                highlightbackground='brown4', 
+                                activebackground='DodgerBlue2', 
+                                activeforeground='OrangeRed2', 
                                 font=('Arial', 25, 'bold'),
+                                width=40,
                                 command = lambda: go_rectangular_eq_menu(W))
-    rectangular_eq_btn.pack(padx=5, pady=5, anchor="w", fill="x")
-    
-    
-    pre_desing_btn = Button(middle_frame, text='Volver a hacer el dimensionamiento preliminar', 
+    rectangular_eq_btn.pack(padx=5, pady=5)
+
+
+    re_design_btn = Button(middle_frame, text='Volver a hacer el dimensionamiento preliminar', 
                             bg='DarkSlateGray', fg='black', 
                             relief='raised', 
-                            activebackground='SlateGray', 
-                            activeforeground='white', 
-                            highlightbackground='brown4', 
+                            activebackground='DodgerBlue2', 
+                            activeforeground='OrangeRed2', 
                             font=('Arial', 25, 'bold'),
+                            width=40,
                             command= lambda: go_back(W))
-    pre_desing_btn.pack(padx=5, pady=5, anchor="w", fill="x")
+    re_design_btn.pack(padx=5, pady=5)
+
+
+    pdf_btn = Button(middle_frame, text='Generar reporte en PDF (Próximamente)',
+                        bg='gray30', fg='black', 
+                        relief='raised', 
+                        activebackground='gray30',
+                        activeforeground='gray60', 
+                        font=('Arial', 25, 'bold'),
+                        width=40,)
+    pdf_btn.pack(padx=5, pady=5)
     
     
     bottom_frame = Frame(W, bg='gray5')

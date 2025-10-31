@@ -65,7 +65,7 @@ def main():
         pre_dim_menu(W, go_back=go_to_velocity_entry, go_next=go_to_corrections_menu)
     
     def go_to_corrections_menu(W):
-        corrections_menu(W, go_back=branch_features_menu, go_accesories_menu=go_to_accesories_menu,
+        corrections_menu(W, go_back=go_to_pre_dim, go_accesories_menu=go_to_accesories_menu,
                         go_roughness_menu=go_to_roughness_menu, go_rectangular_eq_menu=go_to_rectangular_eq_menu)
         
     def go_to_accesories_menu(W):
@@ -77,9 +77,9 @@ def main():
     def go_to_rectangular_eq_menu(W):
         rectangular_eq_menu(W, go_back=go_to_corrections_menu)
         
-
     
     go_to_start(W)
+    
     
     W.mainloop()
 

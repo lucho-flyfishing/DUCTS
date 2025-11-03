@@ -63,11 +63,11 @@ def corrections_menu(W, go_back, go_accesories_menu, go_roughness_menu, go_recta
     re_design_btn.pack(padx=5, pady=5)
 
 
-    pdf_btn = Button(middle_frame, text='Generar reporte en PDF (Próximamente)',
+    pdf_btn = Button(middle_frame, text='Generar reporte en PDF',
                         bg='white', fg='black', 
                         relief='raised', 
-                        activebackground='gray30',
-                        activeforeground='gray60', 
+                        activebackground='DodgerBlue2',
+                        activeforeground='OrangeRed2', 
                         font=('Arial', 25, 'bold'),
                         width=40,)
     pdf_btn.pack(padx=5, pady=5)

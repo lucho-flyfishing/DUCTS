@@ -11,7 +11,7 @@ def rectangular_eq_menu(W, go_back):
     top_frame.pack(side='top', fill='x')
     
     
-    pre_result_main = Label(top_frame, text='Rectangulares EQ', font=('Arial', 30), bg='gray12', fg='gray80')
+    pre_result_main = Label(top_frame, text='Rectangulares EQ', font=('Arial', 30), bg='gray5', fg='gray60')
     pre_result_main.pack(side='top', pady=1)
     
     
@@ -25,8 +25,8 @@ def rectangular_eq_menu(W, go_back):
     back_btn = Button(bottom_frame, text='Regresar', 
                     bg='white', fg='black', 
                     relief='raised', 
-                    activebackground='SlateGray', 
-                    activeforeground='white', 
+                    activebackground='DodgerBlue2', 
+                    activeforeground='OrangeRed2', 
                     highlightbackground='brown4', 
                     font=('Arial', 20, 'bold'),
                     command=lambda: go_back(W))

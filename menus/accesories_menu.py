@@ -23,7 +23,7 @@ def accesories_menu(W, go_back):
     bottom_frame.pack(side='bottom', fill='x')
     
     back_btn = Button(bottom_frame, text='Regresar', 
-                    bg='DarkSlateGray', fg='black', 
+                    bg='white', fg='black', 
                     relief='raised', 
                     activebackground='SlateGray', 
                     activeforeground='white', 

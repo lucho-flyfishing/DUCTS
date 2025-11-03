@@ -20,7 +20,7 @@ def corrections_menu(W, go_back, go_accesories_menu, go_roughness_menu, go_recta
     
     
     roughness_btn = Button(middle_frame, text='Correcion por rugosidad del material del ducto',
-                        bg='DarkSlateGray', fg='black', 
+                        bg='white', fg='black', 
                         relief='raised', 
                         activebackground='DodgerBlue2',
                         activeforeground='OrangeRed2', 
@@ -31,7 +31,7 @@ def corrections_menu(W, go_back, go_accesories_menu, go_roughness_menu, go_recta
     
     
     accesories_btn = Button(middle_frame, text='Calcular perdidas en accesorios', 
-                            bg='DarkSlateGray', fg='black', 
+                            bg='white', fg='black', 
                             relief='raised', 
                             activebackground='DodgerBlue2', 
                             activeforeground='OrangeRed2', 
@@ -42,7 +42,7 @@ def corrections_menu(W, go_back, go_accesories_menu, go_roughness_menu, go_recta
     
     
     rectangular_eq_btn = Button(middle_frame, text='Ductos rectangulares equivalentes', 
-                                bg='DarkSlateGray', fg='black', 
+                                bg='white', fg='black', 
                                 relief='raised', 
                                 activebackground='DodgerBlue2', 
                                 activeforeground='OrangeRed2', 
@@ -53,7 +53,7 @@ def corrections_menu(W, go_back, go_accesories_menu, go_roughness_menu, go_recta
 
 
     re_design_btn = Button(middle_frame, text='Volver a hacer el dimensionamiento preliminar', 
-                            bg='DarkSlateGray', fg='black', 
+                            bg='white', fg='black', 
                             relief='raised', 
                             activebackground='DodgerBlue2', 
                             activeforeground='OrangeRed2', 

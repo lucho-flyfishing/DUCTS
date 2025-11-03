@@ -64,7 +64,7 @@ def corrections_menu(W, go_back, go_accesories_menu, go_roughness_menu, go_recta
 
 
     pdf_btn = Button(middle_frame, text='Generar reporte en PDF (Próximamente)',
-                        bg='gray30', fg='black', 
+                        bg='white', fg='black', 
                         relief='raised', 
                         activebackground='gray30',
                         activeforeground='gray60', 

@@ -15,7 +15,7 @@ def rectangular_eq_menu(W, go_back):
     pre_result_main.pack(side='top', pady=1)
     
     
-    middle_frame = Frame(W, bg='gray20')
+    middle_frame = Frame(W, bg='gray5')
     middle_frame.pack(side='top', fill='both', expand=True)
     
     

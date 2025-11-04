@@ -64,21 +64,18 @@ def roughness_menu(W, go_back):
     if selected == 3:
     
         table1_roughness_imperial = [
-            ["Lisa", 0.00118],  
-            ["Lisa", 0.00118],
-            ["Lisa", 0.00118],
-            ["Lisa", 0.00118],   
-            ["Medianamente Lisa", 0.00354],
-            ["Promedio", 0.00591],
-            ["Promedio", 0.00591],  
-            ["Medianamente Rugosa", 0.03543],
-            ["Medianamente Rugosa", 0.03543],
-            ["Rugosa", 0.11811],
-            ["Medianamente Rugosa", 0.03543],
-            ["Rugosa", 0.11811],
-            ["Rugosa", 0.11811],
-            ["Rugosa", 0.11811],
-            ["Rugosa", 0.11811],
+            ["Acero al carbon sin recubrir","Lisa", 0.001181102],  
+            ["Ducto plastico PVC", "Lisa",0.001181102],
+            ["Aluminio","Lisa", 0.001181102],
+            ["Acero galvanizado juntas longitudinales","Lisa", 0.001181102],   
+            ["Acero galvanizado juntas en espiral","Medianamente Lisa",0.003543307],
+            ["Laminas de acero galvanizado baño caliente juntas longitudinales","Promedio", 0.005905512],
+            ["Ducto rigido en fibra de vidrio","Medianamente Rugosa", 0.0354331],  
+            ["Recubrimiento de fibra de vidrio","Medianamente Rugosa", 0.0354331],
+            ["Recubrimiento fibra de vidrio con aerosol","Rugosa", 0.11811],
+            ["Ducto flexible metalico","Rugosa",0.11811],
+            ["Ducto flexible en todo tipo de tejidos y alambre","Rugosa",0.11811],
+            ["Concreto","Rugosa",0.11811]
         ]
     
     
@@ -90,7 +87,7 @@ def roughness_menu(W, go_back):
                             relief="solid",
                             width=16,
                             height=1)
-                label.grid(row=i+2, column=j+1, padx=2, pady=2)
+                label.grid(row=i+2, column=j, padx=2, pady=2)
     
     
         roughness_imp_lbl = Label(middle_frame, text='Factor de Rugosidad (in)',
@@ -103,21 +100,18 @@ def roughness_menu(W, go_back):
     else:
         
         table2_roughness = [
-            ["Lisa", 0.03],  
-            ["Lisa", 0.03],
-            ["Lisa", 0.03],
-            ["Lisa", 0.03],   
-            ["Medianamente Lisa", 0.09],
-            ["Promedio", 0.15],
-            ["Promedio", 0.15],  
-            ["Medianamente Rugosa", 0.9],
-            ["Medianamente Rugosa", 0.9],
-            ["Rugosa", 3],
-            ["Medianamente Rugosa", 0.9],
-            ["Rugosa", 3],
-            ["Rugosa", 3],
-            ["Rugosa", 3],
-            ["Rugosa", 3]
+            ["Acero al carbon sin recubrir","Lisa", 0.03],  
+            ["Ducto plastico PVC", "Lisa", 0.03],
+            ["Aluminio","Lisa", 0.03],
+            ["Acero galvanizado juntas longitudinales","Lisa", 0.03],   
+            ["Acero galvanizado juntas en espiral","Medianamente Lisa", 0.09],
+            ["Laminas de acero galvanizado baño caliente juntas longitudinales","Promedio", 0.15],
+            ["Ducto rigido en fibra de vidrio","Medianamente Rugosa", 0.9],  
+            ["Recubrimiento de fibra de vidrio","Medianamente Rugosa", 0.9],
+            ["Recubrimiento fibra de vidrio con aerosol","Rugosa", 3],
+            ["Ducto flexible metalico","Rugosa", 3],
+            ["Ducto flexible en todo tipo de tejidos y alambre","Rugosa", 3],
+            ["Concreto","Rugosa", 3]
         ]
         
         
@@ -127,7 +121,7 @@ def roughness_menu(W, go_back):
                             borderwidth=1, 
                             relief="solid",
                             width=16, height=1)
-                label.grid(row=i+2, column=j+1, padx=2, pady=2)
+                label.grid(row=i+2, column=j, padx=2, pady=2)
     
     
         roughness_lbl = Label(middle_frame, text='Factor de Rugosidad (mm)',

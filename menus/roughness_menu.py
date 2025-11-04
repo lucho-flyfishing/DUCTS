@@ -83,11 +83,10 @@ def roughness_menu(W, go_back):
             for j, value in enumerate(row):
                 label = Label(middle_frame,
                             text=value,
-                            borderwidth=1,
+                            borderwidth=0.5,
                             relief="solid",
-                            width=16,
                             height=1)
-                label.grid(row=i+2, column=j, padx=2, pady=2)
+                label.grid(row=i+2, column=j, padx=2, pady=2, sticky="nsew")
     
     
         roughness_imp_lbl = Label(middle_frame, text='Factor de Rugosidad (in)',
@@ -118,10 +117,10 @@ def roughness_menu(W, go_back):
         for i, row in enumerate(table2_roughness):
             for j, value in enumerate(row):
                 label = Label(middle_frame, text=value, 
-                            borderwidth=1, 
+                            borderwidth=0.5, 
                             relief="solid",
-                            width=16, height=1)
-                label.grid(row=i+2, column=j, padx=2, pady=2)
+                            height=1)
+                label.grid(row=i+2, column=j, padx=2, pady=2, sticky="nsew")
     
     
         roughness_lbl = Label(middle_frame, text='Factor de Rugosidad (mm)',

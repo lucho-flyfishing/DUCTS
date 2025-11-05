@@ -36,25 +36,25 @@ def accesories_menu(W, go_back):
         print("Selected accesory:", app_state.selected_accesory.get())
         
     Radiobutton(middle_frame, text="1. Campanas",
-                variable=app_state.selected_option, value=1,
+                variable=app_state.selected_accesory, value=1,
                 command=on_select, **radio_style).pack(pady=10)
     
     
     Radiobutton(middle_frame, text="2. Codos", 
-                variable=app_state.selected_option, value=2,
+                variable=app_state.selected_accesory, value=2,
                 command=on_select, **radio_style).pack(pady=10)
     
     
     Radiobutton(middle_frame, text="3. Intersecciones ",
-                variable=app_state.selected_option, value=3,
+                variable=app_state.selected_accesory, value=3,
                 command=on_select, **radio_style).pack(pady=10)
     
     Radiobutton(middle_frame, text="4. Transiciones",
-                variable=app_state.selected_option, value=4,
+                variable=app_state.selected_accesory, value=4,
                 command=on_select, **radio_style).pack(pady=10)
     
     Radiobutton(middle_frame, text="5. Compuerta",
-                variable=app_state.selected_option, value=5,
+                variable=app_state.selected_accesory, value=5,
                 command=on_select, **radio_style).pack(pady=10)
 
     
@@ -71,7 +71,7 @@ def accesories_menu(W, go_back):
                     activeforeground='OrangeRed2',
                     font=('Arial', 20, 'bold'),
                     command=lambda: go_back(W))
-    back_btn.pack(padx=10, pady=10, anchor="w")
+    back_btn.pack(side='left', padx=10, pady=10)
 
 
     next_btn = Button(bottom_frame, text='Siguiente',

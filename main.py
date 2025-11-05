@@ -16,11 +16,12 @@ from menus.roughness_menu import roughness_menu
 from menus.rectangular_eq_menu import rectangular_eq_menu
 
 def main():
-    # Create the single root window
+    
     W = Tk()
     W.geometry("1200x900")
     W.configure(bg="gray5")
-
+    
+    
     # Init app_state variables
     app_state.selected_option = StringVar(W)
     app_state.duct_number = IntVar(W)
@@ -35,54 +36,67 @@ def main():
     app_state.rho = StringVar(W)
     app_state.diameter = StringVar(W)
     app_state.S = StringVar(W)
-
+    app_state.selected_accesory = IntVar(W)
+    
+    
     # navigation
     def go_to_start(W):
         start_menu(W, go_next=go_to_file_name)
-
+        
+        
     def go_to_file_name(W):
         file_name_menu(W, go_back=go_to_start, go_next=go_to_duct_number)
-
+        
+        
     def go_to_duct_number(W):
         duct_number_menu(W, go_back=go_to_file_name, go_next=go_to_units)
-
+        
+        
     def go_to_units(W):
         units_menu(W, go_back=go_to_duct_number, go_next=go_to_branch_features)
         
     def go_to_branch_features(W):
         branch_features_menu(W, go_back=go_to_units, go_next=go_to_alt_temp)
-
+        
+        
     def go_to_alt_temp(W):
         alt_temp_menu(W, go_back=go_to_branch_features, go_next=go_to_velocity_range)
+    
     
     def go_to_velocity_range(W):
         velocity_range_menu(W, go_back=go_to_alt_temp, go_next=go_to_velocity_entry)
     
+    
     def go_to_velocity_entry(W):
         velocity_entry_menu(W, go_back=go_to_velocity_range, go_next=go_to_pre_dim )
+    
     
     def go_to_pre_dim(W):
         pre_dim_menu(W, go_back=go_to_velocity_entry, go_next=go_to_corrections_menu)
     
+    
     def go_to_corrections_menu(W):
         corrections_menu(W, go_back=go_to_pre_dim, go_accesories_menu=go_to_accesories_menu,
                         go_roughness_menu=go_to_roughness_menu, go_rectangular_eq_menu=go_to_rectangular_eq_menu)
-        
+    
+    
     def go_to_accesories_menu(W):
         accesories_menu(W, go_back=go_to_corrections_menu)
-        
+    
+    
     def go_to_roughness_menu(W):
         roughness_menu(W, go_back=go_to_corrections_menu)
-        
+    
+    
     def go_to_rectangular_eq_menu(W):
         rectangular_eq_menu(W, go_back=go_to_corrections_menu)
-        
+    
     
     go_to_start(W)
     
     
     W.mainloop()
-
-
+    
+    
 if __name__ == "__main__":
     main()

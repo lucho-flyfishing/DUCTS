@@ -11,10 +11,10 @@ def bells_menu(W, go_back):
     # ---- TOP FRAME ----
     top_frame = Frame(W, bg='gray5')
     top_frame.pack(side='top', fill='x')
-    
-    pre_result_main = Label(top_frame, text='Campanas', font=('Arial', 35), bg='gray5', fg='gray60')
-    pre_result_main.pack(side='top', pady=1)
-    
+
+    bells_lbl = Label(top_frame, text='Campanas', font=('Arial', 35), bg='gray5', fg='gray60')
+    bells_lbl.pack(side='top', pady=1)
+
     # ---- MIDDLE FRAME ----
     middle_frame = Frame(W, bg='gray10')
     middle_frame.pack(expand=True, fill='both')

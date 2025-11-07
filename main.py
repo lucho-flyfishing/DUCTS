@@ -14,6 +14,15 @@ from menus.corrections_menu import corrections_menu
 from menus.accesories_menu import accesories_menu
 from menus.roughness_menu import roughness_menu
 from menus.rectangular_eq_menu import rectangular_eq_menu
+from menus.bells_menu import bells_menu
+from menus.elbows_menu import elbows_menu
+from menus.damper_menu import damper_menu   
+from menus.diffuser_menu import diffuser_menu
+from menus.reducers_menu import reducers_menu
+from menus.tees_menu import tees_menu
+
+
+
 
 def main():
     
@@ -80,16 +89,44 @@ def main():
                         go_roughness_menu=go_to_roughness_menu, go_rectangular_eq_menu=go_to_rectangular_eq_menu)
     
     
-    def go_to_accesories_menu(W):
-        accesories_menu(W, go_back=go_to_corrections_menu)
-    
-    
     def go_to_roughness_menu(W):
         roughness_menu(W, go_back=go_to_corrections_menu)
     
     
     def go_to_rectangular_eq_menu(W):
         rectangular_eq_menu(W, go_back=go_to_corrections_menu)
+    
+    
+    def go_to_accesories_menu(W):
+        accesories_menu(W, go_back=go_to_corrections_menu, go_bells_menu=go_to_bells_menu,
+                        go_elbows_menu=go_to_elbows_menu, go_damper_menu=go_to_damper_menu,
+                        go_diffuser_menu=go_to_diffuser_menu, go_reducers_menu=go_to_reducers_menu,
+                        go_tees_menu=gp_to_tees_menu)
+    
+    
+    def go_to_bells_menu(W):
+        bells_menu(W, go_back=go_to_accesories_menu)
+    
+    
+    def go_to_elbows_menu(W):
+        elbows_menu(W, go_back=go_to_accesories_menu)
+    
+    
+    def go_to_damper_menu(W):
+        damper_menu(W, go_back=go_to_accesories_menu)
+    
+    
+    def go_to_diffuser_menu(W):
+        diffuser_menu(W, go_back=go_to_accesories_menu)
+    
+    
+    def go_to_reducers_menu(W):
+        reducers_menu(W, go_back=go_to_accesories_menu)
+    
+    
+    def gp_to_tees_menu(W):
+        tees_menu(W, go_back=go_to_accesories_menu)
+    
     
     
     go_to_start(W)

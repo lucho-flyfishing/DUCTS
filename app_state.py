@@ -17,6 +17,6 @@ class AppState:
         self.rho = None
         self.diameter = None
         self.S = None
-        self.selected_accesory = None
+        self.selected_bell = None
 
 app_state = AppState()

@@ -43,8 +43,7 @@ def units_menu(W, go_back, go_next):
         "fg": "OrangeRed2",   
         "activeforeground": "black",
         "activebackground": "OrangeRed2",
-        "bg": "gray5",                  
-        "relief": "raised"              
+        "bg": "gray5",                              
     }
 
     def on_select():

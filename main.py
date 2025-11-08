@@ -45,7 +45,7 @@ def main():
     app_state.rho = StringVar(W)
     app_state.diameter = StringVar(W)
     app_state.S = StringVar(W)
-    app_state.selected_accesory = IntVar(W)
+    app_state.selected_bell = IntVar(W)
     
     
     # navigation

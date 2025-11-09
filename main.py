@@ -47,6 +47,7 @@ def main():
     app_state.S = StringVar(W)
     app_state.selected_bell = IntVar(W)
     app_state.selected_elbow = IntVar(W)
+    app_state.selected_transition = IntVar(W)
     
     
     # navigation

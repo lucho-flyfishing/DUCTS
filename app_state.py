@@ -19,5 +19,6 @@ class AppState:
         self.S = None
         self.selected_bell = None
         self.selected_elbow = None
+        self.selected_transition = None
 
 app_state = AppState()

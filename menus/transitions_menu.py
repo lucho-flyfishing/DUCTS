@@ -1,5 +1,6 @@
-from tkinter import Button, Label, Frame
+from tkinter import Button, Label, Frame, Radiobutton
 from app_state import app_state
+import resources
 
 def transitions_menu(W, go_back):
     # Clear the window
@@ -18,6 +19,123 @@ def transitions_menu(W, go_back):
     
     middle_frame = Frame(W, bg='gray10')
     middle_frame.pack(expand=True, fill='both')
+    
+    total_rows = 5  
+    total_cols = 3 
+    
+    for r in range(total_rows):
+        middle_frame.rowconfigure(r, weight=1)
+    
+    for c in range(total_cols):
+        middle_frame.columnconfigure(c, weight=1)
+    
+    radio_style = {
+        "width": 50,
+        "height": 1,
+        "font": ("Arial", 10, "bold"),
+        "fg": "OrangeRed2",   
+        "activeforeground": "black",
+        "activebackground": "OrangeRed2",
+        "bg": "gray5",                               
+    }
+    
+    
+    def on_select():
+        print("Selected bell:", app_state.selected_transition.get())
+        
+        
+    Radiobutton(middle_frame, text="1. Transición circular",
+                variable=app_state.selected_transition, value=1,
+                command=on_select, **radio_style).grid(row=1, column=0, pady=10)
+    
+    
+    Radiobutton(middle_frame, text="2. Transicion circular reductora", 
+                variable=app_state.selected_elbow, value=2,
+                command=on_select, **radio_style).grid(row=1, column=1, pady=10)
+    
+    
+    Radiobutton(middle_frame, text="3. Transición circular a rectangular", 
+                variable=app_state.selected_transition, value=3,
+                command=on_select, **radio_style).grid(row=1, column=2, pady=10)
+    
+    
+    Radiobutton(middle_frame, text="4. Transición rectangular a circular",
+                variable=app_state.selected_transition, value=4,
+                command=on_select, **radio_style).grid(row=3, column=0, pady=10)
+    
+    
+    Radiobutton(middle_frame, text="5. Transición rectangular",
+                variable=app_state.selected_transition, value=5,
+                command=on_select, **radio_style).grid(row=3, column=1, pady=10)
+    
+    
+    Radiobutton(middle_frame, text="6. Transición rectangular piramidal",
+                variable=app_state.selected_transition, value=6,
+                command=on_select, **radio_style).grid(row=3, column=2, pady=10)
+    
+    
+    Radiobutton(middle_frame, text="7. Transición rectangular 3 lados",
+                variable=app_state.selected_transition, value=7,
+                command=on_select, **radio_style).grid(row=4, column=2, pady=10)
+    
+    
+
+    
+    
+    round_transition_img = resources.load_image("round_transition.png", 
+                                    size=(300, 200))  
+    round_transition_img_lbl = Label(middle_frame, image=round_transition_img, bg='gray5')
+    round_transition_img_lbl.image = round_transition_img  
+    round_transition_img_lbl.grid(row=0, column=1, padx=20, pady=20, sticky="nsew")
+    
+    
+    round_reducer_transition_img = resources.load_image("round_reducer_transition.png",
+                                    size=(300, 200))
+    round_reducer_transition_img_lbl = Label(middle_frame, image=round_reducer_transition_img, bg='gray5')
+    round_reducer_transition_img_lbl.image = round_reducer_transition_img
+    round_reducer_transition_img_lbl.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")
+    
+    
+    round_rectangular_transition_img = resources.load_image("round_rectangular_transition.png",
+                                    size=(300, 200))
+    round_rectangular_transition_img_lbl = Label(middle_frame, image=round_rectangular_transition_img, bg='gray5')
+    round_rectangular_transition_img_lbl.image = round_rectangular_transition_img
+    round_rectangular_transition_img_lbl.grid(row=0, column=2, padx=20, pady=20, sticky="nsew")
+    
+    
+    rectangular_round_transition_img = resources.load_image("rectangular_round_transition.png",
+                                    size=(300, 200))
+    rectangular_round_transition_img_lbl = Label(middle_frame, image=rectangular_round_transition_img, bg='gray5')
+    rectangular_round_transition_img_lbl.image = rectangular_round_transition_img
+    rectangular_round_transition_img_lbl.grid(row=2, column=0, padx=20, pady=20, sticky="nsew")
+    
+    
+    rectangular_transition_img = resources.load_image("rectangular_transition.png",
+                                    size=(300, 200))
+    rectangular_transition_img_lbl = Label(middle_frame, image=rectangular_transition_img, bg='gray5')
+    rectangular_transition_img_lbl.image = rectangular_transition_img
+    rectangular_transition_img_lbl.grid(row=2, column=1, padx=20, pady=20, sticky="nsew")
+    
+    
+    rectangular_pyramidal_transition_img = resources.load_image("rectangular_pyramidal_transition.png",
+                                    size=(300, 200))
+    rectangular_pyramidal_transition_img_lbl = Label(middle_frame, image=rectangular_pyramidal_transition_img, bg='gray5')
+    rectangular_pyramidal_transition_img_lbl.image = rectangular_pyramidal_transition_img
+    rectangular_pyramidal_transition_img_lbl.grid(row=2, column=2, padx=20, pady=20, sticky="nsew")
+    
+    
+    rectangular_3_sides_transition_img = resources.load_image("rectangular_3_side_transition.png",
+                                    size=(300, 200))
+    rectangular_3_sides_transition_img_lbl = Label(middle_frame, image=rectangular_3_sides_transition_img, bg='gray5')
+    rectangular_3_sides_transition_img_lbl.image = rectangular_3_sides_transition_img
+    rectangular_3_sides_transition_img_lbl.grid(row=4, column=0, padx=20, pady=20, sticky="nsew")
+    
+    
+    
+    
+    
+    
+
     
     
     bottom_frame = Frame(W, bg='gray5')

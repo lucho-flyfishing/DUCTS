@@ -1,7 +1,7 @@
 from tkinter import Button, Label, Frame
 from app_state import app_state
 
-def reducers_menu(W, go_back):
+def diffusers_menu(W, go_back):
     # Clear the window
     for widget in W.winfo_children():
         widget.destroy()
@@ -9,16 +9,13 @@ def reducers_menu(W, go_back):
         
     top_frame = Frame(W, bg='gray5')
     top_frame.pack(side='top', fill='x')
-    
-    
-    reducers_lbl = Label(top_frame, text='Reductores - Transiciones', 
-                            font=('Arial', 35), bg='gray5', fg='gray60')
-    reducers_lbl.pack(side='top', pady=1)
-    
-    
+
+
+    diffusers_lbl = Label(top_frame, text='Difusores - Rejillas', font=('Arial', 35), bg='gray5', fg='gray60')
+    diffusers_lbl.pack(side='top', pady=1)
+
     middle_frame = Frame(W, bg='gray10')
     middle_frame.pack(expand=True, fill='both')
-    
     
     bottom_frame = Frame(W, bg='gray5')
     bottom_frame.pack(side='bottom', fill='x')

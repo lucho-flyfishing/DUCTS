@@ -18,5 +18,6 @@ class AppState:
         self.diameter = None
         self.S = None
         self.selected_bell = None
+        self.selected_elbow = None
 
 app_state = AppState()

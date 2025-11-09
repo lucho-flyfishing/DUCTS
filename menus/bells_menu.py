@@ -19,8 +19,8 @@ def bells_menu(W, go_back):
     
     middle_frame = Frame(W, bg='gray5')
     middle_frame.pack(expand=True, fill='both')
-    total_rows = 5   # You use rows 0, 1, 2, and 4 (so up to 5)
-    total_cols = 4   # You use columns 0–3
+    total_rows = 5  
+    total_cols = 4  
 
     for r in range(total_rows):
         middle_frame.rowconfigure(r, weight=1)
@@ -37,11 +37,13 @@ def bells_menu(W, go_back):
         "activebackground": "OrangeRed2",
         "bg": "gray5",                               
     }
-
+    
+    
     def on_select():
         print("Selected bell:", app_state.selected_bell.get())
         
-    Radiobutton(middle_frame, text="1. Campana de entrada de radio suave sin pared terminal",
+        
+    Radiobutton(middle_frame, text="1. Campana de entrada de radio suave",
                 variable=app_state.selected_bell, value=1,
                 command=on_select, **radio_style).grid(row=1, column=0, pady=10)
     
@@ -51,16 +53,47 @@ def bells_menu(W, go_back):
                 command=on_select, **radio_style).grid(row=1, column=1, pady=10)
     
     
-    Radiobutton(middle_frame, text="3. Campana cónica sin pared terminal",
+    Radiobutton(middle_frame, text="3. Campana cónica",
                 variable=app_state.selected_bell, value=3,
                 command=on_select, **radio_style).grid(row=1, column=2, pady=10)
     
+    
     Radiobutton(middle_frame, text="4. Campana cónica con pared terminal",
-                variable=app_state.selected_bell, value=3,
-                command=on_select, **radio_style).grid(row=1, column=2, pady=10)
-
-
-    smooth_img = resources.load_image("smooth.png", size=(300, 200))  
+                variable=app_state.selected_bell, value=4,
+                command=on_select, **radio_style).grid(row=1, column=3, pady=10)
+    
+    
+    Radiobutton(middle_frame, text="5. Salida circular",
+                variable=app_state.selected_bell, value=5,
+                command=on_select, **radio_style).grid(row=3, column=0, pady=10)
+    
+    
+    Radiobutton(middle_frame, text="6. Salida circular con pared terminal",
+                variable=app_state.selected_bell, value=6,
+                command=on_select, **radio_style).grid(row=3, column=1, pady=10)
+    
+    
+    Radiobutton(middle_frame, text="7. Salida rectangular",
+                variable=app_state.selected_bell, value=7,
+                command=on_select, **radio_style).grid(row=3, column=2, pady=10)
+    
+    
+    Radiobutton(middle_frame, text="8. Salida rectangular con pared terminal",
+                variable=app_state.selected_bell, value=8,
+                command=on_select, **radio_style).grid(row=3, column=3, pady=10)
+    
+    
+    Radiobutton(middle_frame, text="9. Campana de entrada con capó de admisión",
+                variable=app_state.selected_bell, value=9,
+                command=on_select, **radio_style).grid(row=5, column=0, pady=10)
+    
+    Radiobutton(middle_frame, text="10. Campana de entrada",
+                variable=app_state.selected_bell, value=10,
+                command=on_select, **radio_style).grid(row=5, column=1, pady=10)
+    
+    
+    smooth_img = resources.load_image("smooth.png", 
+                                    size=(300, 200))  
     smooth_img_lbl = Label(middle_frame, image=smooth_img, bg='gray5')
     smooth_img_lbl.image = smooth_img
     smooth_img_lbl.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")
@@ -100,11 +133,13 @@ def bells_menu(W, go_back):
     exit_round_wall_img_lbl.image = exit_round_wall_img
     exit_round_wall_img_lbl.grid(row=2, column=1, padx=20, pady=20, sticky="nsew")
     
+    
     exit_rect_img = resources.load_image("exit_rectangular.png",
                                     size=(350, 200))
     exit_rect_img_lbl = Label(middle_frame, image=exit_rect_img, bg='gray5')
     exit_rect_img_lbl.image = exit_rect_img
     exit_rect_img_lbl.grid(row=2, column=2, padx=20, pady=20, sticky="nsew")
+    
     
     exit_rect_wall_img = resources.load_image("exit_rectangular_wall.png",
                                     size=(350, 200))
@@ -112,11 +147,13 @@ def bells_menu(W, go_back):
     exit_rect_wall_img_lbl.image = exit_rect_wall_img
     exit_rect_wall_img_lbl.grid(row=2, column=3, padx=20, pady=20, sticky="nsew") 
     
+    
     intake_hood_img = resources.load_image("intake_hood.png",
                                     size=(300, 200))
     intake_hood_img_lbl = Label(middle_frame, image=intake_hood_img, bg='gray5')
     intake_hood_img_lbl.image = intake_hood_img
     intake_hood_img_lbl.grid(row=4, column=0, padx=20, pady=20, sticky="nsew")
+    
     
     hood_tapered_img = resources.load_image("hood_tapered.png",
                                     size=(300, 200))

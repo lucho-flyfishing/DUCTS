@@ -1,7 +1,7 @@
 from tkinter import Button, Label, Frame
 from app_state import app_state
 
-def tees_menu(W, go_back):
+def junctions_menu(W, go_back):
     # Clear the window
     for widget in W.winfo_children():
         widget.destroy()

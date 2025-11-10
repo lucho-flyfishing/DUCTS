@@ -76,10 +76,7 @@ def transitions_menu(W, go_back):
     
     Radiobutton(middle_frame, text="7. Transición rectangular 3 lados",
                 variable=app_state.selected_transition, value=7,
-                command=on_select, **radio_style).grid(row=4, column=2, pady=10)
-    
-    
-
+                command=on_select, **radio_style).grid(row=4, column=0, pady=10)
     
     
     round_transition_img = resources.load_image("round_transition.png", 
@@ -129,13 +126,6 @@ def transitions_menu(W, go_back):
     rectangular_3_sides_transition_img_lbl = Label(middle_frame, image=rectangular_3_sides_transition_img, bg='gray5')
     rectangular_3_sides_transition_img_lbl.image = rectangular_3_sides_transition_img
     rectangular_3_sides_transition_img_lbl.grid(row=4, column=0, padx=20, pady=20, sticky="nsew")
-    
-    
-    
-    
-    
-    
-
     
     
     bottom_frame = Frame(W, bg='gray5')

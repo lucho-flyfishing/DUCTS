@@ -11,7 +11,7 @@ def junctions_menu(W, go_back):
     top_frame.pack(side='top', fill='x')
 
 
-    tees_lbl = Label(top_frame, text='Tees', font=('Arial', 35), bg='gray5', fg='gray60')
+    tees_lbl = Label(top_frame, text='Uniones - Empalmes', font=('Arial', 35), bg='gray5', fg='gray60')
     tees_lbl.pack(side='top', pady=1)
 
     middle_frame = Frame(W, bg='gray10')

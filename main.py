@@ -19,7 +19,7 @@ from menus.elbows_menu import elbows_menu
 from menus.damper_menu import damper_menu   
 from menus.diffusers_menu import diffusers_menu
 from menus.transitions_menu import transitions_menu
-from menus.junctions import junctions_menu
+from menus.junctions_menu import junctions_menu
 
 
 
@@ -103,7 +103,7 @@ def main():
         accesories_menu(W, go_back=go_to_corrections_menu, go_bells_menu=go_to_bells_menu,
                         go_elbows_menu=go_to_elbows_menu, go_damper_menu=go_to_damper_menu,
                         go_diffusers_menu=go_to_diffusers_menu, go_transitions_menu=go_to_transitions_menu,
-                        go_junctions_menu=gp_to_junctions_menu)
+                        go_junctions_menu=go_to_junctions_menu)
     
     
     def go_to_bells_menu(W):
@@ -126,7 +126,7 @@ def main():
         transitions_menu(W, go_back=go_to_accesories_menu)
     
     
-    def gp_to_junctions_menu(W):
+    def go_to_junctions_menu(W):
         junctions_menu(W, go_back=go_to_accesories_menu)
     
     

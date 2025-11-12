@@ -39,7 +39,7 @@ def elbows_menu(W, go_back):
     
     
     def on_select():
-        print("Selected bell:", app_state.selected_elbow.get())
+        print("Selected elbow:", app_state.selected_elbow.get())
         
         
     Radiobutton(middle_frame, text="1. Codo de radio suave",

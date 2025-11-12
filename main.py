@@ -49,6 +49,7 @@ def main():
     app_state.selected_elbow = IntVar(W)
     app_state.selected_transition = IntVar(W)
     app_state.selected_junction = IntVar(W)
+    app_state.selected_damper = IntVar(W)
     
     
     # navigation

@@ -68,6 +68,23 @@ def alt_temp_menu(W, go_back, go_next):
                         highlightbackground='black')
         alt_entry.grid(row=0, column=1)
         
+    a_placeholder = 'Escribe aquí...'
+    alt_entry.insert(0, a_placeholder)
+
+    def on_focus_in(event):
+        if alt_entry.get() == a_placeholder:
+            alt_entry.delete(0, 'end')
+            alt_entry.config(fg='black')
+
+    def on_focus_out(event):
+        if alt_entry.get() == '':
+            alt_entry.insert(0, a_placeholder)
+            alt_entry.config(fg='gray')
+
+    alt_entry.bind('<FocusIn>', on_focus_in)
+    alt_entry.bind('<FocusOut>', on_focus_out)
+    alt_entry.focus()
+        
         
     def get_values():
         app_state.get_alt = alt_entry.get()

@@ -3,6 +3,7 @@ from app_state import app_state
 from tables.smooth_bell import get_co_smooth_bell
 
 
+
 def bells_specs_menu(W, go_back):
     
     for widget in W.winfo_children():

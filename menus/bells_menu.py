@@ -3,7 +3,7 @@ from app_state import app_state
 from PIL import Image, ImageTk
 import resources  
 
-def bells_menu(W, go_back):
+def bells_menu(W, go_back, go_next):
     
     for widget in W.winfo_children():
         widget.destroy()
@@ -173,4 +173,14 @@ def bells_menu(W, go_back):
         activeforeground='OrangeRed2',
         font=('Arial', 20, 'bold'),
         command=lambda: go_back(W))
-    back_btn.pack(side='left', padx=10, pady=10)#
+    back_btn.pack(side='left', padx=10, pady=10)
+    
+    
+    next_btn = Button(bottom_frame, text='Siguiente',
+                    bg='White', fg='black',
+                    relief='raised',
+                    activebackground='DodgerBlue2',
+                    activeforeground='OrangeRed2',
+                    font=('Arial', 20, 'bold'),
+                    command=lambda: go_next(W))
+    next_btn.pack(side='right' , padx= 10, pady=10)

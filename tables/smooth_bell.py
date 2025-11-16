@@ -1,4 +1,4 @@
-def get_co(r_D):
+def get_co_smooth_bell(r_D):
     tabla = {
         0.00: 1.00,
         0.01: 0.87,
@@ -41,7 +41,7 @@ def get_co(r_D):
 r_bell = 2
 D_bell = 5
 r_bell__D_bell = r_bell / D_bell
-result = get_co(r_bell__D_bell)
+result = get_co_smooth_bell(r_bell__D_bell)
 
 
 

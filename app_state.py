@@ -17,10 +17,13 @@ class AppState:
         self.rho = None
         self.diameter = None
         self.S = None
-        self.selected_bell = None
+        self.selected_bell = None 
         self.selected_elbow = None
         self.selected_transition = None
         self.selected_junction = None
         self.selected_damper = None
+        self.r_bell = None 
+        self.D_bell = None  
+        self.Co_bell = None 
 
 app_state = AppState()

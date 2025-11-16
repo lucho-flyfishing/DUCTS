@@ -20,6 +20,7 @@ from menus.damper_menu import damper_menu
 from menus.diffusers_menu import diffusers_menu
 from menus.transitions_menu import transitions_menu
 from menus.junctions_menu import junctions_menu
+from menus.bells_specs_menu import bells_specs_menu
 
 
 
@@ -50,6 +51,10 @@ def main():
     app_state.selected_transition = IntVar(W)
     app_state.selected_junction = IntVar(W)
     app_state.selected_damper = IntVar(W)
+    app_state.r_bell = IntVar(W)
+    app_state.D_bell = IntVar(W)
+    app_state.Co_bell = IntVar(W)
+
     
     
     # navigation
@@ -109,8 +114,10 @@ def main():
     
     
     def go_to_bells_menu(W):
-        bells_menu(W, go_back=go_to_accesories_menu)
+        bells_menu(W, go_back=go_to_accesories_menu, go_next=go_to_bell_specs_menu)
     
+    def go_to_bell_specs_menu(W):
+        bells_specs_menu(W, go_back=go_to_bells_menu)
     
     def go_to_elbows_menu(W):
         elbows_menu(W, go_back=go_to_accesories_menu)
@@ -130,6 +137,9 @@ def main():
     
     def go_to_junctions_menu(W):
         junctions_menu(W, go_back=go_to_accesories_menu)
+    
+    
+    
     
     
     

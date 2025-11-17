@@ -47,13 +47,13 @@ _interp_rect = interp1d(
 #  PUBLIC FUNCTION
 # ============================================================
 
-def get_co_hood_tapered_bell(theta_deg, shape):
+def get_co_hood_tapered_bell(theta, shape):
     """
     Returns Co for a tapered hood (round or rectangular).
 
     Parameters
     ----------
-    theta_deg : float
+    theta : float
         Hood angle θ in degrees.
 
     shape : str
@@ -68,10 +68,10 @@ def get_co_hood_tapered_bell(theta_deg, shape):
     shape = shape.lower().strip()
 
     if shape == "round":
-        return float(_interp_round(theta_deg))
+        return float(_interp_round(theta))
 
     elif shape in ("rect", "rectangular", "square"):
-        return float(_interp_rect(theta_deg))
+        return float(_interp_rect(theta))
 
     else:
         raise ValueError(

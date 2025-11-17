@@ -1,6 +1,6 @@
 
 
-def get_co_smooth_wall_bell(r_over_D: float) -> float:
+def get_co_smooth_wall_bell(r_D: float) -> float:
     
     
     table = [
@@ -19,11 +19,11 @@ def get_co_smooth_wall_bell(r_over_D: float) -> float:
     ]
     
     
-    if r_over_D <= table[0][0]:
+    if r_D <= table[0][0]:
         return table[0][1]
     
     
-    if r_over_D >= table[-1][0]:
+    if r_D >= table[-1][0]:
         return table[-1][1]
     
     
@@ -32,9 +32,9 @@ def get_co_smooth_wall_bell(r_over_D: float) -> float:
         x1, y1 = table[i + 1]
         
         
-        if x0 <= r_over_D <= x1:
+        if x0 <= r_D <= x1:
             
-            t = (r_over_D - x0) / (x1 - x0)
+            t = (r_D - x0) / (x1 - x0)
             return y0 + t * (y1 - y0)
         
         

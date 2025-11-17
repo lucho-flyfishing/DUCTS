@@ -43,21 +43,21 @@ interpolator = RegularGridInterpolator(
 # Main function
 # --------------------------
 
-def get_co_round_exit_bell(a_ratio: float, theta_deg: float) -> float:
+def get_co_round_exit_bell(A1_A0: float, theta: float) -> float:
     """
     Interpolate Co for a ROUND EXIT BELL.
 
     Parameters:
-        a_ratio (float): A1/A0 ratio.
-        theta_deg (float): Divergence angle θ in degrees.
+        A1/A0 (float): A1/A0 ratio.
+        theta (float): Divergence angle θ in degrees.
 
     Returns:
         float: Co value (interpolated).
     """
 
     # Clamp to table limits
-    a_clamped = np.clip(a_ratio, A_RATIO.min(), A_RATIO.max())
-    t_clamped = np.clip(theta_deg, THETA_DEG.min(), THETA_DEG.max())
+    a_clamped = np.clip(A1_A0, A_RATIO.min(), A_RATIO.max())
+    t_clamped = np.clip(theta, THETA_DEG.min(), THETA_DEG.max())
 
     point = np.array([a_clamped, t_clamped])
 

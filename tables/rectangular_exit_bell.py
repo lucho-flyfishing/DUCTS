@@ -26,15 +26,15 @@ _interpolator = RegularGridInterpolator(
     fill_value=None
 )
 
-def get_co_rectangular_exit_bell(A1_over_A0, theta_deg):
+def get_co_rectangular_exit_bell(A1_A0, theta):
     """
     Returns the Co value for a Rectangular Exit Bell (Two Sides Parallel Diverging).
 
     Parameters
     ----------
-    A1_over_A0 : float
+    A1_A0 : float
         Ratio A1/A0.
-    theta_deg : float
+    theta : float
         Divergence angle in degrees.
 
     Returns
@@ -44,8 +44,8 @@ def get_co_rectangular_exit_bell(A1_over_A0, theta_deg):
     """
 
     # Clamp values outside table range
-    A1_clamped = np.clip(A1_over_A0, A1_over_A0_values[0], A1_over_A0_values[-1])
-    theta_clamped = np.clip(theta_deg, theta_values[0], theta_values[-1])
+    A1_clamped = np.clip(A1_A0, A1_over_A0_values[0], A1_over_A0_values[-1])
+    theta_clamped = np.clip(theta, theta_values[0], theta_values[-1])
 
     Co = _interpolator([[A1_clamped, theta_clamped]])[0]
     return float(Co)

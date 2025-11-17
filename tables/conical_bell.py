@@ -26,8 +26,8 @@ interpolator = RegularGridInterpolator(
     fill_value=None
 )
 
-def get_co_conical_bell(LD_value, angle_value):
+def get_co_conical_bell(L_D, theta):
     
     
-    point = np.array([[LD_value, angle_value]])
+    point = np.array([[L_D, theta]])
     return float(interpolator(point)[0])

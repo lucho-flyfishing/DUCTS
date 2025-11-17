@@ -29,14 +29,14 @@ _co_interpolator = RegularGridInterpolator(
 )
 
 
-def get_co_intake_hood_bell(theta_deg: float, L_over_D: float) -> float:
+def get_co_intake_hood_bell(theta: float, L_D: float) -> float:
     """
     Obtiene C₀ para un intake_hood_bell usando interpolación bilineal
     Parámetros:
-        theta_deg (float): ángulo en grados
-        L_over_D (float): relación L/D
+        theta (float): ángulo en grados
+        L_D (float): relación L/D
     Retorna:
         float: valor interpolado de C₀
     """
-    point = np.array([[theta_deg, L_over_D]])
+    point = np.array([[theta, L_D]])
     return float(_co_interpolator(point))

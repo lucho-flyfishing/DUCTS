@@ -13,10 +13,10 @@ _co_interp = interp1d(
     fill_value="extrapolate"
 )
 
-def get_co_rectangular_exit_wall_bell(L_over_H: float) -> float:
+def get_co_rectangular_exit_wall_bell(L_H: float) -> float:
     """
     Returns interpolated Co for:
     - Exit, Rectangular, With Wall, Two Sides Parallel, Symmetrical, Diverging
     Based on Idelchik / ASHRAE diagram 5-10.
     """
-    return float(_co_interp(L_over_H))
+    return float(_co_interp(L_H))

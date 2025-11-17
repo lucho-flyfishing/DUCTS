@@ -41,7 +41,7 @@ interpolator = RegularGridInterpolator(
 # ---------------------------------------------------
 # FUNCIÓN PRINCIPAL
 # ---------------------------------------------------
-def get_co_conical_wall_bell(L_over_D: float, theta_deg: float) -> float:
+def get_co_conical_wall_bell(L_D: float, theta: float) -> float:
     """
     Calcula el coeficiente Co para una campana cónica con pared (Conical Wall Bellmouth)
     usando interpolación bilineal basada en la tabla ASHRAE.
@@ -56,7 +56,7 @@ def get_co_conical_wall_bell(L_over_D: float, theta_deg: float) -> float:
         float : valor interpolado de Co
     """
 
-    point = np.array([[L_over_D, theta_deg]])
+    point = np.array([[L_D, theta]])
     Co = interpolator(point)[0]
 
     return float(Co)

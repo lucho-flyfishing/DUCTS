@@ -20,14 +20,14 @@ _co_interpolator = interp1d(
     fill_value=(Co_values[0], Co_values[-1])
 )
 
-def get_co_round_exit_wall_bell(L_over_D):
+def get_co_round_exit_wall_bell(L_D):
     """
     Returns the Co value for a Round Exit with End Wall Transition.
     Interpolates based on L/D.
 
     Parameters
     ----------
-    L_over_D : float
+    L_D : float
         The L/D ratio.
 
     Returns
@@ -35,4 +35,4 @@ def get_co_round_exit_wall_bell(L_over_D):
     float
         Interpolated Co value.
     """
-    return float(_co_interpolator(L_over_D))
+    return float(_co_interpolator(L_D))

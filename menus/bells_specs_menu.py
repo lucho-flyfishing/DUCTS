@@ -1,171 +1,125 @@
-from tkinter import Button, Label, Frame, Entry
+from tkinter import Label, Button, Frame, Entry
 from app_state import app_state
-from tables.smooth_bell import get_co_smooth_bell
+import importlib
 
 
+def bell_specs_menu(W, go_back):
 
-def bells_specs_menu(W, go_back):
-    
+    # --- LIMPIAR VENTANA ---
     for widget in W.winfo_children():
         widget.destroy()
-        
-        
+
+    # --- MAPA ARCHIVOS ---
+    BELL_FILE_MAP = {
+        1: "smooth_bell",
+        2: "smooth_wall_bell",
+        3: "conical_bell",
+        4: "conical_wall_bell",
+        5: "round_exit_bell",
+        6: "round_exit_wall_bell",
+        7: "rectangular_exit_bell",
+        8: "rectangular_exit_wall_bell",
+        9: "intake_hood_bell",
+        10: "hood_tapered_bell"
+    }
+
+    # --- ETIQUETAS DE PARÁMETROS ---
+    PARAM_LABELS = {
+        "smooth_bell": ["Radio de entrada (r)", "Diámetro hidráulico (d)"],
+        "smooth_wall_bell": ["Radio de entrada (r)", "Diámetro hidráulico (d)"],
+        "conical_bell": ["Diámetro menor (d1)", "Diámetro mayor (d2)", "Ángulo (°)"],
+        "conical_wall_bell": ["Diámetro menor (d1)", "Diámetro mayor (d2)", "Ángulo (°)"],
+        "round_exit_bell": ["Radio de salida (r)", "Diámetro (d)"],
+        "round_exit_wall_bell": ["Radio de salida (r)", "Diámetro (d)"],
+        "rectangular_exit_bell": ["Lado mayor (a)", "Lado menor (b)"],
+        "rectangular_exit_wall_bell": ["Lado mayor (a)", "Lado menor (b)"],
+        "intake_hood_bell": ["Altura (H)", "Ancho (W)", "Profundidad (L)"],
+        "hood_tapered_bell": ["Altura (H)", "Ancho (W)", "Longitud del Taper (L)"]
+    }
+
+    selected = app_state.selected_bell.get()
+    bell_file = BELL_FILE_MAP.get(selected)
+
+    if bell_file is None:
+        return
+
+    # --- FRAMES ---
     top_frame = Frame(W, bg='gray5')
     top_frame.pack(side='top', fill='x')
-    
-    
-    main_label = Label(
+
+    Label(
         top_frame,
-        text='Introduzca los valores de la campana',
-        font=('Arial', 30),
+        text="Introduzca los valores del accesorio",
+        font=('Arial', 28),
         bg='gray5',
         fg='gray60'
-    )
-    main_label.pack(side='top', pady=1)
-    
-    
+    ).pack(pady=10)
+
     middle_frame = Frame(W, bg='gray5')
-    middle_frame.pack(expand=True, fill='both')
-    
-    
-    if app_state.selected_bell.get() == 1: 
-        
-        
-        r_label = Label(
-            middle_frame, text="Radio de entrada r (m):",
-            font=("Arial", 20), bg='gray5', fg='gray90'
-        )
-        r_label.pack(pady=5)
-        
-        r_entry = Entry(
-            middle_frame,
-            bg='white', fg='gray5',
-            relief='solid', bd=2,
-            highlightthickness=2,
-            highlightbackground='black',
-            font=('Arial', 15)
-        )
-        r_entry.pack(pady=5)
+    middle_frame.pack(expand=True)
 
-        D_label = Label(
-            middle_frame, text="Diámetro hidráulico D (m):",
-            font=("Arial", 20), bg='gray5', fg='gray90'
-        )
-        D_label.pack(pady=5)
+    # --- PARÁMETROS ---
+    entries = []
+    for label in PARAM_LABELS[bell_file]:
+        lbl = Label(middle_frame, text=label + ":", font=("Arial", 20), bg='gray5', fg='gray90')
+        lbl.pack(pady=5)
 
-        D_entry = Entry(
-            middle_frame,                             
-            bg='white', fg='gray5',
-            relief='solid', bd=2,
-            highlightthickness=2,
-            highlightbackground='black',
-            font=('Arial', 15)
-        )
-        D_entry.pack(pady=5)
-        
-        
-        fit_code_label = Label(
-            middle_frame, text="Elija un nombre o código para el accesorio:",
-            font=("Arial", 20), bg='gray5', fg='gray90'
-        )
-        fit_code_label.pack(pady=5)
-        
-        
-        fit_code_entry = Entry(
-            middle_frame,                             
-            bg='white', fg='gray5',
-            relief='solid', bd=2,
-            highlightthickness=2,
-            highlightbackground='black',
-            font=('Arial', 15)
-        )
-        fit_code_entry.pack(pady=5)
-        
-        
-        def save_bell_values():
-            try:
-                app_state.r_bell = float(r_entry.get())
-                app_state.D_bell = float(D_entry.get())
-                
-                r_over_D = app_state.r_bell / app_state.D_bell
-                
-                app_state.Co_bell = get_co_smooth_bell(r_over_D)
-                
-                confirm_label.config(
-                    text=f"C₀ = {app_state.Co_bell:.3f} calculado correctamente",
-                    fg="lightgreen"
-                )
+        entry = Entry(middle_frame, bg='white', fg='gray5',
+                    relief='solid', bd=2, highlightthickness=2,
+                    highlightbackground='black', font=('Arial', 16))
+        entry.pack(pady=5)
 
-            except ZeroDivisionError:
-                confirm_label.config(
-                    text="Error: D no puede ser 0.",
-                    fg="red"
-                )
-            except ValueError:
-                confirm_label.config(
-                    text="Error: introduzca valores numéricos válidos.",
-                    fg="red"
-                )
+        entries.append(entry)
 
+    confirm_label = Label(middle_frame, text="", font=("Arial", 18), bg="gray5")
+    confirm_label.pack(pady=10)
 
-        
-        def save_fitting():
-            code = fit_code_entry.get().strip()
+    # --- CALCULAR ---
+    def calculate_and_save():
+        try:
+            params = [float(e.get()) for e in entries]
 
-            if code == "":
-                confirm_label.config(
-                    text="Debe ingresar un nombre/código para guardar el accesorio.",
-                    fg="red"
-                )
-                return
+            module = importlib.import_module(f"tables.{bell_file}")
+            func = getattr(module, f"get_co_{bell_file}")
+            Co_value = func(*params)
 
-            
+            # Guardar accesorio
+            if not hasattr(app_state, "fittings"):
+                app_state.fittings = []
+
             app_state.fittings.append({
-                "type": "smooth_bell",
-                "code": code,
-                "r": app_state.r_bell,
-                "D": app_state.D_bell,
-                "r_over_D": app_state.r_bell / app_state.D_bell,
-                "Co": app_state.Co_bell
+                "type": bell_file,
+                "params": params,
+                "Co": Co_value
             })
 
             confirm_label.config(
-                text=f"Accesorio '{code}' guardado en app_state.fittings",
-                fg="lightblue"
+                text=f"C₀ = {Co_value:.3f} guardado correctamente",
+                fg="lightgreen"
             )
 
+        except ValueError:
+            confirm_label.config(
+                text="Error: ingrese valores numéricos válidos.",
+                fg="red"
+            )
 
-        
-        save_button = Button(
-            middle_frame,
-            text="Guardar Valores",
-            bg='white', fg='black',
-            relief='raised',
-            activebackground='DodgerBlue2',
-            activeforeground='OrangeRed2',
-            font=('Arial', 22, 'bold'),
-            command=lambda: (save_bell_values(), save_fitting())
-        )
-        save_button.pack(pady=20)
+    Button(
+        middle_frame, text="Guardar Valores",
+        bg='white', fg='black',
+        relief='raised',
+        activebackground='DodgerBlue2',
+        activeforeground='OrangeRed2',
+        font=('Arial', 22, 'bold'),
+        command=calculate_and_save
+    ).pack(pady=20)
 
-
-        confirm_label = Label(
-            middle_frame,
-            text="", 
-            font=("Arial", 18),
-            bg="gray5",
-            fg="lightgreen"
-        )
-        confirm_label.pack(pady=10)
-        
-        
+    # --- NAVEGACIÓN (ESTÁNDAR) ---
     bottom_frame = Frame(W, bg='gray5')
     bottom_frame.pack(side='bottom', fill='x')
-    
-    
+
     back_btn = Button(
-        bottom_frame,
-        text='Regresar',
+        bottom_frame, text='Regresar',
         bg='white', fg='black',
         relief='raised',
         activebackground='DodgerBlue2',
@@ -174,3 +128,4 @@ def bells_specs_menu(W, go_back):
         command=lambda: go_back(W)
     )
     back_btn.pack(side='left', padx=10, pady=10)
+

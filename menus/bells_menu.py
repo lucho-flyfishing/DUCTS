@@ -48,7 +48,7 @@ def bells_menu(W, go_back, go_next):
                 command=on_select, **radio_style).grid(row=1, column=0, pady=10)
     
     
-    smooth_img = resources.load_image("smooth.png", 
+    smooth_img = resources.load_image("smooth_bell.png", 
                                     size=(300, 200))  
     smooth_img_lbl = Label(middle_frame, image=smooth_img, bg='gray5')
     smooth_img_lbl.image = smooth_img
@@ -60,7 +60,7 @@ def bells_menu(W, go_back, go_next):
                 command=on_select, **radio_style).grid(row=1, column=1, pady=5)
     
     
-    smooth_wall_img = resources.load_image("smooth_wall.png",
+    smooth_wall_img = resources.load_image("smooth_wall_bell.png",
                                     size=(300, 200))  
     smooth_wall_img_lbl = Label(middle_frame, image=smooth_wall_img, bg='gray5')
     smooth_wall_img_lbl.image = smooth_wall_img
@@ -72,7 +72,7 @@ def bells_menu(W, go_back, go_next):
                 command=on_select, **radio_style).grid(row=1, column=2, pady=5)
     
     
-    conical_img = resources.load_image("conical.png",
+    conical_img = resources.load_image("conical_bell.png",
                                     size=(350, 200))
     conical_img_lbl = Label(middle_frame, image=conical_img, bg='gray5')
     conical_img_lbl.image = conical_img
@@ -84,7 +84,7 @@ def bells_menu(W, go_back, go_next):
                 command=on_select, **radio_style).grid(row=1, column=3, pady=5)
     
     
-    conical_wall_img = resources.load_image("conical_wall.png",
+    conical_wall_img = resources.load_image("conical_wall_bell.png",
                                     size=(350, 200))
     conical_wall_img_lbl = Label(middle_frame, image=conical_wall_img, bg='gray5')
     conical_wall_img_lbl.image = conical_wall_img
@@ -96,7 +96,7 @@ def bells_menu(W, go_back, go_next):
                 command=on_select, **radio_style).grid(row=3, column=0, pady=5)
     
     
-    exit_round_img = resources.load_image("exit_round.png",
+    exit_round_img = resources.load_image("round_exit_bell.png",
                                     size=(300, 200))
     exit_round_img_lbl = Label(middle_frame, image=exit_round_img, bg='gray5')
     exit_round_img_lbl.image = exit_round_img
@@ -107,7 +107,7 @@ def bells_menu(W, go_back, go_next):
                 command=on_select, **radio_style).grid(row=3, column=1, pady=5)
     
     
-    exit_round_wall_img = resources.load_image("exit_round_wall.png",
+    exit_round_wall_img = resources.load_image("round_exit_wall_bell.png",
                                     size=(300, 200))
     exit_round_wall_img_lbl = Label(middle_frame, image=exit_round_wall_img, bg='gray5')
     exit_round_wall_img_lbl.image = exit_round_wall_img
@@ -119,7 +119,7 @@ def bells_menu(W, go_back, go_next):
                 command=on_select, **radio_style).grid(row=3, column=2, pady=5)
     
     
-    exit_rect_img = resources.load_image("exit_rectangular.png",
+    exit_rect_img = resources.load_image("rectangular_exit_bell.png",
                                     size=(350, 200))
     exit_rect_img_lbl = Label(middle_frame, image=exit_rect_img, bg='gray5')
     exit_rect_img_lbl.image = exit_rect_img
@@ -131,7 +131,7 @@ def bells_menu(W, go_back, go_next):
                 command=on_select, **radio_style).grid(row=3, column=3, pady=5)
     
     
-    exit_rect_wall_img = resources.load_image("exit_rectangular_wall.png",
+    exit_rect_wall_img = resources.load_image("rectangular_exit_wall_bell.png",
                                     size=(350, 200))
     exit_rect_wall_img_lbl = Label(middle_frame, image=exit_rect_wall_img, bg='gray5')
     exit_rect_wall_img_lbl.image = exit_rect_wall_img
@@ -143,7 +143,7 @@ def bells_menu(W, go_back, go_next):
                 command=on_select, **radio_style).grid(row=5, column=0, pady=5)
     
     
-    intake_hood_img = resources.load_image("intake_hood.png",
+    intake_hood_img = resources.load_image("intake_hood_bell.png",
                                     size=(300, 200))
     intake_hood_img_lbl = Label(middle_frame, image=intake_hood_img, bg='gray5')
     intake_hood_img_lbl.image = intake_hood_img
@@ -155,7 +155,7 @@ def bells_menu(W, go_back, go_next):
                 command=on_select, **radio_style).grid(row=5, column=1, pady=5)
     
     
-    hood_tapered_img = resources.load_image("hood_tapered.png",
+    hood_tapered_img = resources.load_image("hood_tapered_bell.png",
                                     size=(300, 200))
     hood_tapered_img_lbl = Label(middle_frame, image=hood_tapered_img, bg='gray5')
     hood_tapered_img_lbl.image = hood_tapered_img

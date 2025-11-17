@@ -20,7 +20,7 @@ from menus.damper_menu import damper_menu
 from menus.diffusers_menu import diffusers_menu
 from menus.transitions_menu import transitions_menu
 from menus.junctions_menu import junctions_menu
-from menus.bells_specs_menu import bell_specs_menu
+from menus.bells_specs_menu import bells_specs_menu
 
 
 
@@ -114,10 +114,10 @@ def main():
     
     
     def go_to_bells_menu(W):
-        bells_menu(W, go_back=go_to_accesories_menu, go_next=go_to_bell_specs_menu)
+        bells_menu(W, go_back=go_to_accesories_menu, go_next=go_to_bells_specs_menu)
     
-    def go_to_bell_specs_menu(W):
-        bell_specs_menu(W, go_back=go_to_bells_menu)
+    def go_to_bells_specs_menu(W):
+        bells_specs_menu(W, go_back=go_to_bells_menu)
     
     def go_to_elbows_menu(W):
         elbows_menu(W, go_back=go_to_accesories_menu)

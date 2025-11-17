@@ -1,131 +1,117 @@
-from tkinter import Label, Button, Frame, Entry
-from app_state import app_state
+# bell_specs_menu.py
+
+from tkinter import Label, Button, Entry, Frame, LEFT, RIGHT, BOTH, X, TOP
 import importlib
+import inspect
+from app_state import app_state
 
 
-def bell_specs_menu(W, go_back):
+# Mapas del tipo de campana a su archivo correspondiente
+BELL_FILE_MAP = {
+    1: "smooth_bell",
+    2: "smooth_wall_bell",
+    3: "conical_bell",
+    4: "conical_wall_bell",
+    5: "round_exit_bell",
+    6: "round_exit_wall_bell",
+    7: "rectangular_exit_bell",
+    8: "rectangular_exit_wall_bell",
+    9: "intake_hood_bell",
+    10: "hood_tapered_bell",
+}
 
-    # --- LIMPIAR VENTANA ---
+
+def bells_specs_menu(W, go_back):
+    # Limpia la ventana
     for widget in W.winfo_children():
         widget.destroy()
 
-    # --- MAPA ARCHIVOS ---
-    BELL_FILE_MAP = {
-        1: "smooth_bell",
-        2: "smooth_wall_bell",
-        3: "conical_bell",
-        4: "conical_wall_bell",
-        5: "round_exit_bell",
-        6: "round_exit_wall_bell",
-        7: "rectangular_exit_bell",
-        8: "rectangular_exit_wall_bell",
-        9: "intake_hood_bell",
-        10: "hood_tapered_bell"
-    }
+        selected_bell_value = app_state.selected_bell.get()
 
-    # --- ETIQUETAS DE PARÁMETROS ---
-    PARAM_LABELS = {
-        "smooth_bell": ["Radio de entrada (r)", "Diámetro hidráulico (d)"],
-        "smooth_wall_bell": ["Radio de entrada (r)", "Diámetro hidráulico (d)"],
-        "conical_bell": ["Diámetro menor (d1)", "Diámetro mayor (d2)", "Ángulo (°)"],
-        "conical_wall_bell": ["Diámetro menor (d1)", "Diámetro mayor (d2)", "Ángulo (°)"],
-        "round_exit_bell": ["Radio de salida (r)", "Diámetro (d)"],
-        "round_exit_wall_bell": ["Radio de salida (r)", "Diámetro (d)"],
-        "rectangular_exit_bell": ["Lado mayor (a)", "Lado menor (b)"],
-        "rectangular_exit_wall_bell": ["Lado mayor (a)", "Lado menor (b)"],
-        "intake_hood_bell": ["Altura (H)", "Ancho (W)", "Profundidad (L)"],
-        "hood_tapered_bell": ["Altura (H)", "Ancho (W)", "Longitud del Taper (L)"]
-    }
-
-    selected = app_state.selected_bell.get()
-    bell_file = BELL_FILE_MAP.get(selected)
-
-    if bell_file is None:
+        filename = BELL_FILE_MAP.get(selected_bell_value, None)
+    if filename is None:
+        Label(W, text="Error: Tipo de campana no válido", font=("Arial", 20, "bold")).pack()
         return
 
-    # --- FRAMES ---
-    top_frame = Frame(W, bg='gray5')
-    top_frame.pack(side='top', fill='x')
+    # Cargar módulo dinámico
+    module = importlib.import_module(f"tables.{filename}")
 
-    Label(
-        top_frame,
-        text="Introduzca los valores del accesorio",
-        font=('Arial', 28),
-        bg='gray5',
-        fg='gray60'
-    ).pack(pady=10)
+    # Obtener la función get_co_xxx
+    func_name = f"get_co_{filename}"
+    calc_func = getattr(module, func_name)
 
-    middle_frame = Frame(W, bg='gray5')
-    middle_frame.pack(expand=True)
+    # Identificar cuantos parámetros requiere la función
+    sig = inspect.signature(calc_func)
+    param_names = list(sig.parameters.keys())
+    num_params = len(param_names)
 
-    # --- PARÁMETROS ---
+    # Crear frame superior
+    top_frame = Frame(W)
+    top_frame.pack(side=TOP, fill=X, pady=20)
+
+    Label(top_frame, text=f"Campana seleccionada: {filename.replace('_',' ').title()}",
+        font=("Arial", 24, "bold")).pack()
+
+    Label(top_frame, text="Ingrese los valores para calcular Co",
+        font=("Arial", 18)).pack(pady=10)
+
+    # Contenedor para parámetros dinámicos
     entries = []
-    for label in PARAM_LABELS[bell_file]:
-        lbl = Label(middle_frame, text=label + ":", font=("Arial", 20), bg='gray5', fg='gray90')
-        lbl.pack(pady=5)
+    params_frame = Frame(W)
+    params_frame.pack(pady=20)
 
-        entry = Entry(middle_frame, bg='white', fg='gray5',
-                    relief='solid', bd=2, highlightthickness=2,
-                    highlightbackground='black', font=('Arial', 16))
-        entry.pack(pady=5)
+    # Crear un entry para cada parámetro requerido por la función
+    for pname in param_names:
+        row = Frame(params_frame)
+        row.pack(fill=X, pady=5)
+
+        Label(row, text=pname.replace("_", " ").title() + ":", 
+            font=("Arial", 16)).pack(side=LEFT, padx=10)
+
+        entry = Entry(row, font=("Arial", 16), width=10)
+        entry.pack(side=LEFT, padx=10)
 
         entries.append(entry)
 
-    confirm_label = Label(middle_frame, text="", font=("Arial", 18), bg="gray5")
-    confirm_label.pack(pady=10)
-
-    # --- CALCULAR ---
-    def calculate_and_save():
+    # Función para guardar valores y calcular Co
+    def save_values_and_compute():
         try:
-            params = [float(e.get()) for e in entries]
+            values = [float(e.get()) for e in entries]
 
-            module = importlib.import_module(f"tables.{bell_file}")
-            func = getattr(module, f"get_co_{bell_file}")
-            Co_value = func(*params)
+            if len(values) != num_params:
+                raise ValueError(
+                    f"La función requiere {num_params} valores, pero ingresaste {len(values)}"
+                )
 
-            # Guardar accesorio
-            if not hasattr(app_state, "fittings"):
-                app_state.fittings = []
+            Co = calc_func(*values)
 
-            app_state.fittings.append({
-                "type": bell_file,
-                "params": params,
-                "Co": Co_value
-            })
+            # Guardar resultado en lista global
+            app_state.fittings.append(Co)
 
-            confirm_label.config(
-                text=f"C₀ = {Co_value:.3f} guardado correctamente",
-                fg="lightgreen"
-            )
+            Label(W, text=f"Co calculado = {Co:.4f}",
+                font=("Arial", 18, "bold"), fg="blue").pack(pady=10)
 
-        except ValueError:
-            confirm_label.config(
-                text="Error: ingrese valores numéricos válidos.",
-                fg="red"
-            )
+        except Exception as e:
+            Label(W, text=f"Error: {e}", 
+                font=("Arial", 16), fg="red").pack(pady=10)
 
-    Button(
-        middle_frame, text="Guardar Valores",
-        bg='white', fg='black',
-        relief='raised',
-        activebackground='DodgerBlue2',
-        activeforeground='OrangeRed2',
-        font=('Arial', 22, 'bold'),
-        command=calculate_and_save
-    ).pack(pady=20)
+    # Botón para guardar valores
+    Button(W, text="Guardar valores",
+        bg="DodgerBlue2", fg="white",
+        font=("Arial", 18, "bold"),
+        command=save_values_and_compute).pack(pady=20)
 
-    # --- NAVEGACIÓN (ESTÁNDAR) ---
-    bottom_frame = Frame(W, bg='gray5')
-    bottom_frame.pack(side='bottom', fill='x')
+    # Frame inferior para navegación
+    bottom_frame = Frame(W)
+    bottom_frame.pack(side=TOP, fill=X, pady=20)
 
-    back_btn = Button(
-        bottom_frame, text='Regresar',
-        bg='white', fg='black',
-        relief='raised',
-        activebackground='DodgerBlue2',
-        activeforeground='OrangeRed2',
-        font=('Arial', 20, 'bold'),
-        command=lambda: go_back(W)
-    )
-    back_btn.pack(side='left', padx=10, pady=10)
+    # Botón Regresar
+    back_btn = Button(bottom_frame, text="Regresar",
+                    bg="white", fg="black",
+                    relief="raised",
+                    activebackground="DodgerBlue2",
+                    activeforeground="OrangeRed2",
+                    font=("Arial", 20, "bold"),
+                    command=lambda: go_back(W))
+    back_btn.pack(side=LEFT, padx=10, pady=10)
 

@@ -44,6 +44,7 @@ def main():
     app_state.viscosity = StringVar(W)
     app_state.P = StringVar(W)
     app_state.rho = StringVar(W)
+    app_state.Re = StringVar(W)
     app_state.diameter = StringVar(W)
     app_state.S = StringVar(W)
     app_state.selected_bell = IntVar(W)

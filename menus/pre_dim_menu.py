@@ -180,6 +180,7 @@ def pre_dim_menu(W, go_back, go_next):
             
             
     def save_diameter_S():
+        app_state.Re = Re
         app_state.diameter = diameter
         app_state.S = S
     
@@ -189,6 +190,7 @@ def pre_dim_menu(W, go_back, go_next):
     print("Viscosidad", app_state.viscosity)
     print("Presion", app_state.P)
     print("Densidad", app_state.rho)
+    print("Reynolds", app_state.Re) 
     print("Diametro ducto principal:", diameter)
     print("Perdida de presion por longitud:", S)
     

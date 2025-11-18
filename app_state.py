@@ -15,6 +15,7 @@ class AppState:
         self.viscosity = None
         self.P = None
         self.rho = None
+        self.Re = None
         self.diameter = None
         self.S = None
         self.selected_bell = None 

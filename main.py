@@ -17,10 +17,10 @@ from menus.rectangular_eq_menu import rectangular_eq_menu
 from menus.bells_menu import bells_menu
 from menus.elbows_menu import elbows_menu
 from menus.damper_menu import damper_menu   
-from menus.diffusers_menu import diffusers_menu
 from menus.transitions_menu import transitions_menu
 from menus.junctions_menu import junctions_menu
 from menus.bells_specs_menu import bells_specs_menu
+from menus.elbows_specs_menu import elbows_specs_menu 
 
 
 
@@ -110,8 +110,7 @@ def main():
     def go_to_accesories_menu(W):
         accesories_menu(W, go_back=go_to_corrections_menu, go_bells_menu=go_to_bells_menu,
                         go_elbows_menu=go_to_elbows_menu, go_damper_menu=go_to_damper_menu,
-                        go_diffusers_menu=go_to_diffusers_menu, go_transitions_menu=go_to_transitions_menu,
-                        go_junctions_menu=go_to_junctions_menu)
+                        go_transitions_menu=go_to_transitions_menu, go_junctions_menu=go_to_junctions_menu)
     
     
     def go_to_bells_menu(W):
@@ -120,16 +119,16 @@ def main():
     def go_to_bells_specs_menu(W):
         bells_specs_menu(W, go_back=go_to_bells_menu)
     
+    
     def go_to_elbows_menu(W):
-        elbows_menu(W, go_back=go_to_accesories_menu)
+        elbows_menu(W, go_back=go_to_accesories_menu, go_next=go_to_elbows_specs_menu)
+        
+    def go_to_elbows_specs_menu(W):
+        elbows_specs_menu(W, go_back=go_to_elbows_menu)
     
     
     def go_to_damper_menu(W):
         damper_menu(W, go_back=go_to_accesories_menu)
-    
-    
-    def go_to_diffusers_menu(W):
-        diffusers_menu(W, go_back=go_to_accesories_menu)
     
     
     def go_to_transitions_menu(W):

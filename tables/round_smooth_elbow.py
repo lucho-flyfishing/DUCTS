@@ -17,7 +17,7 @@ def linear_interp(x, xp, fp):
     return fp[-1]
 
 
-def get_co_smooth_r_elbow(r_D, theta):
+def get_co_round_smooth_elbow(r_D, theta):
     """
     Calcula Co para un codo smooth radius redondo.
     Parámetros:

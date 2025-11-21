@@ -46,56 +46,89 @@ def bells_specs_menu(W, go_back):
     num_params = len(param_names)
 
     # Frame superior
-    top_frame = Frame(W)
+    top_frame = Frame(W, bg='gray5')
     top_frame.pack(side=TOP, fill=X, pady=20)
 
     Label(
         top_frame,
+        bg='gray5',
         text=f"Campana seleccionada: {filename.replace('_',' ').title()}",
         font=("Arial", 24, "bold")
     ).pack()
 
     Label(
         top_frame,
+        bg='gray5',
         text="Ingrese los valores para calcular Co",
         font=("Arial", 18)
     ).pack(pady=10)
 
     # Frame de parámetros dinámicos
     entries = []
-    params_frame = Frame(W)
+    params_frame = Frame(W, bg='gray5')
     params_frame.pack(pady=20)
 
     # Crear dinámicamente las entradas según la función
     for pname in param_names:
-        row = Frame(params_frame)
+        row = Frame(params_frame, bg='gray5')
         row.pack(fill=X, pady=5)
 
         Label(
             row,
             text=pname.replace("_", "/") + ":",
-            font=("Arial", 16)
+            font=("Arial", 20),
+            bg='gray5', fg='OrangeRed2',
         ).pack(side=LEFT, padx=10)
 
-        entry = Entry(row, font=("Arial", 16), width=10)
+        # ---- FIXED ENTRY SETTINGS ----
+        entry = Entry(
+            row,
+            font=("Arial", 20),
+            bg='white',
+            fg='black',
+            relief='solid',
+            bd=2,
+            highlightthickness=2,
+            highlightbackground='white',      # unfocused border visible
+            highlightcolor='DeepSkyBlue2',     # focused border visible
+            insertbackground='black'           # cursor visible
+        )
         entry.pack(side=LEFT, padx=10)
 
         entries.append(entry)
 
+    # Force visibility: focus first entry
+    if entries:
+        W.after(100, lambda: entries[0].focus_set())
+
     # -------------------------
     # Entry EXTRA → Nombre del fitting
     # -------------------------
-    name_row = Frame(W)
+    name_row = Frame(W, bg='gray5')
     name_row.pack(fill=X, pady=10)
 
     Label(
         name_row,
         text="Nombre / etiqueta del accesorio:",
-        font=("Arial", 16)
-    ).pack(side=LEFT, padx=10)
+        font=("Arial", 20),
+        bg='gray5'
+    ).pack(padx=10)
 
-    name_entry = Entry(name_row, font=("Arial", 16), width=20)
-    name_entry.pack(side=LEFT, padx=10)
+    # ---- FIXED NAME ENTRY SETTINGS ----
+    name_entry = Entry(
+        name_row,
+        bg='white',
+        fg='black',
+        relief='solid',
+        bd=2,
+        highlightthickness=2,
+        highlightbackground='white',
+        highlightcolor='DeepSkyBlue2',
+        insertbackground='black',
+        font=("Arial", 20),
+        width=20
+    )
+    name_entry.pack(padx=10)
 
     # -------------------------
     # Guardar y calcular Co
@@ -146,14 +179,18 @@ def bells_specs_menu(W, go_back):
     Button(
         W,
         text="Guardar valores",
-        bg="DodgerBlue2", fg="white",
-        font=("Arial", 18, "bold"),
+        bg='White', fg='black',
+        relief='raised',
+        activebackground='DodgerBlue2',
+        activeforeground='OrangeRed2',
+        highlightbackground='OrangeRed2',
+        font=('Arial', 20, 'bold'),
         command=save_values_and_compute
     ).pack(pady=20)
 
     # Navegación inferior
-    bottom_frame = Frame(W)
-    bottom_frame.pack(side=TOP, fill=X, pady=20)
+    bottom_frame = Frame(W, bg='gray5')
+    bottom_frame.pack(side='bottom', fill=X, pady=20)
 
     back_btn = Button(
         bottom_frame,

@@ -2,6 +2,7 @@
 # Calculates Co for Rectangular Mitered Elbows (Idelchik 1986, Diagram 6-5)
 
 import numpy as np
+from app_state import app_state
 
 # ------------------------------
 # TABULATED C' VALUES (θ° vs H/W)
@@ -57,7 +58,7 @@ def interpolate_2d(x, y, x_points, y_points, table):
     return np.interp(x, x_points, c_at_hw)
 
 
-def get_co_rectangular_mitered(app_state, theta_deg, H_over_W):
+def get_co_rectangular_mitered_elbow(theta_deg, H_over_W):
     """
     Computes Co for Rectangular Mitered Elbow.
     

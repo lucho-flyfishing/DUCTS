@@ -50,7 +50,7 @@ def transitions_menu(W, go_back):
     
     
     round_transition_img = resources.load_image("round_transition.png", 
-                                    size=(350, 300))  
+                                    size=(350, 220))  
     round_transition_img_lbl = Label(middle_frame, image=round_transition_img, bg='gray5')
     round_transition_img_lbl.image = round_transition_img  
     round_transition_img_lbl.grid(row=0, column=1, padx=20, pady=10, sticky="nsew")
@@ -62,7 +62,7 @@ def transitions_menu(W, go_back):
     
     
     round_reducer_transition_img = resources.load_image("round_reducer_transition.png",
-                                    size=(350, 300))
+                                    size=(350, 220))
     round_reducer_transition_img_lbl = Label(middle_frame, image=round_reducer_transition_img, bg='gray5')
     round_reducer_transition_img_lbl.image = round_reducer_transition_img
     round_reducer_transition_img_lbl.grid(row=0, column=0, padx=20, pady=10, sticky="nsew")
@@ -74,7 +74,7 @@ def transitions_menu(W, go_back):
     
     
     round_rectangular_transition_img = resources.load_image("round_rectangular_transition.png",
-                                    size=(350, 300))
+                                    size=(350, 220))
     round_rectangular_transition_img_lbl = Label(middle_frame, image=round_rectangular_transition_img, bg='gray5')
     round_rectangular_transition_img_lbl.image = round_rectangular_transition_img
     round_rectangular_transition_img_lbl.grid(row=0, column=2, padx=20, pady=10, sticky="nsew")
@@ -86,7 +86,7 @@ def transitions_menu(W, go_back):
     
     
     rectangular_round_transition_img = resources.load_image("rectangular_round_transition.png",
-                                    size=(350, 300))
+                                    size=(350, 220))
     rectangular_round_transition_img_lbl = Label(middle_frame, image=rectangular_round_transition_img, bg='gray5')
     rectangular_round_transition_img_lbl.image = rectangular_round_transition_img
     rectangular_round_transition_img_lbl.grid(row=2, column=0, padx=20, pady=10, sticky="nsew")
@@ -97,7 +97,7 @@ def transitions_menu(W, go_back):
                 command=on_select, **radio_style).grid(row=3, column=1, pady=5)
     
     rectangular_transition_img = resources.load_image("rectangular_transition.png",
-                                    size=(350, 300))
+                                    size=(350, 220))
     rectangular_transition_img_lbl = Label(middle_frame, image=rectangular_transition_img, bg='gray5')
     rectangular_transition_img_lbl.image = rectangular_transition_img
     rectangular_transition_img_lbl.grid(row=2, column=1, padx=20, pady=10, sticky="nsew")
@@ -109,7 +109,7 @@ def transitions_menu(W, go_back):
     
     
     rectangular_pyramidal_transition_img = resources.load_image("rectangular_pyramidal_transition.png",
-                                    size=(350, 300))
+                                    size=(350, 220))
     rectangular_pyramidal_transition_img_lbl = Label(middle_frame, image=rectangular_pyramidal_transition_img, bg='gray5')
     rectangular_pyramidal_transition_img_lbl.image = rectangular_pyramidal_transition_img
     rectangular_pyramidal_transition_img_lbl.grid(row=2, column=2, padx=20, pady=10, sticky="nsew")
@@ -121,7 +121,7 @@ def transitions_menu(W, go_back):
     
     
     rectangular_3_sides_transition_img = resources.load_image("rectangular_3_side_transition.png",
-                                    size=(350, 300))
+                                    size=(350, 220))
     rectangular_3_sides_transition_img_lbl = Label(middle_frame, image=rectangular_3_sides_transition_img, bg='gray5')
     rectangular_3_sides_transition_img_lbl.image = rectangular_3_sides_transition_img
     rectangular_3_sides_transition_img_lbl.grid(row=4, column=0, padx=20, pady=10, sticky="nsew")

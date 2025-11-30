@@ -1,46 +1,62 @@
 # tables/hood_tapered_bell.py
 # Computes Co for tapered hoods (round or rectangular) using tabulated ASHRAE values.
-# Uses linear interpolation.
-
-import numpy as np
-from scipy.interpolate import interp1d
+# Pure Python version (no numpy, no scipy).
 
 
 # ============================================================
 #  ROUND HOOD TABLE
 # ============================================================
 
-# Angles (degrees)
-theta_round = np.array([0, 20, 40, 60, 80, 100, 120, 140, 160, 180], dtype=float)
+theta_round = [0, 20, 40, 60, 80, 100, 120, 140, 160, 180]
 
-# Corresponding Co values
-Co_round = np.array([1.00, 0.11, 0.06, 0.09, 0.14, 0.18, 0.27, 0.32, 0.43, 0.50], dtype=float)
-
-# Interpolator
-_interp_round = interp1d(
-    theta_round,
-    Co_round,
-    kind="linear",
-    fill_value="extrapolate",
-    bounds_error=False
-)
+Co_round = [1.00, 0.11, 0.06, 0.09, 0.14, 0.18, 0.27, 0.32, 0.43, 0.50]
 
 
 # ============================================================
 #  RECTANGULAR / SQUARE HOOD TABLE
 # ============================================================
 
-theta_rect = np.array([0, 20, 40, 60, 80, 100, 120, 140, 160, 180], dtype=float)
+theta_rect = [0, 20, 40, 60, 80, 100, 120, 140, 160, 180]
 
-Co_rect = np.array([1.00, 0.19, 0.13, 0.16, 0.21, 0.27, 0.33, 0.43, 0.53, 0.62], dtype=float)
+Co_rect = [1.00, 0.19, 0.13, 0.16, 0.21, 0.27, 0.33, 0.43, 0.53, 0.62]
 
-_interp_rect = interp1d(
-    theta_rect,
-    Co_rect,
-    kind="linear",
-    fill_value="extrapolate",
-    bounds_error=False
-)
+
+# ============================================================
+#  LINEAR INTERPOLATION UTILITY
+# ============================================================
+
+def linear_interp(x, xp, fp):
+    """
+    Replacement for numpy/scipy interp1d.
+    Performs linear interpolation or extrapolation.
+
+    xp: list of x values (sorted)
+    fp: list of corresponding y values
+    """
+
+    # Below minimum → extrapolate linearly
+    if x <= xp[0]:
+        x0, x1 = xp[0], xp[1]
+        y0, y1 = fp[0], fp[1]
+        return y0 + (x - x0) * (y1 - y0) / (x1 - x0)
+
+    # Above maximum → extrapolate linearly
+    if x >= xp[-1]:
+        x0, x1 = xp[-2], xp[-1]
+        y0, y1 = fp[-2], fp[-1]
+        return y0 + (x - x0) * (y1 - y0) / (x1 - x0)
+
+    # Find interval
+    for i in range(len(xp) - 1):
+        if xp[i] <= x <= xp[i + 1]:
+            x0 = xp[i]
+            x1 = xp[i + 1]
+            y0 = fp[i]
+            y1 = fp[i + 1]
+            return y0 + (x - x0) * (y1 - y0) / (x1 - x0)
+
+    # Should never happen
+    return fp[-1]
 
 
 # ============================================================
@@ -68,10 +84,10 @@ def get_co_hood_tapered_bell(theta, shape):
     shape = shape.lower().strip()
 
     if shape == "round":
-        return float(_interp_round(theta))
+        return float(linear_interp(theta, theta_round, Co_round))
 
     elif shape in ("rect", "rectangular", "square"):
-        return float(_interp_rect(theta))
+        return float(linear_interp(theta, theta_rect, Co_rect))
 
     else:
         raise ValueError(

@@ -15,7 +15,7 @@ def junctions_menu(W, go_back):
     tees_lbl = Label(top_frame, text='Uniones - Empalmes', font=('Arial', 35), bg='gray5', fg='gray60')
     tees_lbl.pack(side='top', pady=1)
 
-    middle_frame = Frame(W, bg='gray10')
+    middle_frame = Frame(W, bg='gray5')
     middle_frame.pack(expand=True, fill='both')
     total_rows = 5  
     total_cols = 4 
@@ -60,7 +60,7 @@ def junctions_menu(W, go_back):
                 command=on_select, **radio_style).grid(row=1, column=3, pady=5)
 
     
-    Radiobutton(middle_frame, text="5. Y 45° pricipal conico",
+    Radiobutton(middle_frame, text="5. Y 45° principal conico",
                 variable=app_state.selected_junction, value=5,
                 command=on_select, **radio_style).grid(row=3, column=0, pady=5)
 
@@ -96,13 +96,13 @@ def junctions_menu(W, go_back):
     
 
 
-    wye_30_img = resources.load_image("wye_30.png",
+    wye_30_img = resources.load_image("30_wye.png",
                                     size=(200, 200))
     wye_30_img_lbl = Label(middle_frame, image=wye_30_img, bg='gray5')
     wye_30_img_lbl.image = wye_30_img
     wye_30_img_lbl.grid(row=0, column=0, padx=20, pady=10, sticky="nsew")
     
-    wye_45_img = resources.load_image("wye_45.png",
+    wye_45_img = resources.load_image("45_wye.png",
                                     size=(200, 200))
     wye_45_img_lbl = Label(middle_frame, image=wye_45_img, bg='gray5')
     wye_45_img_lbl.image = wye_45_img
@@ -114,13 +114,13 @@ def junctions_menu(W, go_back):
     round_tee_img_lbl.image = round_tee_img
     round_tee_img_lbl.grid(row=0, column=2, padx=20, pady=10, sticky="nsew")
     
-    wye_30_conical_img = resources.load_image("wye_30_conical_main.png",
+    wye_30_conical_img = resources.load_image("30_conical_wye.png",
                                     size=(200, 200))
     wye_30_conical_img_lbl = Label(middle_frame, image=wye_30_conical_img, bg='gray5')
     wye_30_conical_img_lbl.image = wye_30_conical_img
     wye_30_conical_img_lbl.grid(row=0, column=3, padx=20, pady=10, sticky="nsew")
     
-    wye_45_conical_img = resources.load_image("wye_45_conical_main.png",
+    wye_45_conical_img = resources.load_image("45_conical_wye.png",
                                     size=(200, 200))
     wye_45_conical_img_lbl = Label(middle_frame, image=wye_45_conical_img, bg='gray5')
     wye_45_conical_img_lbl.image = wye_45_conical_img

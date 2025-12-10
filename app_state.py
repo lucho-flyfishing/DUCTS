@@ -17,6 +17,7 @@ class AppState:
         self.rho = None
         self.Re = None
         self.diameter = None
+        self.diameters_values = []
         self.S = None
         self.selected_bell = None 
         self.selected_elbow = None

@@ -14,6 +14,7 @@ from menus.corrections_menu import corrections_menu
 from menus.accesories_menu import accesories_menu
 from menus.roughness_menu import roughness_menu
 from menus.rectangular_eq_menu import rectangular_eq_menu
+from menus.branches_results_menu import branches_results_menu
 from menus.bells_menu import bells_menu
 from menus.elbows_menu import elbows_menu
 from menus.damper_menu import damper_menu   
@@ -97,7 +98,11 @@ def main():
     
     def go_to_corrections_menu(W):
         corrections_menu(W, go_back=go_to_pre_dim, go_accesories_menu=go_to_accesories_menu,
-                        go_roughness_menu=go_to_roughness_menu, go_rectangular_eq_menu=go_to_rectangular_eq_menu)
+                        go_roughness_menu=go_to_roughness_menu, go_rectangular_eq_menu=go_to_rectangular_eq_menu, 
+                        go_branches_results_menu=go_to_branches_results_menu)
+        
+    def go_to_branches_results_menu(W):
+        branches_results_menu(W, go_back=go_to_corrections_menu)   
     
     
     def go_to_roughness_menu(W):

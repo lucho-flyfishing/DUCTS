@@ -1,7 +1,7 @@
 from tkinter import Button, Label, Frame
 from app_state import app_state
 
-def corrections_menu(W, go_back, go_accesories_menu, go_roughness_menu, go_rectangular_eq_menu):
+def corrections_menu(W, go_back, go_accesories_menu, go_roughness_menu, go_rectangular_eq_menu, go_branches_results_menu):
     # Clear the window
     for widget in W.winfo_children():
         widget.destroy()
@@ -62,6 +62,16 @@ def corrections_menu(W, go_back, go_accesories_menu, go_roughness_menu, go_recta
                             command= lambda: go_back(W))
     re_design_btn.pack(padx=5, pady=5)
 
+
+    branches_results_btn = Button(middle_frame, text='Resultados del dimensionamiento de ramalaes', 
+                            bg='white', fg='black', 
+                            relief='raised', 
+                            activebackground='DodgerBlue2', 
+                            activeforeground='OrangeRed2', 
+                            font=('Arial', 25, 'bold'),
+                            width=40,
+                            command= lambda: go_branches_results_menu(W))
+    branches_results_btn.pack(padx=5, pady=5)
 
     pdf_btn = Button(middle_frame, text='Generar reporte en PDF',
                         bg='white', fg='black', 

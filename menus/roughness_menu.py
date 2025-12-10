@@ -1,4 +1,4 @@
-from tkinter import Button, Label, Frame, StringVar
+from tkinter import Button, Label, Frame, StringVar, Entry
 from app_state import app_state
 
 def roughness_menu(W, go_back):
@@ -23,7 +23,8 @@ def roughness_menu(W, go_back):
     
     
     roughness_top_lbl = Label(top_frame, text='Hasta ahora se ha trabajado con una ' 
-                            'rugosidad #### \n Seleccione el material del ducto', 
+                            'rugosidad  de 0.0015 mm / 0.0000591 in \n Seleccione el factor ' 
+                            'según el material del ducto', 
                             font=('Arial', 25), 
                             bg='gray5',
                             fg='gray60')
@@ -128,6 +129,22 @@ def roughness_menu(W, go_back):
                             bg='gray5',
                             fg='gray60')
         roughness_lbl.grid(row=1, column=2, padx=5, pady=3, sticky="nsew")
+    
+    new_rough_lbl = Label(W, text=('introduzca el valor de rugosidad que desea utilizar para el cálculo \n'
+                                'luego presione Siguiente'), 
+                        font=('Arial', 26), 
+                        bg='gray5', 
+                        fg='gray60')
+    new_rough_lbl.pack(pady=1)
+    
+    
+    new_rough_entry = Entry(W, font=('Arial', 12), 
+                            bg='white', fg='gray', 
+                            relief='solid', bd=2, 
+                            highlightthickness=2, 
+                            highlightbackground='black')
+    new_rough_entry.pack(pady=5, ipady=5, ipadx=10)
+    
     
     
     bottom_frame = Frame(W, bg='gray5')

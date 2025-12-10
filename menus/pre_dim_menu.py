@@ -131,7 +131,7 @@ def pre_dim_menu(W, go_back, go_next):
             diameter = diameter_m * 1000  # m → mm
             
             
-            epsilon = 1.5e-7  # rugosidad para materiales típicos de conductos en m
+            epsilon = 1.5e-6  # rugosidad para materiales típicos de conductos en m
             
             
             D = diameter_m # m
@@ -155,7 +155,7 @@ def pre_dim_menu(W, go_back, go_next):
             diameter = diameter_in
             
             
-            epsilon_in = 0.0005  # rugosidad en pulgadas
+            epsilon_in = 0.0000591  # rugosidad en pulgadas
             epsilon_ft = epsilon_in / 12  # convertir in → ft
             density_ip = app_state.rho  # lb/ft³
             viscosity_ip = app_state.viscosity  # lb/ft·s

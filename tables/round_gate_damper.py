@@ -35,16 +35,16 @@ def interpolate_1d(x, xp, fp):
 # MAIN FUNCTION
 # -------------------------------------------------------
 
-def get_co_round_gate_damper(h_over_D):
+def get_co_round_gate_damper(h_D):
     """
     Computes Co for a Round Gate Damper.
 
     Parameter:
-        h_over_D : float
+        h_D : float
             Ratio h/D from the diagram.
 
     Returns:
         float : Co
     """
 
-    return float(interpolate_1d(h_over_D, h_over_D_values, Co_values))
+    return float(interpolate_1d(h_D, h_over_D_values, Co_values))

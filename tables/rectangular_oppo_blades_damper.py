@@ -61,7 +61,7 @@ def _interp_table(x, x_list, y_table):
     return y_table[x_list[-1]]
 
 
-def get_co_rectangular_opposed_blades_damper(L_R: float, theta: float) -> float:
+def get_co_rectangular_oppo_blades_damper(L_R: float, theta: float) -> float:
     """
     Returns Co for a rectangular opposed-blade damper.
 

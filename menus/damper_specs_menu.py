@@ -11,7 +11,7 @@ DAMPER_FILE_MAP = {
     1: "round_butterfly_damper",
     2: "rectangular_butterfly_damper",
     3: "rectangular_gate_damper",
-    4: "round_gate_dampe",
+    4: "round_gate_damper",
     5: "rectangular_parallel_blades_damper",
     6: "rectangular_oppo_blades_damper",
     7: "round_and_rectangular_screen_damper",

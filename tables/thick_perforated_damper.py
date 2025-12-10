@@ -32,11 +32,11 @@ def _interp_1d(x, x_list, y_list):
             return y0 + t * (y1 - y0)
 
 
-def get_co_thick_perforated_damper(t_over_d, n):
+def get_co_thick_perforated_damper(t_d, n):
     """
     Interpolación bilineal manual para obtener Co.
     Parámetros:
-        t_over_d : relación t/d
+        t_d : relación t/d
         n : free area ratio
     """
 
@@ -46,6 +46,6 @@ def get_co_thick_perforated_damper(t_over_d, n):
         row_results.append(_interp_1d(n, n_values, row))
 
     # 2) Con esos valores, interpolar ahora entre filas según t/d
-    Co = _interp_1d(t_over_d, t_over_d_values, row_results)
+    Co = _interp_1d(t_d, t_over_d_values, row_results)
 
     return Co

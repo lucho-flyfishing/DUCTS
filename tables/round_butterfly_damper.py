@@ -72,13 +72,13 @@ def interp_2d(x, y, x_points, y_points, table):
 # PUBLIC FUNCTION
 # -------------------------------------------------------------
 
-def get_co_round_butterfly_damper(app_state, d_over_Do, theta_deg):
+def get_co_round_butterfly_damper(D_Do, theta):
     """
     Computes Co for a Round Butterfly Damper.
 
     Inputs:
-        d_over_Do (float): Ratio D/Do (0.5 - 1.0)
-        theta_deg (float): Blade angle in degrees (0 - 85)
+        D_Do (float): Ratio D/Do (0.5 - 1.0)
+        theta (float): Blade angle in degrees (0 - 85)
         app_state: Not used for this fitting, included for consistency
 
     Output:
@@ -86,14 +86,14 @@ def get_co_round_butterfly_damper(app_state, d_over_Do, theta_deg):
     """
 
     Co = interp_2d(
-        d_over_Do,
-        theta_deg,
+        D_Do,
+        theta,
         ddo_values,
         theta_values,
         co_table
     )
 
-    print(f"[DEBUG] Round Butterfly Damper → D/Do={d_over_Do}, θ={theta_deg}")
+    print(f"[DEBUG] Round Butterfly Damper → D/Do={D_Do}, θ={theta}")
     print(f"[DEBUG] Co = {Co}")
 
     return Co

@@ -106,20 +106,20 @@ def bilinear_interpolate(x, y, x_list, y_list, table):
 # MAIN FUNCTION
 # -------------------------------------------------------
 
-def get_co_rectangular_gate_damper(H_over_W, h_over_H):
+def get_co_rectangular_gate_damper(H_W, h_H):
     """
     Returns Co for a Rectangular Gate Damper.
 
     Parameters:
-        H_over_W (float): Ratio of height to width.
-        h_over_H (float): Blade height relative to duct height.
+        H_w (float): Ratio of height to width.
+        h_H (float): Blade height relative to duct height.
 
     Returns:
         float: interpolated Co.
     """
     return bilinear_interpolate(
-        H_over_W,
-        h_over_H,
+        H_W,
+        h_H,
         H_over_W_values,
         h_over_H_values,
         Co_table

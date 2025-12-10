@@ -56,20 +56,20 @@ def interpolate_1d(x, xp, fp):
 # Helper: find row based on H/W
 # -------------------------------------------------------
 
-def _find_table_row(damper_type, H_over_W):
+def get_co_rectangular_butterfly_damper(TYPE, H_W):
     """
     Determines which row of the damper table applies.
     Returns (row_index).
     """
 
-    ranges = damper_table[damper_type]["ranges"]
+    ranges = damper_table[TYPE]["ranges"]
 
     for i, (low, high) in enumerate(ranges):
-        if low <= H_over_W < high:
+        if low <= H_W < high:
             return i
 
     # If H/W is exactly 1.0 for Type 1, choose the second row
-    if damper_type == 1 and H_over_W == 1.0:
+    if TYPE == 1 and H_W == 1.0:
         return 1
 
     # Clamp to last row in unexpected cases

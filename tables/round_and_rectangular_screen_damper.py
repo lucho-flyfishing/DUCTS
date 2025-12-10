@@ -62,7 +62,7 @@ def _interp_table(x, x_list, y_table):
     return y_table[x_list[-1]]
 
 
-def get_co_round_rectangular_screen_damper(n: float, A1_Ao: float) -> float:
+def get_co_round_and_rectangular_screen_damper(n: float, A1_Ao: float) -> float:
     """
     Returns Co for a round/rectangular screen damper.
 

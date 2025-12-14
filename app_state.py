@@ -16,6 +16,7 @@ class AppState:
         self.P = None
         self.rho = None
         self.Re = None
+        self.epsilon = None
         self.diameter = None
         self.diameters_values = []
         self.S = None

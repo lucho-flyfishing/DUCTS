@@ -107,8 +107,11 @@ def pre_dim_menu(W, go_back, go_next):
             diameter_m = math.sqrt((4 * Q) / (math.pi * velocity)) # m
             diameter = diameter_m * 1000  # m → mm
             
+            if app_state.epsilon is not None:
+                epsilon = 1.5e-4  # rugosidad para materiales típicos de conductos en m
+            else:
+                epsilon = (app_state.epsilon) / 1000  # convertir mm → m
             
-            epsilon = 1.5e-7  # rugosidad para materiales típicos de conductos en m
             
             
             D = diameter_m
@@ -130,8 +133,11 @@ def pre_dim_menu(W, go_back, go_next):
             diameter_m = math.sqrt((4 * Q) / (math.pi * velocity)) # m
             diameter = diameter_m * 1000  # m → mm
             
+            if app_state.epsilon is not None:
+                epsilon = 1.5e-4  # rugosidad para materiales típicos de conductos en m
+            else:
+                epsilon = (app_state.epsilon) / 1000  # convertir mm → m
             
-            epsilon = 1.5e-6  # rugosidad para materiales típicos de conductos en m
             
             
             D = diameter_m # m
@@ -154,8 +160,10 @@ def pre_dim_menu(W, go_back, go_next):
             diameter_in = D_ft * 12  # ft → in
             diameter = diameter_in
             
-            
-            epsilon_in = 0.0000591  # rugosidad en pulgadas
+            if app_state.epsilon is not None:
+                epsilon_in = 0.0059 * 12  # rugosidad para materiales típicos de conductos en in
+            else:
+                epsilon_in = app_state.epsilon  # ya en in
             epsilon_ft = epsilon_in / 12  # convertir in → ft
             density_ip = app_state.rho  # lb/ft³
             viscosity_ip = app_state.viscosity  # lb/ft·s

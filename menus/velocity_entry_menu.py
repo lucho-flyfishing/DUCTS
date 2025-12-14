@@ -12,9 +12,8 @@ def velocity_entry_menu(W, go_back, go_next):
     top_frame.pack(side='top', fill='x')
     
     
-    velocity_lbl = Label(top_frame, text=' Ingrese la velocidad de aire, '
-                        'tenga en cuenta que debe ser la maxima \n velocidad ' 
-                        'de todo el sistema',
+    velocity_lbl = Label(top_frame, text=' Ingrese la velocidad de aire '
+                        'del ramal principal:',
                         font=('Arial', 30), bg='gray5', fg='gray80')
     velocity_lbl.pack(side='top', pady=1)
     

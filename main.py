@@ -47,6 +47,7 @@ def main():
     app_state.P = StringVar(W)
     app_state.rho = StringVar(W)
     app_state.Re = StringVar(W)
+    app_state.epsilon = StringVar(W)
     app_state.diameter = StringVar(W)
     app_state.S = StringVar(W)
     app_state.selected_bell = IntVar(W)
@@ -106,7 +107,7 @@ def main():
     
     
     def go_to_roughness_menu(W):
-        roughness_menu(W, go_back=go_to_corrections_menu)
+        roughness_menu(W, go_back=go_to_corrections_menu, go_next=go_to_pre_dim)
     
     
     def go_to_rectangular_eq_menu(W):

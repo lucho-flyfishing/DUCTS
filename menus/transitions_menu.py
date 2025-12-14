@@ -17,7 +17,7 @@ def transitions_menu(W, go_back):
     reducers_lbl.pack(side='top', pady=1)
     
     
-    middle_frame = Frame(W, bg='gray50')
+    middle_frame = Frame(W, bg='gray5')
     middle_frame.pack(expand=True, fill='both')
     
     total_rows = 5  

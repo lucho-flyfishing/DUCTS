@@ -1,7 +1,7 @@
 from tkinter import Button, Label, Frame, StringVar, Entry
 from app_state import app_state
 
-def roughness_menu(W, go_back):
+def roughness_menu(W, go_back, go_next):
     # Clear the window
     for widget in W.winfo_children():
         widget.destroy()
@@ -23,7 +23,7 @@ def roughness_menu(W, go_back):
     
     
     roughness_top_lbl = Label(top_frame, text='Hasta ahora se ha trabajado con una ' 
-                            'rugosidad  de 0.0015 mm / 0.0000591 in \n Seleccione el factor ' 
+                            'rugosidad  de 0.15 mm / 0.0059 in \n Seleccione el factor ' 
                             'según el material del ducto', 
                             font=('Arial', 25), 
                             bg='gray5',
@@ -146,11 +146,14 @@ def roughness_menu(W, go_back):
     new_rough_entry.pack(pady=5, ipady=5, ipadx=10)
     
     
+    def save_new_rugosity():
+        app_state.epsilon = float(new_rough_entry.get())
+
     
     bottom_frame = Frame(W, bg='gray5')
     bottom_frame.pack(side='bottom', fill='x')
     
-    
+
     back_btn = Button(bottom_frame, text='Regresar', 
                     bg='white', fg='black', 
                     relief='raised', 
@@ -159,4 +162,14 @@ def roughness_menu(W, go_back):
                     highlightbackground='brown4', 
                     font=('Arial', 20, 'bold'),
                     command=lambda: go_back(W))
-    back_btn.pack(padx=10, pady=10, anchor="w")
+    back_btn.pack(side='left', padx=10, pady=10)
+    
+    new_rough_btn = Button(W, text='Guardar el valor de rugosidad y volver al mennú de predimensionamiento', 
+                        bg='white', fg='black', 
+                        relief='raised', 
+                        activebackground='DodgerBlue2', 
+                        activeforeground='OrangeRed2', 
+                        highlightbackground='brown4', 
+                        font=('Arial', 20, 'bold'),
+                        command=lambda: [save_new_rugosity(), go_next(W)])
+    new_rough_btn.pack(side='right' , padx= 10, pady=10)

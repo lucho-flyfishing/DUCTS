@@ -7,7 +7,6 @@ from menus.duct_number_menu import duct_number_menu
 from menus.units_menu import units_menu
 from menus.branch_features_menu import branch_features_menu
 from menus.alt_temp_menu import alt_temp_menu
-from menus.velocity_range_menu import velocity_range_menu
 from menus.velocity_entry_menu import velocity_entry_menu
 from menus.pre_dim_menu import pre_dim_menu
 from menus.corrections_menu import corrections_menu
@@ -82,15 +81,11 @@ def main():
         
         
     def go_to_alt_temp(W):
-        alt_temp_menu(W, go_back=go_to_branch_features, go_next=go_to_velocity_range)
-    
-    
-    def go_to_velocity_range(W):
-        velocity_range_menu(W, go_back=go_to_alt_temp, go_next=go_to_velocity_entry)
+        alt_temp_menu(W, go_back=go_to_branch_features, go_next=go_to_velocity_entry)
     
     
     def go_to_velocity_entry(W):
-        velocity_entry_menu(W, go_back=go_to_velocity_range, go_next=go_to_pre_dim )
+        velocity_entry_menu(W, go_back=go_to_alt_temp, go_next=go_to_pre_dim )
     
     
     def go_to_pre_dim(W):

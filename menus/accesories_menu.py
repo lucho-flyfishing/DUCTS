@@ -2,7 +2,7 @@ from tkinter import Button, Label, Frame
 from app_state import app_state
 
 def accesories_menu(W, go_back, go_bells_menu, go_elbows_menu, go_damper_menu,
-                    go_transitions_menu, go_junctions_menu):
+                    go_transitions_menu, go_junctions_menu, go_results_menu):
     # Clear the window
     for widget in W.winfo_children():
         widget.destroy()
@@ -75,6 +75,16 @@ def accesories_menu(W, go_back, go_bells_menu, go_elbows_menu, go_damper_menu,
                             width=40,
                             command= lambda: go_junctions_menu(W))
     tees_btn.pack(padx=5, pady=5)
+    
+    results_btn = Button(middle_frame, text='7. Resultados',
+                            bg='white', fg='black',
+                            relief='raised',
+                            activebackground='DodgerBlue2',
+                            activeforeground='OrangeRed2',
+                            font=('Arial', 25, 'bold'),
+                            width=40,
+                            command= lambda: go_results_menu(W))
+    results_btn.pack(padx=5, pady=5)
     
     
     bottom_frame = Frame(W, bg='gray5')

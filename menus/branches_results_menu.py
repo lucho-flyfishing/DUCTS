@@ -1,4 +1,3 @@
-
 from tkinter import Button, Label, Frame, StringVar
 from app_state import app_state
 import math
@@ -21,6 +20,7 @@ def branches_results_menu(W, go_back):
 
     # lists to store the results of diameter and friction loss per length
     diameters_values = []
+    S_values = []
     
     
     for i in range(len(flowrate_values)): # Loop through each branch to calculate diameter and friction loss
@@ -85,16 +85,75 @@ def branches_results_menu(W, go_back):
 
         else:
             diameters = None
+            S = None
 
         diameters_values.append(diameters)
+        S_values.append(S)
 
-        
         app_state.diameters_values = diameters_values  # Store the diameter values in app_state
+        app_state.S = S_values                         # Store the friction loss values in app_state
 
         print("Diametro calculado para el ramal", i+1, ":", diameters)
-        
 
-        
+
+    # ── Results table ─────────────────────────────────────────────────────────
+    title_lbl = Label(W, text='Resultados del dimensionamiento de ramales',
+                      font=('Arial', 22, 'bold'), bg='gray5', fg='OrangeRed2')
+    title_lbl.pack(pady=(15, 5))
+
+    table_frame = Frame(W, bg='gray5')
+    table_frame.pack(pady=5)
+
+    # Column headers depending on unit system
+    if selected == 1:
+        col_headers = ['Ramal', 'Caudal (L/s)', 'Longitud (m)', 'Pérdidas (Pa/m)', 'Diámetro (mm)']
+    elif selected == 2:
+        col_headers = ['Ramal', 'Caudal (m³/s)', 'Longitud (m)', 'Pérdidas (Pa/m)', 'Diámetro (mm)']
+    else:
+        col_headers = ['Ramal', 'Caudal (cfm)', 'Longitud (ft)', 'Pérdidas (inH₂O/ft)', 'Diámetro (in)']
+
+    col_widths = [18, 18, 18, 20, 18]
+
+    # Header row
+    for col, (header, width) in enumerate(zip(col_headers, col_widths)):
+        Label(table_frame, text=header,
+              font=('Arial', 12, 'bold'),
+              bg='gray15', fg='gray90',
+              width=width, anchor='center',
+              relief='flat', padx=4, pady=6
+              ).grid(row=0, column=col, padx=1, pady=1)
+
+    main_branch = app_state.main_branch.get()
+
+    # Data rows
+    for i in range(len(flowrate_values)):
+        is_main = (main_branch == i + 1)
+
+        row_bg   = 'gray12'
+        name_fg  = 'OrangeRed2' if is_main else 'gray80'
+        val_fg   = 'OrangeRed2' if is_main else 'gray70'
+        tag      = ' (Principal)' if is_main else ''
+
+        row_data = [
+            f'Ramal {i + 1}{tag}',
+            f'{flowrate_values[i]:.2f}',
+            f'{length_values[i]:.2f}',
+            f'{S_values[i]:.4f}',
+            f'{diameters_values[i]:.1f}',
+        ]
+
+        for col, (value, width) in enumerate(zip(row_data, col_widths)):
+            fg = name_fg if col == 0 else val_fg
+            Label(table_frame, text=value,
+                  font=('Arial', 12),
+                  bg=row_bg, fg=fg,
+                  width=width, anchor='center',
+                  relief='flat', padx=4, pady=5
+                  ).grid(row=i + 1, column=col, padx=1, pady=1)
+
+    # ── end results table ─────────────────────────────────────────────────────
+
+
     bottom_frame = Frame(W, bg='gray5')
     bottom_frame.pack(side='bottom', fill='x')
         

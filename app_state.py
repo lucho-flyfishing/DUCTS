@@ -20,6 +20,7 @@ class AppState:
         self.diameter = None
         self.diameters_values = []
         self.S = None
+        self.aspect_ratio = None
         self.selected_bell = None 
         self.selected_elbow = None
         self.selected_transition = None

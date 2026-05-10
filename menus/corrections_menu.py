@@ -23,17 +23,15 @@ def corrections_menu(W, go_back, go_accesories_menu, go_roughness_menu, go_recta
     middle_frame = Frame(W, bg='gray5')
     middle_frame.pack(expand=True, anchor='center')
     
-    
-    roughness_btn = Button(middle_frame, text='Correcion por rugosidad del material del ducto',
-                        bg='white', fg='black', 
-                        relief='raised', 
-                        activebackground='DodgerBlue2',
-                        activeforeground='OrangeRed2', 
-                        font=('Arial', 25, 'bold'),
-                        width=40,
-                        command =lambda: go_roughness_menu(W))
-    roughness_btn.pack(padx=5, pady=10, anchor='n')
-    
+    branches_results_btn = Button(middle_frame, text='Resultados del dimensionamiento de ramales', 
+                            bg='white', fg='black', 
+                            relief='raised', 
+                            activebackground='DodgerBlue2', 
+                            activeforeground='OrangeRed2', 
+                            font=('Arial', 25, 'bold'),
+                            width=40,
+                            command= lambda: go_branches_results_menu(W))
+    branches_results_btn.pack(padx=5, pady=5)
     
     accesories_btn = Button(middle_frame, text='Calcular perdidas en accesorios', 
                             bg='white', fg='black', 
@@ -44,6 +42,16 @@ def corrections_menu(W, go_back, go_accesories_menu, go_roughness_menu, go_recta
                             width=40,
                             command= lambda: go_accesories_menu(W))
     accesories_btn.pack(padx=5, pady=5)
+    
+    roughness_btn = Button(middle_frame, text='Correcion por rugosidad del material del ducto',
+                        bg='white', fg='black', 
+                        relief='raised', 
+                        activebackground='DodgerBlue2',
+                        activeforeground='OrangeRed2', 
+                        font=('Arial', 25, 'bold'),
+                        width=40,
+                        command =lambda: go_roughness_menu(W))
+    roughness_btn.pack(padx=5, pady=10, anchor='n')
     
     
     rectangular_eq_btn = Button(middle_frame, text='Ductos rectangulares equivalentes', 
@@ -68,17 +76,6 @@ def corrections_menu(W, go_back, go_accesories_menu, go_roughness_menu, go_recta
     re_design_btn.pack(padx=5, pady=5)
 
 
-    branches_results_btn = Button(middle_frame, text='Resultados del dimensionamiento de ramalaes', 
-                            bg='white', fg='black', 
-                            relief='raised', 
-                            activebackground='DodgerBlue2', 
-                            activeforeground='OrangeRed2', 
-                            font=('Arial', 25, 'bold'),
-                            width=40,
-                            command= lambda: go_branches_results_menu(W))
-    branches_results_btn.pack(padx=5, pady=5)
-    
-    
     # Function to generate the PDF
     def generate_pdf():
         # PDF setup
@@ -147,7 +144,7 @@ def corrections_menu(W, go_back, go_accesories_menu, go_roughness_menu, go_recta
 
         print(f"PDF '{pdf_filename}' created successfully!")
 
-    pdf_btn = Button(middle_frame, text='Generar reporte en PDF',
+    pdf_btn = Button(middle_frame, text='Generar reporte de resultados en PDF',
                         bg='white', fg='black', 
                         relief='raised', 
                         activebackground='DodgerBlue2',

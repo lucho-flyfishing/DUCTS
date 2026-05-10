@@ -9,8 +9,8 @@ def duct_number_menu(W, go_back, go_next):
     top_frame = Frame(W, bg='gray5')
     top_frame.pack(side='top', fill='x')
     
-    duct_info_tittle = Label(top_frame, text='Ingrese el número de ramales del sistema'
-                            'de ductos y el número que asignara del ducto principal.', 
+    duct_info_tittle = Label(top_frame, text='Ingrese el número de ramales del sistema '
+                            'de ductos y el número que asignara al ducto principal.', 
                             font=('Arial', 30, 'bold'), bg='gray5', fg='gray60')
     duct_info_tittle.pack(pady=10)
     

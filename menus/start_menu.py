@@ -14,9 +14,9 @@ def start_menu(W, go_next):
     
     lbl2 = Label(W, text='Con este programa usted podrá dimensionar ductos de ventilación \n'
                         'considerando las pérdidas debidas a la fricción en tramos rectos y \n'
-                        'en accesorios. Solo es necesario conocer el caudal en los \n'
-                        'ramales del sistema. Además, el programa presenta los ductos \n'
-                        'rectangulares equivalentes.',
+                        'en accesorios. Solo es necesario conocer el caudal y la longitud de los \n'
+                        'ramales del sistema. Además, el programa presenta la opción de convertir \n'
+                        'los ductos rectangulares equivalentes.',
                 font=('Arial', 26), bg='gray5', fg='gray60')
     lbl2.pack(pady=1)
     

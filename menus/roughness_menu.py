@@ -22,11 +22,10 @@ def roughness_menu(W, go_back, go_next):
     top_frame.pack(side='top', fill='x')
     
     
-    roughness_top_lbl = Label(top_frame, text='Los calculos para el dimensionamiento preliminar'
+    roughness_top_lbl = Label(top_frame, text='Los calculos para el dimensionamiento preliminar '
                             'se basan en un valor de rugosidad  de 0.15 mm / 0.0059 in,\n ' 
-                            'si  desea cambiarlos ingrese un valor personalizado de rugosidad' 
-                            'o use alguno de los de la tabla'
-                            'según el material del ducto', 
+                            'si  desea cambiarlos ingrese un valor personalizado de rugosidad ' 
+                            'ó use alguno de los de la tabla según el material del ducto', 
                             font=('Arial', 25), 
                             bg='gray5',
                             fg='gray60')

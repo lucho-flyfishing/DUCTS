@@ -63,7 +63,7 @@ def linear_interp(x, xp, fp):
 #  PUBLIC FUNCTION
 # ============================================================
 
-def get_co_hood_tapered_bell(theta, shape):
+def get_co_hood_tapered_bell(theta, forma):
     """
     Returns Co for a tapered hood (round or rectangular).
 
@@ -72,7 +72,7 @@ def get_co_hood_tapered_bell(theta, shape):
     theta : float
         Hood angle θ in degrees.
 
-    shape : str
+    forma : str
         "round"   → use round hood table
         "rect"    → use square/rectangular table
 
@@ -81,15 +81,15 @@ def get_co_hood_tapered_bell(theta, shape):
     float : interpolated Co
     """
 
-    shape = shape.lower().strip()
+    forma = forma.lower().strip()
 
-    if shape == "round":
+    if forma == "circular" or forma == "round":
         return float(linear_interp(theta, theta_round, Co_round))
 
-    elif shape in ("rect", "rectangular", "square"):
+    elif forma in ("rect", "rectangular", "square"):
         return float(linear_interp(theta, theta_rect, Co_rect))
 
     else:
         raise ValueError(
-            f"Shape '{shape}' not recognized. Use 'round' or 'rect'."
+            f"forma '{forma}' not recognized. Use 'round' or 'rect'."
         )

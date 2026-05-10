@@ -50,8 +50,9 @@ def elbows_specs_menu(W, go_back):
 
     Label(
         top_frame,
-        text=f"Codo seleccionada: {filename.replace('_',' ').title()}",
+        text=f"Codo seleccionado: {filename.replace('_',' ').title()}",
         bg='gray5',
+        fg='white',
         font=("Arial", 24, "bold")
     ).pack()
 
@@ -59,6 +60,7 @@ def elbows_specs_menu(W, go_back):
         top_frame,
         text="Ingrese los valores para calcular Co",
         bg='gray5',
+        fg='white',
         font=("Arial", 18)
     ).pack(pady=10)
 
@@ -77,7 +79,6 @@ def elbows_specs_menu(W, go_back):
             text=pname.replace("_", "/") + ":",
             font=("Arial", 20),
             bg='gray5', fg='OrangeRed2',
-            relief='solid'
         ).pack(side=LEFT, padx=10)
 
         # ------- FIXED ENTRY SETTINGS -------
@@ -112,6 +113,7 @@ def elbows_specs_menu(W, go_back):
         name_row,
         text="Nombre / etiqueta del accesorio:",
         bg='gray5',
+        fg='OrangeRed2',
         font=("Arial", 20)
     ).pack(padx=10)
 

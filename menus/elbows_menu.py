@@ -12,7 +12,7 @@ def elbows_menu(W, go_back, go_next):
     top_frame.pack(side='top', fill='x')
 
 
-    elbows_lbl = Label(top_frame, text='Codos', font=('Arial', 35), bg='gray5', fg='gray60')
+    elbows_lbl = Label(top_frame, text='Codos', font=('Arial', 35), bg='gray5', fg='white')
     elbows_lbl.pack(side='top', pady=1)
     
     

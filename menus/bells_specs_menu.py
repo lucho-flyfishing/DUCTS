@@ -51,14 +51,16 @@ def bells_specs_menu(W, go_back):
 
     Label(
         top_frame,
-        bg='gray5',
+        bg="gray5",
+        fg="white",
         text=f"Campana seleccionada: {filename.replace('_',' ').title()}",
         font=("Arial", 24, "bold")
     ).pack()
 
     Label(
         top_frame,
-        bg='gray5',
+        bg="gray5",
+        fg="white",
         text="Ingrese los valores para calcular Co",
         font=("Arial", 18)
     ).pack(pady=10)
@@ -111,7 +113,7 @@ def bells_specs_menu(W, go_back):
         name_row,
         text="Nombre / etiqueta del accesorio:",
         font=("Arial", 20),
-        bg='gray5'
+        bg='gray5', fg='OrangeRed2',
     ).pack(padx=10)
 
     # ---- FIXED NAME ENTRY SETTINGS ----

@@ -20,11 +20,11 @@ def linear_interp(x, xp, fp):
     return fp[-1]
 
 
-def get_co_z_30_elbow(L_over_D):
+def get_co_z_30_elbow(L_D):
     """
     Codo 30° Z-shaped Round.
     Parámetros:
-    - L_over_D : relación L/D tomada del menú
+    - L_D : relación L/D tomada del menú
     
     app_state.Re se usa automáticamente para la corrección.
     """
@@ -34,7 +34,7 @@ def get_co_z_30_elbow(L_over_D):
     LD_vals =     [0,   0.5,  1.0,  1.5,  2.0,  2.5,  3.0]
     Cprime_vals = [0,   0.15, 0.15, 0.16, 0.16, 0.16, 0.16]
 
-    Cprime = linear_interp(L_over_D, LD_vals, Cprime_vals)
+    Cprime = linear_interp(L_D, LD_vals, Cprime_vals)
 
     # ---- Corrección por Reynolds ----
     if app_state.Re is None:

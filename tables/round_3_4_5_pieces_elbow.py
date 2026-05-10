@@ -18,17 +18,17 @@ def linear_interp(x, xp, fp):
     return fp[-1]
 
 
-def get_co_round_3_4_5_pieces_elbow(num_pieces, r_D, theta):
+def get_co_round_3_4_5_pieces_elbow(número_piezas, r_D, theta):
     """
     Calcula Co para codos de 3, 4 o 5 piezas.
     Parámetros:
-    - num_pieces : número de piezas (3, 4, 5)
+    - número_piezas : número de piezas (3, 4, 5)
     - r_D : relación r/D
     - theta : ángulo en grados
     """
 
-    if num_pieces not in [3, 4, 5]:
-        raise ValueError("num_pieces debe ser 3, 4 o 5.")
+    if número_piezas not in [3, 4, 5]:
+        raise ValueError("número_piezas debe ser 3, 4 o 5.")
 
     # Tabla r/D en columnas
     rd_vals = [0.75, 1.0, 1.5, 2.0]
@@ -40,7 +40,7 @@ def get_co_round_3_4_5_pieces_elbow(num_pieces, r_D, theta):
         3: [0.54, 0.42, 0.34, 0.33],
     }
 
-    Cprime_vals = Cprime_table[num_pieces]
+    Cprime_vals = Cprime_table[número_piezas]
 
     # Interpolación para C'
     Cprime = linear_interp(r_D, rd_vals, Cprime_vals)

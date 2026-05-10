@@ -103,13 +103,13 @@ def interpolate_2d(x, y, x_points, y_points, table):
 # MAIN PUBLIC FUNCTION
 # -----------------------
 
-def get_co_rectangular_mitered_elbow(theta_deg, H_over_W):
+def get_co_rectangular_mitered_elbow(theta, H_W):
     """
     Computes Co for Rectangular Mitered Elbow.
 
     Inputs:
-        theta_deg (float): Angle in degrees
-        H_over_W (float): H/W geometric ratio
+        theta (float): Angle in degrees
+        H_W (float): H/W geometric ratio
         app_state.Re (float): Reynolds number
 
     Output:
@@ -122,8 +122,8 @@ def get_co_rectangular_mitered_elbow(theta_deg, H_over_W):
 
     # 1) C'
     c_prime = interpolate_2d(
-        theta_deg,
-        H_over_W,
+        theta,
+        H_W,
         theta_values,
         hw_values,
         c_prime_table
@@ -136,7 +136,7 @@ def get_co_rectangular_mitered_elbow(theta_deg, H_over_W):
     # 3) Final loss coefficient Co
     Co = k_re * c_prime
 
-    print(f"[DEBUG] Rectangular Mitered Elbow → θ={theta_deg}, H/W={H_over_W}")
+    print(f"[DEBUG] Rectangular Mitered Elbow → θ={theta}, H/W={H_W}")
     print(f"[DEBUG] C'={c_prime:.4f},  K_Re={k_re:.3f},  Co={Co:.4f}")
 
     return Co

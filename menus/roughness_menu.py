@@ -22,8 +22,10 @@ def roughness_menu(W, go_back, go_next):
     top_frame.pack(side='top', fill='x')
     
     
-    roughness_top_lbl = Label(top_frame, text='Hasta ahora se ha trabajado con una ' 
-                            'rugosidad  de 0.15 mm / 0.0059 in \n Seleccione el factor ' 
+    roughness_top_lbl = Label(top_frame, text='Los calculos para el dimensionamiento preliminar'
+                            'se basan en un valor de rugosidad  de 0.15 mm / 0.0059 in,\n ' 
+                            'si  desea cambiarlos ingrese un valor personalizado de rugosidad' 
+                            'o use alguno de los de la tabla'
                             'según el material del ducto', 
                             font=('Arial', 25), 
                             bg='gray5',
@@ -147,7 +149,8 @@ def roughness_menu(W, go_back, go_next):
     
     
     def save_new_rugosity():
-        app_state.epsilon = float(new_rough_entry.get())
+        val = new_rough_entry.get().strip()
+        app_state.epsilon = float(val) if val else None
 
     
     bottom_frame = Frame(W, bg='gray5')
@@ -164,7 +167,8 @@ def roughness_menu(W, go_back, go_next):
                     command=lambda: go_back(W))
     back_btn.pack(side='left', padx=10, pady=10)
     
-    new_rough_btn = Button(W, text='Guardar el valor de rugosidad y volver al mennú de predimensionamiento', 
+    new_rough_btn = Button(bottom_frame, text='Guardar el valor de rugosidad y volver \n' 
+                        'al menú de predimensionamiento', 
                         bg='white', fg='black', 
                         relief='raised', 
                         activebackground='DodgerBlue2', 

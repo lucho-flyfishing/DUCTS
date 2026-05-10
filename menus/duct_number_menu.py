@@ -9,10 +9,15 @@ def duct_number_menu(W, go_back, go_next):
     top_frame = Frame(W, bg='gray5')
     top_frame.pack(side='top', fill='x')
     
-    duct_info_tittle = Label(top_frame, text='Complete la información sobre los ramales '
-                            'del sistema, luego presione " Siguiente".', 
+    duct_info_tittle = Label(top_frame, text='Ingrese el número de ramales del sistema'
+                            'de ductos y el número que asignara del ducto principal.', 
                             font=('Arial', 30, 'bold'), bg='gray5', fg='gray60')
     duct_info_tittle.pack(pady=10)
+    
+    guide_lbl = Label(top_frame, bg='gray5', fg='gray60', 
+                    text='(luego presione siguiente)',
+                    font=('Arial', 18))
+    guide_lbl.pack(side='top', pady=1)
     
     
     middle_frame = Frame(W, bg='gray5')
@@ -32,7 +37,7 @@ def duct_number_menu(W, go_back, go_next):
     duct_number_entry.pack(pady=20, ipady=5, ipadx=10)
     
     
-    main_branch_lbl = Label(middle_frame, text='Número de ramal que va a usar como ducto principal:',
+    main_branch_lbl = Label(middle_frame, text='Número del ramal que va a usar como ducto principal:',
                             font=('Arial', 26), bg='gray5', fg='OrangeRed2')
     main_branch_lbl.pack(pady=5)
     

@@ -5,7 +5,7 @@ from app_state import app_state
 # ASHRAE Handbook – HVAC Applications 2015, Table 8, Section 48
 # Main circular duct max velocities (m/s) by location and RC(N) level
 ASHRAE_MAIN_CIRCULAR = {
-    "En eje / techo de placa yeso": {
+    "Ductov vertical / techo de panel yeso": {
         "Baja  (RC 25)":   12.7,
         "Media (RC 35)":   17.8,
         "Alta  (RC 45)":   25.4,
@@ -80,7 +80,7 @@ def velocity_entry_menu(W, go_back, go_next):
                   ).grid(row=row_idx, column=col_idx, padx=1, pady=1)
 
     ref_note = Label(reference_frame,
-                     text='· RC(N): criterio acústico del espacio servido  '
+                     text='· RC(N): criterio acústico del espacio de instalación  '
                           '· Ramales: usar ~80% de los valores anteriores',
                      font=('Arial', 9, 'italic'), bg='gray5', fg='gray55')
     ref_note.grid(row=5, column=0, columnspan=5, pady=(5, 0))
@@ -157,7 +157,7 @@ def velocity_entry_menu(W, go_back, go_next):
     back_btn.pack(side='left', padx=10, pady=10)
 
 
-    next_btn = Button(bottom_frame, text='Siguiente',
+    next_btn = Button(bottom_frame, text='Guardar y continuar',
                     bg='White', fg='black',
                     relief='raised',
                     activebackground='DodgerBlue2',

@@ -132,6 +132,34 @@ def elbows_specs_menu(W, go_back):
         width=20
     )
     name_entry.pack(padx=10)
+    
+    # -------------------------
+    # Entry EXTRA → Número de ramal del accesorio
+    # -------------------------
+    duct_row = Frame(W, bg='gray5')
+    duct_row.pack(fill=X, pady=10)
+
+    Label(
+        duct_row,
+        text="Número de ramal al que pertenece el accesorio:",
+        font=("Arial", 20),
+        bg='gray5', fg='OrangeRed2',
+    ).pack(padx=10)
+
+    duct_number_entry = Entry(
+        duct_row,
+        bg='white',
+        fg='black',
+        relief='solid',
+        bd=2,
+        highlightthickness=2,
+        highlightbackground='white',
+        highlightcolor='DeepSkyBlue2',
+        insertbackground='black',
+        font=("Arial", 20),
+        width=10
+    )
+    duct_number_entry.pack(padx=10)
 
     # -------------------------
     # Guardar y calcular Co
@@ -154,8 +182,12 @@ def elbows_specs_menu(W, go_back):
             if nombre == "":
                 nombre = "Sin nombre"
 
-            # Guardar como lista [nombre, Co]
-            app_state.fittings.append([nombre, Co])
+            # Get duct number
+            duct_num_str = duct_number_entry.get().strip()
+            duct_num = int(duct_num_str) if duct_num_str else None
+
+            # Save as [nombre, Co, duct_number]
+            app_state.fittings.append([nombre, Co, duct_num])
 
             # Mostrar Co en pantalla
             Label(

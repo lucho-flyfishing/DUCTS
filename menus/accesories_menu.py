@@ -66,17 +66,17 @@ def accesories_menu(W, go_back, go_bells_menu, go_elbows_menu, go_damper_menu,
     reducers_btn.pack(padx=5, pady=5)
     
     
-    tees_btn = Button(middle_frame, text='6. Uniones - Empalmes',
-                            bg='white', fg='black',
-                            relief='raised',
-                            activebackground='DodgerBlue2',
-                            activeforeground='OrangeRed2',
-                            font=('Arial', 25, 'bold'),
-                            width=40,
-                            command= lambda: go_junctions_menu(W))
-    tees_btn.pack(padx=5, pady=5)
+    #tees_btn = Button(middle_frame, text='6. Uniones - Empalmes',
+                            #bg='white', fg='black',
+                            #relief='raised',
+                            #activebackground='DodgerBlue2',
+                            #activeforeground='OrangeRed2',
+                            #font=('Arial', 25, 'bold'),
+                            #width=40,
+                            #command= lambda: go_junctions_menu(W))
+    #tees_btn.pack(padx=5, pady=5)
     
-    results_btn = Button(middle_frame, text='7. Resultados',
+    results_btn = Button(middle_frame, text='6. Resultados de accesorios',
                             bg='white', fg='black',
                             relief='raised',
                             activebackground='DodgerBlue2',

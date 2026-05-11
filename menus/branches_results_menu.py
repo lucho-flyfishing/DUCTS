@@ -15,7 +15,7 @@ def branches_results_menu(W, go_back):
     V = float(app_state.velocity)           
     density = float(app_state.rho)         
     viscosity = float(app_state.viscosity)
-
+    main_branch = app_state.main_branch.get()
 
 
     # lists to store the results of diameter and friction loss per length
@@ -28,7 +28,7 @@ def branches_results_menu(W, go_back):
         length_value = length_values[i]
 
         if selected == 1:
-            velocity =  float(V)
+            velocity = float(V) if (i + 1) == main_branch else float(V) * 0.8
             Q = flow_value / 1000  # L/s → m³/s
             diameter_m = math.sqrt((4 * Q) / (math.pi * velocity)) # m
             diameters = diameter_m * 1000  # m → mm
@@ -44,7 +44,7 @@ def branches_results_menu(W, go_back):
             S = f * (1 / diameter_m) * (density * velocity ** 2) / 2  # Pa per meter
 
         elif selected == 2:
-            velocity =  float(V)  # m/s
+            velocity = float(V) if (i + 1) == main_branch else float(V) * 0.8  # m/s
             Q = flow_value  # m³/s
             diameter_m = math.sqrt((4 * Q) / (math.pi * velocity)) # m
             diameters = diameter_m * 1000  # m → mm
@@ -61,7 +61,7 @@ def branches_results_menu(W, go_back):
             S = f * (1 / D) * (density * velocity ** 2) / 2  # Pa per meter
 
         elif selected == 3:
-            velocity =  float(V)  # fpm (feet per minute)
+            velocity = float(V) if (i + 1) == main_branch else float(V) * 0.8  # fpm
             Q_ft3s = flow_value / 60  # CFM → ft³/s
             D_ft = math.sqrt((4 * Q_ft3s) / (math.pi * velocity))  # ft
             diameter_in = D_ft * 12  # ft → in
@@ -96,6 +96,15 @@ def branches_results_menu(W, go_back):
         print("Diametro calculado para el ramal", i+1, ":", diameters)
 
 
+    # S of the main branch is the design friction rate for all branches
+    S_main = S_values[main_branch - 1]
+
+    # DeltaP for each branch = S_main * branch length
+    delta_p_values = [S_main * L for L in length_values]
+
+    app_state.delta_p_values = delta_p_values
+
+
     # ── Results table ─────────────────────────────────────────────────────────
     title_lbl = Label(W, text='Resultados del dimensionamiento de ramales',
                       font=('Arial', 22, 'bold'), bg='gray5', fg='OrangeRed2')
@@ -106,11 +115,11 @@ def branches_results_menu(W, go_back):
 
     # Column headers depending on unit system
     if selected == 1:
-        col_headers = ['Ramal', 'Caudal (L/s)', 'Longitud (m)', 'Pérdidas (Pa/m)', 'Diámetro (mm)']
+        col_headers = ['Ramal', 'Caudal (L/s)', 'Longitud (m)', 'ΔP (Pa)', 'Diámetro (mm)']
     elif selected == 2:
-        col_headers = ['Ramal', 'Caudal (m³/s)', 'Longitud (m)', 'Pérdidas (Pa/m)', 'Diámetro (mm)']
+        col_headers = ['Ramal', 'Caudal (m³/s)', 'Longitud (m)', 'ΔP (Pa)', 'Diámetro (mm)']
     else:
-        col_headers = ['Ramal', 'Caudal (cfm)', 'Longitud (ft)', 'Pérdidas (inH₂O/ft)', 'Diámetro (in)']
+        col_headers = ['Ramal', 'Caudal (cfm)', 'Longitud (ft)', 'ΔP (inH₂O)', 'Diámetro (in)']
 
     col_widths = [18, 18, 18, 20, 18]
 
@@ -123,22 +132,20 @@ def branches_results_menu(W, go_back):
               relief='flat', padx=4, pady=6
               ).grid(row=0, column=col, padx=1, pady=1)
 
-    main_branch = app_state.main_branch.get()
-
     # Data rows
     for i in range(len(flowrate_values)):
         is_main = (main_branch == i + 1)
 
-        row_bg   = 'gray12'
-        name_fg  = 'OrangeRed2' if is_main else 'gray80'
-        val_fg   = 'OrangeRed2' if is_main else 'gray70'
-        tag      = ' (Principal)' if is_main else ''
+        row_bg  = 'gray12'
+        name_fg = 'OrangeRed2' if is_main else 'gray80'
+        val_fg  = 'OrangeRed2' if is_main else 'gray70'
+        tag     = ' (Principal)' if is_main else ''
 
         row_data = [
             f'Ramal {i + 1}{tag}',
             f'{flowrate_values[i]:.2f}',
             f'{length_values[i]:.2f}',
-            f'{S_values[i]:.4f}',
+            f'{delta_p_values[i]:.4f}',
             f'{diameters_values[i]:.1f}',
         ]
 

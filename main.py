@@ -22,6 +22,8 @@ from menus.junctions_menu import junctions_menu
 from menus.bells_specs_menu import bells_specs_menu
 from menus.elbows_specs_menu import elbows_specs_menu 
 from menus.damper_specs_menu import damper_specs_menu
+from menus.junctions_menu import junctions_menu
+from menus.transitions_specs_menu import transitions_specs_menu
 from menus.accesories_results_menu import accesories_results_menu
 
 
@@ -138,7 +140,10 @@ def main():
     
     
     def go_to_transitions_menu(W):
-        transitions_menu(W, go_back=go_to_accesories_menu)
+        transitions_menu(W, go_back=go_to_accesories_menu, go_next=go_to_transitions_specs_menu)
+    
+    def go_to_transitions_specs_menu(W):
+        transitions_specs_menu(W, go_back=go_to_transitions_menu)
     
     
     def go_to_junctions_menu(W):

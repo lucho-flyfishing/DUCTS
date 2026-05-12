@@ -164,7 +164,7 @@ def pre_dim_menu(W, go_back, go_next):
             diameter = diameter_in
             
             if app_state.epsilon is None:
-                epsilon_in = 0.0059 * 12
+                epsilon_in = 0.0059 
             else:
                 epsilon_in = app_state.epsilon  # ya es float en in
             epsilon_ft = epsilon_in / 12  # convertir in → ft

@@ -7,16 +7,13 @@ def start_menu(W, go_next):
         widget.destroy()
         
         
-    lbl1 = Label(W, text='DIMENSIONAMIENTO DE DUCTOS \n DE AIRE ACONDICIONADO',
+    lbl1 = Label(W, text='DIMENSIONAMIENTO DE DUCTOS',
                 font=('Arial', 30, 'bold'), bg='gray5', fg='Dark Orange')
     lbl1.pack(pady=1)
     
     
     lbl2 = Label(W, text='Con este programa usted podrá dimensionar ductos de ventilación \n'
-                        'considerando las pérdidas debidas a la fricción en tramos rectos y \n'
-                        'en accesorios. Solo es necesario conocer el caudal y la longitud de los \n'
-                        'ramales del sistema. Además, el programa presenta la opción de convertir \n'
-                        'los ductos rectangulares equivalentes.',
+                        'mediante equal friction method.',
                 font=('Arial', 26), bg='gray5', fg='gray60')
     lbl2.pack(pady=1)
     

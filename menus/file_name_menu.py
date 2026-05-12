@@ -7,7 +7,7 @@ def file_name_menu(W, go_back, go_next):
         widget.destroy()
     
     
-    file_name_lbl = Label(W, text=('El programa va a crear un archivo con los resultados.\n'
+    file_name_lbl = Label(W, text=('Creación de archivo.\n'
                         'Introduzca el nombre con el que desea guardar \n el archivo y presione '
                         '“Guardar nombre del archivo”, \n luego presione “Siguiente”:'), 
                         font=('Arial', 26), 

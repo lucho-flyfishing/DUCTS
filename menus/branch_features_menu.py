@@ -35,7 +35,7 @@ def branch_features_menu(W, go_back, go_next):
     
     headers = {
         1: ("Caudal (L/s)", "Longitud (m)"),
-        2: ("Caudal (m³/h)", "Longitud (m)"),
+        2: ("Caudal (m³/s)", "Longitud (m)"),
         3: ("Caudal (cfm)", "Longitud (ft)")
     }
     

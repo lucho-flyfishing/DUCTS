@@ -3,125 +3,159 @@ from app_state import app_state
 import math
 
 
+def solve_diameter_equal_friction(Q, S, rho, viscosity, epsilon):
+    """
+    Iterative solver for duct diameter using equal friction method.
+    Given flowrate Q (m³/s), target friction rate S (Pa/m),
+    air density rho (kg/m³), dynamic viscosity (Pa·s), roughness epsilon (m).
+    Returns diameter in meters.
+    """
+    # Initial guess from simplified formula (ignore friction factor, assume f~0.02)
+    f_guess = 0.02
+    D = ((8 * f_guess * rho * Q**2) / (math.pi**2 * S)) ** (1/5)
+
+    for _ in range(50):  # iterate until convergence
+        V = (4 * Q) / (math.pi * D**2)
+        Re = (rho * V * D) / viscosity
+        if Re < 1:
+            break
+        f = 0.25 / (math.log10((epsilon / (3.7 * D)) + (5.74 / Re**0.9)))**2
+        D_new = ((8 * f * rho * Q**2) / (math.pi**2 * S)) ** (1/5)
+        if abs(D_new - D) < 1e-9:
+            break
+        D = D_new
+
+    return D
+
+
+def solve_diameter_equal_friction_ip(Q_ft3s, S_inwg_ft, density_ip, viscosity_ip, epsilon_ft):
+    """
+    Iterative solver for duct diameter — imperial units.
+    Q_ft3s: ft³/s, S_inwg_ft: inH₂O/ft, density_ip: lb/ft³,
+    viscosity_ip: lb/(ft·s), epsilon_ft: ft.
+    Returns diameter in feet.
+    """
+    S_lbft2_ft = S_inwg_ft * 5.202  # convert inH₂O/ft → lb/ft² per ft
+
+    f_guess = 0.02
+    D = ((8 * f_guess * density_ip * Q_ft3s**2) / (math.pi**2 * S_lbft2_ft)) ** (1/5)
+
+    for _ in range(50):
+        V = (4 * Q_ft3s) / (math.pi * D**2)
+        Re = (density_ip * V * D) / viscosity_ip
+        if Re < 1:
+            break
+        f = 0.25 / (math.log10((epsilon_ft / (3.7 * D)) + (5.74 / Re**0.9)))**2
+        D_new = ((8 * f * density_ip * Q_ft3s**2) / (math.pi**2 * S_lbft2_ft)) ** (1/5)
+        if abs(D_new - D) < 1e-9:
+            break
+        D = D_new
+
+    return D
+
+
 def branches_results_menu(W, go_back):
     # Clear the window
     for widget in W.winfo_children():
         widget.destroy()
-    
-    
-    selected =  app_state.selected_option.get()
+
+
+    selected       = app_state.selected_option.get()
     flowrate_values = app_state.flowrate_entries
-    length_values = app_state.length_entries
-    V = float(app_state.velocity)           
-    density = float(app_state.rho)         
-    viscosity = float(app_state.viscosity)
-    main_branch = app_state.main_branch.get()
+    length_values   = app_state.length_entries
+    density        = float(app_state.rho)
+    viscosity      = float(app_state.viscosity)
+    main_branch    = app_state.main_branch.get()
 
+    # S from the main branch (set in pre_dim_menu) — design friction rate for all branches
+    S_main = float(app_state.S)
 
-    # lists to store the results of diameter and friction loss per length
     diameters_values = []
-    S_values = []
-    
-    
-    for i in range(len(flowrate_values)): # Loop through each branch to calculate diameter and friction loss
-        flow_value = flowrate_values[i]
+    delta_p_values   = []
+    velocity_values  = []
+
+
+    for i in range(len(flowrate_values)):
+        flow_value   = flowrate_values[i]
         length_value = length_values[i]
 
         if selected == 1:
-            velocity = float(V) if (i + 1) == main_branch else float(V) * 0.8
-            Q = flow_value / 1000  # L/s → m³/s
-            diameter_m = math.sqrt((4 * Q) / (math.pi * velocity)) # m
-            diameters = diameter_m * 1000  # m → mm
-            
-            epsilon = 1.5e-6 # roughness for typical duct materials in m
-            
-            D = diameter_m
-            Re = (density * velocity * D) / viscosity
+            Q       = flow_value / 1000          # L/s → m³/s
+            epsilon = 1.5e-4                     # m (default roughness)
 
-            # Friction factor (turbulent, Swamee-Jain approximation)
-            f = 0.25 / ( math.log10( (epsilon / (3.7 * D)) + (5.74 / Re**0.9) ) )**2  # friction factor for turbulent flow
-
-            S = f * (1 / diameter_m) * (density * velocity ** 2) / 2  # Pa per meter
+            D_m       = solve_diameter_equal_friction(Q, S_main, density, viscosity, epsilon)
+            diameters = D_m * 1000               # m → mm
+            velocity  = float(app_state.velocity) if (i + 1) == main_branch else (4 * Q) / (math.pi * D_m**2)  # m/s
 
         elif selected == 2:
-            velocity = float(V) if (i + 1) == main_branch else float(V) * 0.8  # m/s
-            Q = flow_value  # m³/s
-            diameter_m = math.sqrt((4 * Q) / (math.pi * velocity)) # m
-            diameters = diameter_m * 1000  # m → mm
-            
-            epsilon = 1.5e-6  # roughness for typical duct materials in m
-            
-            D = diameter_m # already in m
-            Re = (density * velocity * D) / viscosity # Reynolds number
+            Q       = flow_value                 # already m³/s
+            epsilon = 1.5e-4                     # m
 
-            # Friction factor (turbulent, Swamee-Jain approximation)
-            f = 0.25 / ( math.log10( (epsilon / (3.7 * D)) + (5.74 / Re**0.9) ) )**2  # friction factor for turbulent flow
-
-            # Friction loss per unit length
-            S = f * (1 / D) * (density * velocity ** 2) / 2  # Pa per meter
+            D_m       = solve_diameter_equal_friction(Q, S_main, density, viscosity, epsilon)
+            diameters = D_m * 1000               # m → mm
+            velocity  = float(app_state.velocity) if (i + 1) == main_branch else (4 * Q) / (math.pi * D_m**2)  # m/s
 
         elif selected == 3:
-            velocity = float(V) if (i + 1) == main_branch else float(V) * 0.8  # fpm
-            Q_ft3s = flow_value / 60  # CFM → ft³/s
-            D_ft = math.sqrt((4 * Q_ft3s) / (math.pi * velocity))  # ft
-            diameter_in = D_ft * 12  # ft → in
-            diameters = diameter_in
+            Q_ft3s       = flow_value / 60       # CFM → ft³/s
+            epsilon_in   = 0.0059                # in (default roughness)
+            epsilon_ft   = epsilon_in / 12       # in → ft
+            density_ip   = density               # lb/ft³
+            viscosity_ip = viscosity             # lb/(ft·s)
 
-            epsilon_in = 0.0000591  # typical roughness in inches
-            epsilon_ft = epsilon_in / 12  # convert in → ft
-            density_ip = app_state.density  # lb/ft³
-            viscosity_ip = app_state.viscosity  # lb/ft·s
-
-            D = D_ft  # already in ft
-            V_ft_s = velocity / 60  # convert fpm → ft/s
-            Re = (density_ip * V_ft_s * D) / viscosity_ip  # Reynolds number
-
-            # Friction factor (turbulent, Swamee-Jain approximation)
-            f_ip = 0.25 / (math.log10((epsilon_ft / (3.7 * D)) + (5.74 / Re**0.9))) ** 2
-
-            # Friction loss per unit length
-            S_ip = f_ip * (1 / D) * (density_ip * V_ft_s ** 2) / 2  # lb/ft² per ft
-            S = S_ip / 5.202  # convert lb/ft² → in.wg per ft
+            D_ft      = solve_diameter_equal_friction_ip(Q_ft3s, S_main, density_ip, viscosity_ip, epsilon_ft)
+            diameters = D_ft * 12                # ft → in
+            velocity  = float(app_state.velocity) if (i + 1) == main_branch else ((4 * Q_ft3s) / (math.pi * D_ft**2)) * 60  # fpm
 
         else:
             diameters = None
-            S = None
+            velocity  = None
+
+        delta_p = S_main * length_value if diameters is not None else None
 
         diameters_values.append(diameters)
-        S_values.append(S)
+        delta_p_values.append(delta_p)
+        velocity_values.append(velocity)
 
-        app_state.diameters_values = diameters_values  # Store the diameter values in app_state
-        app_state.S = S_values                         # Store the friction loss values in app_state
-
-        print("Diametro calculado para el ramal", i+1, ":", diameters)
+        print("Diametro calculado para el ramal", i + 1, ":", diameters, "| Velocidad:", velocity)
 
 
-    # S of the main branch is the design friction rate for all branches
-    S_main = S_values[main_branch - 1]
+    app_state.diameters_values = diameters_values
+    app_state.delta_p_values   = delta_p_values
+    app_state.velocity_values  = velocity_values
 
-    # DeltaP for each branch = S_main * branch length
-    delta_p_values = [S_main * L for L in length_values]
 
-    app_state.delta_p_values = delta_p_values
+    # ── S label ───────────────────────────────────────────────────────────────
+    if selected in (1, 2):
+        s_text = f'Tasa de fricción de diseño (S): {round(S_main, 4)} Pa/m'
+    else:
+        s_text = f'Tasa de fricción de diseño (S): {round(S_main, 6)} inH₂O/ft'
 
+    Label(W, text=s_text,
+          font=('Arial', 16, 'bold'),
+          bg='gray5', fg='gray60'
+          ).pack(pady=(15, 2))
+
+    Label(W, text='Todos los ramales se dimensionan con esta misma tasa (método de igual fricción)',
+          font=('Arial', 11, 'italic'),
+          bg='gray5', fg='gray50'
+          ).pack(pady=(0, 10))
 
     # ── Results table ─────────────────────────────────────────────────────────
     title_lbl = Label(W, text='Resultados del dimensionamiento de ramales',
                       font=('Arial', 22, 'bold'), bg='gray5', fg='OrangeRed2')
-    title_lbl.pack(pady=(15, 5))
+    title_lbl.pack(pady=(5, 5))
 
     table_frame = Frame(W, bg='gray5')
     table_frame.pack(pady=5)
 
-    # Column headers depending on unit system
     if selected == 1:
-        col_headers = ['Ramal', 'Caudal (L/s)', 'Longitud (m)', 'ΔP (Pa)', 'Diámetro (mm)']
+        col_headers = ['Ramal', 'Caudal (L/s)', 'Longitud (m)', 'Velocidad (m/s)', 'ΔP (Pa)', 'Diámetro (mm)']
     elif selected == 2:
-        col_headers = ['Ramal', 'Caudal (m³/s)', 'Longitud (m)', 'ΔP (Pa)', 'Diámetro (mm)']
+        col_headers = ['Ramal', 'Caudal (m³/s)', 'Longitud (m)', 'Velocidad (m/s)', 'ΔP (Pa)', 'Diámetro (mm)']
     else:
-        col_headers = ['Ramal', 'Caudal (cfm)', 'Longitud (ft)', 'ΔP (inH₂O)', 'Diámetro (in)']
+        col_headers = ['Ramal', 'Caudal (cfm)', 'Longitud (ft)', 'Velocidad (fpm)', 'ΔP (inH₂O)', 'Diámetro (in)']
 
-    col_widths = [18, 18, 18, 20, 18]
+    col_widths = [18, 18, 18, 18, 20, 18]
 
     # Header row
     for col, (header, width) in enumerate(zip(col_headers, col_widths)):
@@ -136,7 +170,6 @@ def branches_results_menu(W, go_back):
     for i in range(len(flowrate_values)):
         is_main = (main_branch == i + 1)
 
-        row_bg  = 'gray12'
         name_fg = 'OrangeRed2' if is_main else 'gray80'
         val_fg  = 'OrangeRed2' if is_main else 'gray70'
         tag     = ' (Principal)' if is_main else ''
@@ -145,6 +178,7 @@ def branches_results_menu(W, go_back):
             f'Ramal {i + 1}{tag}',
             f'{flowrate_values[i]:.2f}',
             f'{length_values[i]:.2f}',
+            f'{velocity_values[i]:.2f}',
             f'{delta_p_values[i]:.4f}',
             f'{diameters_values[i]:.1f}',
         ]
@@ -153,7 +187,7 @@ def branches_results_menu(W, go_back):
             fg = name_fg if col == 0 else val_fg
             Label(table_frame, text=value,
                   font=('Arial', 12),
-                  bg=row_bg, fg=fg,
+                  bg='gray12', fg=fg,
                   width=width, anchor='center',
                   relief='flat', padx=4, pady=5
                   ).grid(row=i + 1, column=col, padx=1, pady=1)
@@ -163,12 +197,12 @@ def branches_results_menu(W, go_back):
 
     bottom_frame = Frame(W, bg='gray5')
     bottom_frame.pack(side='bottom', fill='x')
-        
-    back_btn = Button(bottom_frame, text='Regresar y modificar valores', 
+
+    back_btn = Button(bottom_frame, text='Regresar y modificar valores',
                     bg='White', fg='black',
-                    relief='raised', 
-                    activebackground='DodgerBlue2', 
-                    activeforeground='OrangeRed2', 
+                    relief='raised',
+                    activebackground='DodgerBlue2',
+                    activeforeground='OrangeRed2',
                     font=('Arial', 20, 'bold'),
                     command=lambda: go_back(W))
     back_btn.pack(side='left', padx=10, pady=10)

@@ -46,8 +46,8 @@ def velocity_entry_menu(W, go_back, go_next):
     reference_frame.pack(pady=(10, 0))
 
     ref_title = Label(reference_frame,
-                      text='Velocidades máximas recomendadas — Ducto circular principal (ASHRAE)',
-                      font=('Arial', 11, 'bold'), bg='gray5', fg='OrangeRed2')
+                    text='Velocidades máximas recomendadas — Ducto circular principal (ASHRAE)',
+                    font=('Arial', 22, 'bold'), bg='gray5', fg='OrangeRed2')
     ref_title.grid(row=0, column=0, columnspan=5, pady=(0, 6))
 
     selected = app_state.selected_option.get()
@@ -56,17 +56,17 @@ def velocity_entry_menu(W, go_back, go_next):
     headers = ['Ubicación', 'Velocidad baja (RC 25)', 'Velocidad media (RC 35)', 'Velocidad alta (RC 45)']
     col_widths = [28, 22, 22, 22]
     for col, (h, w) in enumerate(zip(headers, col_widths)):
-        Label(reference_frame, text=h, font=('Arial', 10, 'bold'),
-              bg='gray15', fg='gray80', width=w, anchor='center',
-              relief='flat', padx=4, pady=4
-              ).grid(row=1, column=col, padx=1, pady=1)
+        Label(reference_frame, text=h, font=('Arial', 22, 'bold'),
+            bg='gray15', fg='gray80', width=w, anchor='center',
+            relief='flat', padx=4, pady=4
+            ).grid(row=1, column=col, padx=1, pady=1)
 
     # Table rows
     for row_idx, (location, ranges) in enumerate(ASHRAE_MAIN_CIRCULAR.items(), start=2):
-        Label(reference_frame, text=location, font=('Arial', 10),
-              bg='gray12', fg='gray75', width=col_widths[0], anchor='w',
-              padx=6, pady=3
-              ).grid(row=row_idx, column=0, padx=1, pady=1)
+        Label(reference_frame, text=location, font=('Arial', 22),
+            bg='gray12', fg='gray75', width=col_widths[0], anchor='w',
+            padx=6, pady=3
+            ).grid(row=row_idx, column=0, padx=1, pady=1)
 
         for col_idx, (range_label, max_vel_ms) in enumerate(ranges.items(), start=1):
             if selected == 3:           # imperial — show fpm
@@ -74,15 +74,17 @@ def velocity_entry_menu(W, go_back, go_next):
             else:                       # metric — show m/s
                 display_val = f"{max_vel_ms} m/s"
 
-            Label(reference_frame, text=display_val, font=('Arial', 10, 'bold'),
-                  bg='gray12', fg='OrangeRed2', width=col_widths[col_idx],
-                  anchor='center', padx=4, pady=3
-                  ).grid(row=row_idx, column=col_idx, padx=1, pady=1)
+            Label(reference_frame, text=display_val, font=('Arial', 22, 'bold'),
+                bg='gray12', fg='OrangeRed2', width=col_widths[col_idx],
+                anchor='center', padx=4, pady=3
+                ).grid(row=row_idx, column=col_idx, padx=1, pady=1)
 
     ref_note = Label(reference_frame,
-                     text='· RC(N): criterio acústico del espacio de instalación  '
-                          '· Ramales: usar ~80% de los valores anteriores',
-                     font=('Arial', 9, 'italic'), bg='gray5', fg='gray55')
+                    text='Las velocidades recomendadas por “ASHRAE Handbook – HVAC Applications 2015 '
+                        '/ Section 48 Noise and vibration control” se basan en criterios acústicos \n'
+                        '· el RC(N): que aparece en la tabla es el criterio acústico del espacio de instalación'
+                        '· para ramales: se usa el 80% de los valores anteriores',
+                    font=('Arial', 12, 'italic'), bg='gray5', fg='gray55')
     ref_note.grid(row=5, column=0, columnspan=5, pady=(5, 0))
     # ── end reference widget ──────────────────────────────────────────────────
 

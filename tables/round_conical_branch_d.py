@@ -1,34 +1,26 @@
-# round_tap_rectangular_main_tee.py
-# Tee, Converging, Round Tap to Rectangular Main
-# SMACNA 1981, Table 6-9C
+# round_conical_branch_d.py
+# Tee, Diverging, Round, Conical Branch
+# Jones and Sepsy 1969, Figure 12
 
 # ---------------------------------------------------------
 # CONSTANT GEOMETRY
 # ---------------------------------------------------------
-# Ab/As = 0.5
-# As/Ac = 1.0
-# Ab/Ac = 0.5
+# Ac = As
 
 # ---------------------------------------------------------
 # TABLE: Branch, Cc,b
 # Inputs:
-#   Vc_fpm = main duct velocity [fpm]
-#   Qb_Qc = Q_b / Q_c
+#   Vb_Vs = V_b / V_s
 # ---------------------------------------------------------
 
-QB_QC_VALUES = [0.1, 0.2, 0.3, 0.4, 0.5,
-                0.6, 0.7, 0.8, 0.9, 1.0]
-
-# Vc < 1200 fpm
-CCB_LOW_VELOCITY = [
-    -0.63, -0.55, 0.13, 0.23, 0.78,
-    1.30, 1.93, 3.10, 4.88, 5.60
+VB_VS_VALUES = [
+    0.0, 0.2, 0.4, 0.6, 0.8,
+    1.0, 1.2, 1.4, 1.6, 1.8, 2.0
 ]
 
-# Vc > 1200 fpm
-CCB_HIGH_VELOCITY = [
-    -0.49, -0.21, 0.23, 0.60, 1.27,
-    2.06, 2.75, 3.70, 4.93, 5.95
+CCB_VALUES = [
+    1.0, 0.85, 0.74, 0.62, 0.52,
+    0.42, 0.36, 0.32, 0.32, 0.37, 0.52
 ]
 
 
@@ -61,16 +53,10 @@ def interpolate_1d(x, xp, fp):
 # BRANCH COEFFICIENT
 # =========================================================
 
-def get_ccb_round_tap_rectangular_main_tee(Vc_fpm, Qb_Qc):
-
-    # Select velocity row
-    if Vc_fpm < 1200:
-        values = CCB_LOW_VELOCITY
-    else:
-        values = CCB_HIGH_VELOCITY
+def get_ccb_round_conical_branch_d(Vb_Vs):
 
     return interpolate_1d(
-        Qb_Qc,
-        QB_QC_VALUES,
-        values
+        Vb_Vs,
+        VB_VS_VALUES,
+        CCB_VALUES
     )

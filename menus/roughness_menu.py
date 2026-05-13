@@ -23,7 +23,8 @@ def roughness_menu(W, go_back, go_next):
     
     
     roughness_top_lbl = Label(top_frame, text='Los calculos para el dimensionamiento preliminar '
-                            'se basan en un valor de rugosidad  de 0.15 mm / 0.0059 in,\n ' 
+                            'se basan en un valor de rugosidad  de 0.15 mm / 0.0059 in, valor que '
+                            'corresponde a Acero Galvanizado de calidad comercial,\n ' 
                             'si  desea cambiarlos ingrese un valor personalizado de rugosidad ' 
                             'ó use alguno de los de la tabla según el material del ducto', 
                             font=('Arial', 25), 
@@ -126,13 +127,20 @@ def roughness_menu(W, go_back, go_next):
     
     
         roughness_lbl = Label(middle_frame, text='Factor de Rugosidad (mm)',
-                            font=('Arial', 15), 
-                            bg='gray5',
-                            fg='gray60')
+                            bg='white',
+                            fg='black',
+                            relief='solid',
+                            bd=2,
+                            highlightthickness=2,
+                            highlightbackground='white',
+                            highlightcolor='DeepSkyBlue2',
+                            insertbackground='black',
+                            font=("Arial", 20),
+                            width=20)
         roughness_lbl.grid(row=1, column=2, padx=5, pady=3, sticky="nsew")
     
     new_rough_lbl = Label(W, text=('introduzca el valor de rugosidad que desea utilizar para el cálculo \n'
-                                'luego presione Siguiente'), 
+                                'luego presione “Continuar”'), 
                         font=('Arial', 26), 
                         bg='gray5', 
                         fg='gray60')
@@ -166,8 +174,7 @@ def roughness_menu(W, go_back, go_next):
                     command=lambda: go_back(W))
     back_btn.pack(side='left', padx=10, pady=10)
     
-    new_rough_btn = Button(bottom_frame, text='Guardar el valor de rugosidad y volver \n' 
-                        'al menú de predimensionamiento', 
+    new_rough_btn = Button(bottom_frame, text='Continuar', 
                         bg='white', fg='black', 
                         relief='raised', 
                         activebackground='DodgerBlue2', 

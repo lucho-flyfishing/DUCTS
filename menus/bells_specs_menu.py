@@ -53,7 +53,7 @@ def bells_specs_menu(W, go_back):
         top_frame,
         bg="gray5",
         fg="white",
-        text=f"Campana seleccionada: {filename.replace('_',' ').title()}",
+        text=f"Campana seleccionada: {filename.replace('_', ' ').title()}",
         font=("Arial", 24, "bold")
     ).pack()
 
@@ -61,7 +61,7 @@ def bells_specs_menu(W, go_back):
         top_frame,
         bg="gray5",
         fg="white",
-        text="Ingrese los valores para calcular Co",
+        text="Ingrese los valores para calcular ΔP",
         font=("Arial", 18)
     ).pack(pady=10)
 
@@ -70,7 +70,7 @@ def bells_specs_menu(W, go_back):
     params_frame = Frame(W, bg='gray5')
     params_frame.pack(pady=20)
 
-    # Crear dinámicamente las entradas según la función
+    # Entradas dinámicas según firma de la función (para Co)
     for pname in param_names:
         row = Frame(params_frame, bg='gray5')
         row.pack(fill=X, pady=5)
@@ -82,7 +82,6 @@ def bells_specs_menu(W, go_back):
             bg='gray5', fg='OrangeRed2',
         ).pack(side=LEFT, padx=10)
 
-        # ---- FIXED ENTRY SETTINGS ----
         entry = Entry(
             row,
             font=("Arial", 20),
@@ -91,32 +90,53 @@ def bells_specs_menu(W, go_back):
             relief='solid',
             bd=2,
             highlightthickness=2,
-            highlightbackground='white',      # unfocused border visible
-            highlightcolor='DeepSkyBlue2',     # focused border visible
-            insertbackground='black'           # cursor visible
+            highlightbackground='white',
+            highlightcolor='DeepSkyBlue2',
+            insertbackground='black'
         )
         entry.pack(side=LEFT, padx=10)
-
         entries.append(entry)
 
-    # Force visibility: focus first entry
-    if entries:
-        W.after(100, lambda: entries[0].focus_set())
+    # -------------------------
+    # Entry → Velocidad
+    # -------------------------
+    vel_row = Frame(params_frame, bg='gray5')
+    vel_row.pack(fill=X, pady=5)
+
+    Label(
+        vel_row,
+        text="V (m/s):",
+        font=("Arial", 20),
+        bg='gray5', fg='OrangeRed2',
+    ).pack(side=LEFT, padx=10)
+
+    vel_entry = Entry(
+        vel_row,
+        font=("Arial", 20),
+        bg='white',
+        fg='black',
+        relief='solid',
+        bd=2,
+        highlightthickness=2,
+        highlightbackground='white',
+        highlightcolor='DeepSkyBlue2',
+        insertbackground='black'
+    )
+    vel_entry.pack(side=LEFT, padx=10)
 
     # -------------------------
-    # Entry EXTRA → Nombre del fitting
+    # Entry → Etiqueta del accesorio
     # -------------------------
     name_row = Frame(W, bg='gray5')
     name_row.pack(fill=X, pady=10)
 
     Label(
         name_row,
-        text="Nombre / etiqueta del accesorio:",
+        text="Etiqueta del accesorio:",
         font=("Arial", 20),
         bg='gray5', fg='OrangeRed2',
     ).pack(padx=10)
 
-    # ---- FIXED NAME ENTRY SETTINGS ----
     name_entry = Entry(
         name_row,
         bg='white',
@@ -131,41 +151,21 @@ def bells_specs_menu(W, go_back):
         width=20
     )
     name_entry.pack(padx=10)
-    
-    # -------------------------
-    # Entry EXTRA → Número de ramal del accesorio
-    # -------------------------
-    duct_row = Frame(W, bg='gray5')
-    duct_row.pack(fill=X, pady=10)
 
-    Label(
-        duct_row,
-        text="Número de ramal al que pertenece el accesorio:",
-        font=("Arial", 20),
-        bg='gray5', fg='OrangeRed2',
-    ).pack(padx=10)
-
-    duct_number_entry = Entry(
-        duct_row,
-        bg='white',
-        fg='black',
-        relief='solid',
-        bd=2,
-        highlightthickness=2,
-        highlightbackground='white',
-        highlightcolor='DeepSkyBlue2',
-        insertbackground='black',
-        font=("Arial", 20),
-        width=10
-    )
-    duct_number_entry.pack(padx=10)
+    # Focus primer entry
+    if entries:
+        W.after(100, lambda: entries[0].focus_set())
 
     # -------------------------
-    # Guardar y calcular Co
+    # Calcular y guardar
     # -------------------------
     def save_values_and_compute():
+        # Limpiar resultados anteriores
+        for widget in result_frame.winfo_children():
+            widget.destroy()
+
         try:
-            # Obtener valores numéricos
+            # Valores para Co
             values = [float(e.get()) for e in entries]
 
             if len(values) != num_params:
@@ -176,43 +176,61 @@ def bells_specs_menu(W, go_back):
             # Calcular Co
             Co = calc_func(*values)
 
-            # Obtener nombre
-            nombre = name_entry.get().strip()
-            if nombre == "":
-                nombre = "Sin nombre"
+            # Velocidad
+            V = float(vel_entry.get())
 
-            # Get duct number
-            duct_num_str = duct_number_entry.get().strip()
-            duct_num = int(duct_num_str) if duct_num_str else None
+            # Densidad desde app_state
+            rho = app_state.rho
 
-            # Save as [nombre, Co, duct_number]
-            app_state.fittings.append([nombre, Co, duct_num])
+            # Calcular ΔP
+            delta_p = Co * rho * (V ** 2) / 2
 
-            # Mostrar Co en pantalla
+            # Etiqueta
+            label = name_entry.get().strip()
+            if label == "":
+                label = "Sin nombre"
+
+            # Tipo de fitting
+            fitting_type = filename.replace('_', ' ').title()
+
+            # Guardar [etiqueta, tipo, ΔP]
+            app_state.fittings.append([label, fitting_type, delta_p])
+
+            # Mostrar resultado
             Label(
-                W,
-                text=f"Co calculado = {Co:.4f}",
+                result_frame,
+                text=f"ΔP = {delta_p:.4f} Pa",
                 font=("Arial", 18, "bold"),
-                fg="blue"
-            ).pack(pady=10)
+                bg='gray5',
+                fg='DeepSkyBlue2'
+            ).pack(pady=5)
+
+            Label(
+                result_frame,
+                text=f"(Co = {Co:.4f}  |  V = {V} m/s  |  ρ = {rho} kg/m³)",
+                font=("Arial", 14),
+                bg='gray5',
+                fg='gray60'
+            ).pack()
 
             # Imprimir en terminal
-            print("\nLista actual de fittings (nombre, Co):")
+            print("\nLista actual de fittings:")
             for item in app_state.fittings:
                 print(item)
 
         except Exception as e:
             Label(
-                W,
+                result_frame,
                 text=f"Error: {e}",
                 font=("Arial", 16),
-                fg="red"
+                bg='gray5',
+                fg='red'
             ).pack(pady=10)
 
-    # Botón de guardar
+    # Botón guardar
     Button(
         W,
-        text="Guardar valores",
+        text="Guardar y calcular ΔP",
         bg='White', fg='black',
         relief='raised',
         activebackground='DodgerBlue2',
@@ -221,6 +239,10 @@ def bells_specs_menu(W, go_back):
         font=('Arial', 20, 'bold'),
         command=save_values_and_compute
     ).pack(pady=20)
+
+    # Frame para mostrar resultado (se limpia en cada cálculo)
+    result_frame = Frame(W, bg='gray5')
+    result_frame.pack(pady=10)
 
     # Navegación inferior
     bottom_frame = Frame(W, bg='gray5')

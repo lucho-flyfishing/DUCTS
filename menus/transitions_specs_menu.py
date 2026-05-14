@@ -55,14 +55,14 @@ def transitions_specs_menu(W, go_back):
     ).pack()
 
     # Nota extra para el reductor (opción 2)
-    if selected_transition_value == 2:
-        Label(
-            top_frame,
-            bg="gray5",
-            fg="OrangeRed2",
-            text="Nota: para un reductor ingrese un valor < 1 en la primera columna de la tabla.",
-            font=("Arial", 14, "italic")
-        ).pack(pady=4)
+    #if selected_transition_value == 2:
+        #Label(
+            #top_frame,
+            #bg="gray5",
+            #fg="OrangeRed2",
+            #text="Nota: para un reductor ingrese un valor < 1 en la primera columna de la tabla.",
+            #font=("Arial", 14, "italic")
+        #).pack(pady=4)
 
     Label(
         top_frame,

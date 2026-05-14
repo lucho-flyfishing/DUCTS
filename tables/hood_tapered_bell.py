@@ -83,7 +83,7 @@ def get_co_hood_tapered_bell(theta, forma):
 
     forma = forma.lower().strip()
 
-    if forma == "1" or forma == "round":
+    if forma == "circular" or forma == "round":
         return float(linear_interp(theta, theta_round, Co_round))
 
     elif forma in ("rect", "rectangular", "square"):

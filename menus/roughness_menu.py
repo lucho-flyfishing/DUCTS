@@ -1,4 +1,4 @@
-from tkinter import Button, Label, Frame, StringVar, Entry
+from tkinter import Button, Label, Frame, OptionMenu, StringVar, Entry
 from app_state import app_state
 
 def roughness_menu(W, go_back, go_next):
@@ -8,7 +8,7 @@ def roughness_menu(W, go_back, go_next):
         
         
     top_frame = Frame(W, bg='gray5')
-    top_frame.pack(side='top', fill='x')
+    top_frame.pack(side='top', fill='x') 
     
     
     pre_result_main = Label(top_frame, text='Menu de rugosidad', 
@@ -134,7 +134,6 @@ def roughness_menu(W, go_back, go_next):
                             highlightthickness=2,
                             highlightbackground='white',
                             highlightcolor='DeepSkyBlue2',
-                            insertbackground='black',
                             font=("Arial", 20),
                             width=20)
         roughness_lbl.grid(row=1, column=2, padx=5, pady=3, sticky="nsew")

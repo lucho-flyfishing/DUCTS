@@ -24,7 +24,6 @@ damper_table = {
             [0.08, 0.33, 1.20, 3.30, 9.00, 26.0, 70.0, 128.0, 210.0]
         ]
     },
-
     2: {
         "ranges": [(1.0, 9999.0)],  # H/W > 1.0
         "Co": [
@@ -32,6 +31,7 @@ damper_table = {
         ]
     }
 }
+
 
 # -------------------------------------------------------
 # 1D interpolation (manual)
@@ -43,34 +43,58 @@ def interpolate_1d(x, xp, fp):
         return fp[0]
     if x >= xp[-1]:
         return fp[-1]
-
     for i in range(len(xp) - 1):
-        if xp[i] <= x <= xp[i+1]:
-            x0, x1 = xp[i], xp[i+1]
-            y0, y1 = fp[i], fp[i+1]
+        if xp[i] <= x <= xp[i + 1]:
+            x0, x1 = xp[i], xp[i + 1]
+            y0, y1 = fp[i], fp[i + 1]
             return y0 + (y1 - y0) * (x - x0) / (x1 - x0)
-
     return fp[-1]
 
+
 # -------------------------------------------------------
-# Helper: find row based on H/W
+# Helper: find correct Co row based on TYPE and H/W
 # -------------------------------------------------------
 
-def get_co_rectangular_butterfly_damper(TYPE, H_W):
-    """
-    Determines which row of the damper table applies.
-    Returns (row_index).
-    """
-
+def get_row_index(TYPE, H_W):
     ranges = damper_table[TYPE]["ranges"]
-
     for i, (low, high) in enumerate(ranges):
         if low <= H_W < high:
             return i
-
-    # If H/W is exactly 1.0 for Type 1, choose the second row
+    # H/W exactly 1.0 for Type 1 → second row
     if TYPE == 1 and H_W == 1.0:
         return 1
-
     # Clamp to last row in unexpected cases
-    return len(ranges)
+    return len(ranges) - 1
+
+
+# -------------------------------------------------------
+# PUBLIC FUNCTION
+# -------------------------------------------------------
+
+def get_co_rectangular_butterfly_damper(TYPE, H_W, theta):
+    """
+    Returns Co for a rectangular butterfly damper.
+
+    Parameters
+    ----------
+    TYPE : int
+        1 → single-blade damper
+        2 → double-blade damper (H/W > 1.0)
+    H_W : float
+        Height-to-width ratio of the duct
+    theta : float
+        Blade angle θ in degrees (0 = fully open, 70 = nearly closed)
+
+    Returns
+    -------
+    float : interpolated Co
+    """
+    TYPE = int(TYPE)
+
+    if TYPE not in damper_table:
+        raise ValueError(f"TYPE '{TYPE}' not recognized. Use 1 or 2.")
+
+    row_index = get_row_index(TYPE, H_W)
+    co_row = damper_table[TYPE]["Co"][row_index]
+
+    return float(interpolate_1d(theta, theta_values, co_row))

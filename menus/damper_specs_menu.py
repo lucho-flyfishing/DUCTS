@@ -1,6 +1,6 @@
 # damper_specs_menu.py
 
-from tkinter import Label, Button, Entry, Frame, LEFT, RIGHT, BOTH, X, TOP
+from tkinter import Label, Button, Entry, Frame, OptionMenu, StringVar, LEFT, RIGHT, BOTH, X, TOP
 import importlib
 import inspect
 from app_state import app_state
@@ -16,6 +16,11 @@ DAMPER_FILE_MAP = {
     6: "rectangular_oppo_blades_damper",
     7: "round_and_rectangular_screen_damper",
     8: "thick_perforated_damper",
+}
+
+# Params that are strings → rendered as dropdowns instead of text entries
+DROPDOWN_PARAMS = {
+    "TYPE": ["1", "2"],
 }
 
 
@@ -65,6 +70,7 @@ def damper_specs_menu(W, go_back):
 
     # Frame de parámetros dinámicos
     entries = []
+    param_types = []   # "numeric" or "string"
     params_frame = Frame(W, bg='gray5')
     params_frame.pack(pady=20)
 
@@ -80,20 +86,42 @@ def damper_specs_menu(W, go_back):
             bg='gray5', fg='OrangeRed2',
         ).pack(side=LEFT, padx=10)
 
-        entry = Entry(
-            row,
-            font=("Arial", 20),
-            bg='white',
-            fg='black',
-            relief='solid',
-            bd=2,
-            highlightthickness=2,
-            highlightbackground='white',
-            highlightcolor='DeepSkyBlue2',
-            insertbackground='black'
-        )
-        entry.pack(side=LEFT, padx=10)
-        entries.append(entry)
+        if pname in DROPDOWN_PARAMS:
+            # String param → OptionMenu
+            options = DROPDOWN_PARAMS[pname]
+            var = StringVar(W)
+            var.set(options[0])
+            menu = OptionMenu(row, var, *options)
+            menu.config(
+                font=("Arial", 18),
+                bg='white', fg='black',
+                activebackground='DeepSkyBlue2',
+                activeforeground='white',
+                relief='solid',
+                bd=2,
+                width=10
+            )
+            menu["menu"].config(font=("Arial", 16), bg='white', fg='black')
+            menu.pack(side=LEFT, padx=10)
+            entries.append(var)
+            param_types.append("string")
+        else:
+            # Numeric param → regular Entry
+            entry = Entry(
+                row,
+                font=("Arial", 20),
+                bg='white',
+                fg='black',
+                relief='solid',
+                bd=2,
+                highlightthickness=2,
+                highlightbackground='white',
+                highlightcolor='DeepSkyBlue2',
+                insertbackground='black'
+            )
+            entry.pack(side=LEFT, padx=10)
+            entries.append(entry)
+            param_types.append("numeric")
 
     # -------------------------
     # Entry → Velocidad
@@ -150,9 +178,10 @@ def damper_specs_menu(W, go_back):
     )
     name_entry.pack(padx=10)
 
-    # Focus primer entry
-    if entries:
-        W.after(100, lambda: entries[0].focus_set())
+    # Focus first numeric entry
+    numeric_entries = [e for e, t in zip(entries, param_types) if t == "numeric"]
+    if numeric_entries:
+        W.after(100, lambda: numeric_entries[0].focus_set())
 
     # -------------------------
     # Calcular y guardar
@@ -163,8 +192,13 @@ def damper_specs_menu(W, go_back):
             widget.destroy()
 
         try:
-            # Valores para Co
-            values = [float(e.get()) for e in entries]
+            # Parse each param according to its type
+            values = []
+            for e, t in zip(entries, param_types):
+                if t == "string":
+                    values.append(e.get())
+                else:
+                    values.append(float(e.get()))
 
             if len(values) != num_params:
                 raise ValueError(

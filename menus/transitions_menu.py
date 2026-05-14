@@ -57,7 +57,7 @@ def transitions_menu(W, go_back, go_next):
     
     
     Radiobutton(middle_frame, text="2. Transicion circular reductora", 
-                variable=app_state.selected_elbow, value=2,
+                variable=app_state.selected_transition, value=2,
                 command=on_select, **radio_style).grid(row=1, column=1, pady=5)
     
     

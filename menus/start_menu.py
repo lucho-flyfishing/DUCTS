@@ -12,7 +12,7 @@ def start_menu(W, go_next):
     lbl1.pack(pady=1)
     
     
-    lbl2 = Label(W, text='Con este programa usted podrá dimensionar ductos de ventilación \n'
+    lbl2 = Label(W, text='Este programa dimensiona ductos de ventilación \n'
                         'mediante equal friction method.',
                 font=('Arial', 26), bg='gray5', fg='gray60')
     lbl2.pack(pady=1)

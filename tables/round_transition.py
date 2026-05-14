@@ -17,33 +17,47 @@ co_table = {
     10.0: {10: 5.00, 15: 5.00, 20: 5.00, 30: 5.00, 45: 6.50, 60: 10.0, 90: 19.0, 120: 27.0, 150: 37.0, 180: 43.0},
 }
 
+
 # ---- Interpolación lineal básica ----
 def linear_interp(x, x1, x2, y1, y2):
     if x2 == x1:
         return y1
     return y1 + (y2 - y1) * (x - x1) / (x2 - x1)
 
+
 # ---- Interpolación bilineal en la tabla ----
 def bilinear_lookup(x, y, table):
     xs = sorted(table.keys())
     ys = sorted(next(iter(table.values())).keys())
 
-    # Limitar dentro de la tabla
-    if x <= xs[0]: x = xs[0]
-    if x >= xs[-1]: x = xs[-1]
-    if y <= ys[0]: y = ys[0]
-    if y >= ys[-1]: y = ys[-1]
+    # Clamp dentro de los límites de la tabla
+    x = max(xs[0], min(xs[-1], x))
+    y = max(ys[0], min(ys[-1], y))
 
-    # Encontrar x1, x2
-    for i in range(len(xs)-1):
-        if xs[i] <= x <= xs[i+1]:
-            x1, x2 = xs[i], xs[i+1]
+    # Caso exacto en x — no necesita interpolación en x
+    if x in table:
+        row = table[x]
+        ys_row = sorted(row.keys())
+        if y in row:
+            return float(row[y])
+        for j in range(len(ys_row) - 1):
+            if ys_row[j] <= y <= ys_row[j + 1]:
+                return float(linear_interp(y, ys_row[j], ys_row[j + 1],
+                                           row[ys_row[j]], row[ys_row[j + 1]]))
+        return float(row[ys_row[-1]])
+
+    # Encontrar x1, x2 para interpolación
+    x1, x2 = xs[0], xs[1]
+    for i in range(len(xs) - 1):
+        if xs[i] <= x <= xs[i + 1]:
+            x1, x2 = xs[i], xs[i + 1]
             break
 
-    # Encontrar y1, y2
-    for j in range(len(ys)-1):
-        if ys[j] <= y <= ys[j+1]:
-            y1, y2 = ys[j], ys[j+1]
+    # Encontrar y1, y2 para interpolación
+    y1, y2 = ys[0], ys[1]
+    for j in range(len(ys) - 1):
+        if ys[j] <= y <= ys[j + 1]:
+            y1, y2 = ys[j], ys[j + 1]
             break
 
     # Valores en los 4 puntos
@@ -52,19 +66,18 @@ def bilinear_lookup(x, y, table):
     Q21 = table[x2][y1]
     Q22 = table[x2][y2]
 
-    # Interpolar en x
+    # Interpolar en x, luego en y
     R1 = linear_interp(x, x1, x2, Q11, Q21)
     R2 = linear_interp(x, x1, x2, Q12, Q22)
+    return float(linear_interp(y, y1, y2, R1, R2))
 
-    # Interpolar final en y
-    P = linear_interp(y, y1, y2, R1, R2)
-
-    return P
 
 # ---- FUNCIÓN PRINCIPAL ----
 def get_co_round_transition(area_ratio, theta_deg):
     """
     area_ratio = Ao / A1
+        < 1 → reductor (área decrece)
+        > 1 → expansor (área crece)
     theta_deg = θ en grados
     """
     return bilinear_lookup(area_ratio, theta_deg, co_table)

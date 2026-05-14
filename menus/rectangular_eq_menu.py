@@ -16,8 +16,8 @@ def rectangular_eq_menu(W, go_back):
     top_frame.pack(side='top', fill='x')
     
     title = Label(top_frame,
-                  text='Rectangulares EQ',
-                  font=('Arial', 30),
+                  text='En la siguiente tabla se muestran los equivalentes rectangulares para cada diámetro de ducto circular, considerando diferentes relaciones de aspecto (ancho:alto).',
+                  font=('Arial', 15),
                   bg='gray5',
                   fg='gray60')
     title.pack(side='top', pady=1)
@@ -65,6 +65,15 @@ def rectangular_eq_menu(W, go_back):
         "Eq 4:1"
     ]
     
+    # Aspect ratio group label spanning the 4 EQ columns
+    Label(
+        middle_frame,
+        text="Relación de aspecto (ancho:alto)",
+        bg="gray20",
+        fg="yellow",
+        font=("Arial", 13, "italic"),
+    ).grid(row=0, column=2, columnspan=4, sticky="nsew", padx=2, pady=(0, 2))
+
     for col, text in enumerate(headers):
         Label(
             middle_frame,
@@ -74,7 +83,7 @@ def rectangular_eq_menu(W, go_back):
             font=("Arial", 22, "bold"),
             padx=10,
             pady=5
-        ).grid(row=0, column=col, sticky="nsew")
+        ).grid(row=1, column=col, sticky="nsew")
     
     
     # -------------------------
@@ -84,7 +93,7 @@ def rectangular_eq_menu(W, go_back):
     
     for i, D in enumerate(diameters_values):
         
-        row = i + 1
+        row = i + 2  # shifted down by 1 to account for the new label row
         
         # Ramal
         Label(

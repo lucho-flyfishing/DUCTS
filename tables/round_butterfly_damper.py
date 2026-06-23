@@ -93,7 +93,7 @@ def get_co_round_butterfly_damper(D_Do, theta):
         co_table
     )
 
-    print(f"[DEBUG] Round Butterfly Damper → D/Do={D_Do}, θ={theta}")
+    print(f"[DEBUG] Round Butterfly Damper -> D/Do={D_Do}, theta={theta}")
     print(f"[DEBUG] Co = {Co}")
 
     return Co

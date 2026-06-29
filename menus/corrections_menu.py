@@ -35,23 +35,23 @@ def corrections_menu(W, go_back, go_accesories_menu, go_roughness_menu,
     middle_frame.pack(expand=True, anchor='center')
 
     branches_results_btn = Button(middle_frame, text='Resultados del dimensionamiento de ramales',
-                                  bg='white', fg='black',
-                                  relief='raised',
-                                  activebackground='DodgerBlue2',
-                                  activeforeground='OrangeRed2',
-                                  font=('Arial', 25, 'bold'),
-                                  width=40,
-                                  command=lambda: go_branches_results_menu(W))
+                                bg='white', fg='black',
+                                relief='raised',
+                                activebackground='DodgerBlue2',
+                                activeforeground='OrangeRed2',
+                                font=('Arial', 25, 'bold'),
+                                width=40,
+                                command=lambda: go_branches_results_menu(W))
     branches_results_btn.pack(padx=5, pady=5)
 
     roughness_btn = Button(middle_frame, text='Correcion por rugosidad del material del ducto',
-                           bg='white', fg='black',
-                           relief='raised',
-                           activebackground='DodgerBlue2',
-                           activeforeground='OrangeRed2',
-                           font=('Arial', 25, 'bold'),
-                           width=40,
-                           command=lambda: go_roughness_menu(W))
+                                bg='white', fg='black',
+                                relief='raised',
+                                activebackground='DodgerBlue2',
+                                activeforeground='OrangeRed2',
+                                font=('Arial', 25, 'bold'),
+                                width=40,
+                                command=lambda: go_roughness_menu(W))
     roughness_btn.pack(padx=5, pady=10, anchor='n')
 
     rectangular_eq_btn = Button(middle_frame, text='Ductos rectangulares equivalentes',
@@ -65,13 +65,13 @@ def corrections_menu(W, go_back, go_accesories_menu, go_roughness_menu,
     rectangular_eq_btn.pack(padx=5, pady=5)
 
     re_design_btn = Button(middle_frame, text='Volver a hacer el dimensionamiento preliminar',
-                           bg='white', fg='black',
-                           relief='raised',
-                           activebackground='DodgerBlue2',
-                           activeforeground='OrangeRed2',
-                           font=('Arial', 25, 'bold'),
-                           width=40,
-                           command=lambda: go_back(W))
+                            bg='white', fg='black',
+                            relief='raised',
+                            activebackground='DodgerBlue2',
+                            activeforeground='OrangeRed2',
+                            font=('Arial', 25, 'bold'),
+                            width=40,
+                            command=lambda: go_back(W))
     re_design_btn.pack(padx=5, pady=5)
 
     accesories_btn = Button(middle_frame, text='Calcular perdidas en accesorios',

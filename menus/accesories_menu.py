@@ -7,7 +7,7 @@ from reportlab.lib import colors
 
 
 def accesories_menu(W, go_back, go_bells_menu, go_elbows_menu, go_damper_menu,
-                    go_transitions_menu, go_junctions_menu, go_results_menu):
+                    go_transitions_menu, go_junctions_menu, go_diverging_junctions_menu, go_results_menu):
     # Clear the window
     for widget in W.winfo_children():
         widget.destroy()
@@ -79,15 +79,25 @@ def accesories_menu(W, go_back, go_bells_menu, go_elbows_menu, go_damper_menu,
     reducers_btn.pack(padx=5, pady=5)
 
 
-    #tees_btn = Button(middle_frame, text='6. Uniones - Empalmes',
-                            #bg='white', fg='black',
-                            #relief='raised',
-                            #activebackground='DodgerBlue2',
-                            #activeforeground='OrangeRed2',
-                            #font=('Arial', 25, 'bold'),
-                            #width=40,
-                            #command= lambda: go_junctions_menu(W))
-    #tees_btn.pack(padx=5, pady=5)
+    tees_btn = Button(middle_frame, text='6. Uniones convergentes',
+                            bg='white', fg='black',
+                            relief='raised',
+                            activebackground='DodgerBlue2',
+                            activeforeground='OrangeRed2',
+                            font=('Arial', 25, 'bold'),
+                            width=40,
+                            command= lambda: go_junctions_menu(W))
+    tees_btn.pack(padx=5, pady=5)
+    
+    div_tees_btn = Button(middle_frame, text='7. Uniones divergentes',
+                            bg='white', fg='black',
+                            relief='raised',
+                            activebackground='DodgerBlue2',
+                            activeforeground='OrangeRed2',
+                            font=('Arial', 25, 'bold'),
+                            width=40,
+                            command= lambda: go_diverging_junctions_menu(W))
+    div_tees_btn.pack(padx=5, pady=5)
 
     results_btn = Button(middle_frame, text='6. Resultados de accesorios',
                             bg='white', fg='black',

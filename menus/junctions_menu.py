@@ -77,21 +77,6 @@ def junctions_menu(W, go_back):
     Radiobutton(middle_frame, text="8. T Ramal y principal rectangular",
                 variable=app_state.selected_junction, value=8,
                 command=on_select, **radio_style).grid(row=3, column=3, pady=5)
-
-    Radiobutton(middle_frame, text="9. Y divergente rectangular y circular",
-                variable=app_state.selected_junction, value=9,
-                command=on_select, **radio_style).grid(row=5, column=0, pady=5)
-
-    
-    Radiobutton(middle_frame, text="10. T divergente ramal circular y principal rectangular",
-                variable=app_state.selected_junction, value=10,
-                command=on_select, **radio_style).grid(row=5, column=1, pady=5)
-
-    
-    Radiobutton(middle_frame, text="11. T divergente rectangular",
-                variable=app_state.selected_junction, value=11,
-                command=on_select, **radio_style).grid(row=5, column=2, pady=5)
-
     
     
 
@@ -147,23 +132,6 @@ def junctions_menu(W, go_back):
     rectangular_tap_rectangular_main_img_lbl.image = rectangular_tap_rectangular_main_img
     rectangular_tap_rectangular_main_img_lbl.grid(row=2, column=3, padx=20, pady=10, sticky="nsew")
     
-    rectangular_and_round_wye_img = resources.load_image("rectangular_and_round_wye_d.png",
-                                    size=(200, 200))
-    rectangular_and_round_wye_img_lbl = Label(middle_frame, image=rectangular_and_round_wye_img, bg='gray5')
-    rectangular_and_round_wye_img_lbl.image = rectangular_and_round_wye_img
-    rectangular_and_round_wye_img_lbl.grid(row=4, column=0, padx=20, pady=10, sticky="nsew")
-    
-    rectangular_main_and_tap_tee_d_img = resources.load_image("rectangular_main_and_tap_tee_d.png",
-                                    size=(200, 200))
-    rectangular_main_and_tap_tee_d_img_lbl = Label(middle_frame, image=rectangular_main_and_tap_tee_d_img, bg='gray5')
-    rectangular_main_and_tap_tee_d_img_lbl.image = rectangular_main_and_tap_tee_d_img
-    rectangular_main_and_tap_tee_d_img_lbl.grid(row=4, column=1, padx=20, pady=10, sticky="nsew")
-
-    rectangular_tee_d_img = resources.load_image("rectangular_tee_d.png",
-                                    size=(200, 200))
-    rectangular_tee_d_img_lbl = Label(middle_frame, image=rectangular_tee_d_img, bg='gray5')
-    rectangular_tee_d_img_lbl.image = rectangular_tee_d_img
-    rectangular_tee_d_img_lbl.grid(row=4, column=2, padx=20, pady=10, sticky="nsew")
 
 
     bottom_frame = Frame(W, bg='gray5')

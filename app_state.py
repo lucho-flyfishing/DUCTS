@@ -25,6 +25,7 @@ class AppState:
         self.selected_elbow = None
         self.selected_transition = None
         self.selected_junction = None
+        self.selected_diverging_junction = None
         self.selected_damper = None
         self.fittings = []
         self.r_bell = None 

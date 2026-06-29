@@ -19,6 +19,7 @@ from menus.elbows_menu import elbows_menu
 from menus.damper_menu import damper_menu   
 from menus.transitions_menu import transitions_menu
 from menus.junctions_menu import junctions_menu
+from menus.diverging_junctions_menu import diverging_junctions_menu
 from menus.bells_specs_menu import bells_specs_menu
 from menus.elbows_specs_menu import elbows_specs_menu 
 from menus.damper_specs_menu import damper_specs_menu
@@ -115,8 +116,10 @@ def main():
     def go_to_accesories_menu(W):
         accesories_menu(W, go_back=go_to_corrections_menu, go_bells_menu=go_to_bells_menu,
                         go_elbows_menu=go_to_elbows_menu, go_damper_menu=go_to_damper_menu,
-                        go_transitions_menu=go_to_transitions_menu, go_junctions_menu=go_to_junctions_menu, go_results_menu=go_to_results_menu)
-    
+                        go_transitions_menu=go_to_transitions_menu, go_junctions_menu=go_to_junctions_menu, 
+                        go_diverging_junctions_menu=go_to_diverging_junctions_menu, 
+                        go_results_menu=go_to_results_menu)
+
     
     def go_to_bells_menu(W):
         bells_menu(W, go_back=go_to_accesories_menu, go_next=go_to_bells_specs_menu)
@@ -148,6 +151,9 @@ def main():
     
     def go_to_junctions_menu(W):
         junctions_menu(W, go_back=go_to_accesories_menu)
+        
+    def go_to_diverging_junctions_menu(W):
+        diverging_junctions_menu(W, go_back=go_to_accesories_menu)
         
     def go_to_results_menu(W):
         accesories_results_menu(W, go_back=go_to_accesories_menu)

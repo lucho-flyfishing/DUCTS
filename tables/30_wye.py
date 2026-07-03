@@ -104,7 +104,7 @@ def _bilinear_from_table(x, y, x_grid, y_grid, table):
 # -------------------------
 # API: funciones expuestas
 # -------------------------
-def get_co_wye_30_branch(Ab_Ac, Qb_Qc):
+def get_co_30_wye_branch(Ab_Ac, Qb_Qc):
     """
     Co for the branch of a 30° Wye (Cc,b).
     Inputs:
@@ -116,7 +116,7 @@ def get_co_wye_30_branch(Ab_Ac, Qb_Qc):
     return _bilinear_from_table(Ab_Ac, Qb_Qc, AB_AC_VALUES, QB_QC_VALUES, CC_BRANCH_TABLE)
 
 
-def get_co_wye_30_main(Ab_Ac, Qb_Qc):
+def get_co_30_wye_main(Ab_Ac, Qb_Qc):
     """
     Co for the main (straight) duct of a 30° Wye (Cc,s).
     Inputs:

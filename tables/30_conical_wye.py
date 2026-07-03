@@ -210,7 +210,7 @@ def interp_2d_irregular(as_ac, ab_ac, q_val, row_headers, q_headers, data_table)
 # Public functions
 # -----------------------------
 
-def get_wye_30_branch(Qs, Qc, Qb, As, Ac, Ab):
+def get_co_30_conical_wye_branch(Qs, Qc, Qb, As, Ac, Ab):
     """
     Calculates Branch Coefficient C_c,b.
     Automatically selects between Top Table (Qb/Qs) and Bottom Table (Qb/Qc)
@@ -236,7 +236,7 @@ def get_wye_30_branch(Qs, Qc, Qb, As, Ac, Ab):
         return interp_2d_irregular(as_ac, ab_ac, q_ratio, 
                                 BRANCH_QC_ROWS_HEAD, Q_RATIOS_2_0, BRANCH_TABLE_QB_QC)
 
-def get_wye_30_main(Qc, Qb, As, Ac, Ab):
+def get_co_30_conical_wye_main(Qc, Qb, As, Ac, Ab):
     """
     Calculates Main Coefficient C_c,s based on Qb/Qc.
     """

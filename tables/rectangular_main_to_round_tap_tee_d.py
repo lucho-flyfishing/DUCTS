@@ -107,7 +107,7 @@ def interpolate_2d(x, y, x_values, y_values, table):
 # BRANCH COEFFICIENT
 # =========================================================
 
-def get_ccb_rectangular_main_to_round_tap_tee_d(Vb_Vc, Qb_Qs):
+def get_co_rectangular_main_to_round_tap_tee_d(Vb_Vc, Qb_Qs):
 
     return interpolate_2d(
         Vb_Vc,

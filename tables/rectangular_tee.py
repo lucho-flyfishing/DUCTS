@@ -90,7 +90,7 @@ def interpolate_between_rows(target, row1, row2, values1, values2):
 # BRANCH INTERPOLATION
 # =========================================================
 
-def get_ccb_rectangular_tee(Ab_As, Ab_Ac, Qb_Qc):
+def get_co_rectangular_tee_branch(Ab_As, Ab_Ac, Qb_Qc):
 
     rows = sorted(BRANCH_ROWS, key=lambda r: (r[0], r[1]))
 
@@ -136,7 +136,7 @@ def get_ccb_rectangular_tee(Ab_As, Ab_Ac, Qb_Qc):
 # MAIN INTERPOLATION
 # =========================================================
 
-def get_ccs_rectangular_tee(Ab_As, Ab_Ac, Qb_Qs):
+def get_co_rectangular_tee_main(Ab_As, Ab_Ac, Qb_Qs):
 
     rows = sorted(MAIN_ROWS, key=lambda r: (r[0], r[1]))
 

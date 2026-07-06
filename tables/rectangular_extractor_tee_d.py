@@ -113,7 +113,7 @@ def interpolate_2d(x, y, x_values, y_values, table):
 # MAIN COEFFICIENT
 # =========================================================
 
-def get_ccs_rectangular_extractor_tee_d(Vb_Vc):
+def get_co_rectangular_extractor_tee_d_main(Vb_Vc):
 
     return interpolate_1d(
         Vb_Vc,
@@ -126,7 +126,7 @@ def get_ccs_rectangular_extractor_tee_d(Vb_Vc):
 # BRANCH COEFFICIENT
 # =========================================================
 
-def get_ccb_rectangular_extractor_tee_d(Vb_Vc, Qb_Qc):
+def get_co_rectangular_extractor_tee_d_branch(Vb_Vc, Qb_Qc):
 
     return interpolate_2d(
         Vb_Vc,

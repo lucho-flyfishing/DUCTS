@@ -117,7 +117,7 @@ def get_row_index(target_ab_as, target_ab_ac, rows):
 # BRANCH COEFFICIENT
 # =========================================================
 
-def get_ccb_rectangular_d_tee(Ab_As, Ab_Ac, Qb_Qc):
+def get_co_rectangular_tee_d_branch(Ab_As, Ab_Ac, Qb_Qc):
 
     row_index = get_row_index(
         Ab_As,

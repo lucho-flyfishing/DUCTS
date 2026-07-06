@@ -53,7 +53,7 @@ def interpolate_1d(x, xp, fp):
 # BRANCH COEFFICIENT
 # =========================================================
 
-def get_ccb_45_round_conical_branch_d_wye(Vb_Vc):
+def get_co_45_round_conical_branch_wye_d_branch(Vb_Vc):
 
     return interpolate_1d(
         Vb_Vc,

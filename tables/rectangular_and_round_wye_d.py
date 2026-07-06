@@ -153,7 +153,7 @@ def get_closest_ab_ac_index(Ab_Ac):
 # MAIN COEFFICIENT
 # =========================================================
 
-def get_ccs_rectangular_and_round_d_tee(Vb_Vc):
+def get_co_rectangular_and_round_wye_d_main(Vb_Vc):
 
     return interpolate_1d(
         Vb_Vc,
@@ -166,7 +166,7 @@ def get_ccs_rectangular_and_round_d_tee(Vb_Vc):
 # BRANCH COEFFICIENT
 # =========================================================
 
-def get_ccb_rectangular_and_round_d_tee(theta_deg, Ab_Ac, Qb_Qc):
+def get_co_rectangular_and_round_wye_d_branch(theta_deg, Ab_Ac, Qb_Qc):
 
     row_index = get_closest_ab_ac_index(Ab_Ac)
 

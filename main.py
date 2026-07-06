@@ -24,7 +24,7 @@ from menus.bells_specs_menu import bells_specs_menu
 from menus.elbows_specs_menu import elbows_specs_menu 
 from menus.damper_specs_menu import damper_specs_menu
 from menus.junctions_specs_menu import junctions_specs_menu
-#from menus.diverging_junctions_specs_menu import diverging_junctions_specs_menu
+from menus.diverging_junctions_specs_menu import diverging_junctions_specs_menu
 from menus.transitions_specs_menu import transitions_specs_menu
 from menus.accesories_results_menu import accesories_results_menu
 
@@ -58,6 +58,7 @@ def main():
     app_state.selected_elbow = IntVar(W)
     app_state.selected_transition = IntVar(W)
     app_state.selected_junction = IntVar(W)
+    app_state.selected_diverging_junction = IntVar(W)
     app_state.selected_damper = IntVar(W)
     app_state.r_bell = IntVar(W)
     app_state.D_bell = IntVar(W)
@@ -157,8 +158,11 @@ def main():
         junctions_specs_menu(W, go_back=go_to_junctions_menu)
     
     def go_to_diverging_junctions_menu(W):
-        diverging_junctions_menu(W, go_back=go_to_accesories_menu)
+        diverging_junctions_menu(W, go_back=go_to_accesories_menu, go_next=go_to_diverging_junctions_specs_menu)
         
+    def go_to_diverging_junctions_specs_menu(W):
+        diverging_junctions_specs_menu(W, go_back=go_to_diverging_junctions_menu)
+
     def go_to_results_menu(W):
         accesories_results_menu(W, go_back=go_to_accesories_menu)
     

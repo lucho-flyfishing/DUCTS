@@ -91,6 +91,8 @@ def diverging_junctions_menu(W, go_back):
                 variable=app_state.selected_diverging_junction, value=9,
                 command=on_select, **radio_style).grid(row=5, column=0, pady=5)
     
+    
+    
 
     round_conical_branch_tee_d_img = resources.load_image("round_conical_branch_tee_d.png",
                                     size=(200, 200))
@@ -118,9 +120,6 @@ def diverging_junctions_menu(W, go_back):
     _90_round_conical_branch_tee_d_img_lbl = Label(middle_frame, image=_90_round_conical_branch_tee_d_img, bg='gray5')
     _90_round_conical_branch_tee_d_img_lbl.image = _90_round_conical_branch_tee_d_img
     _90_round_conical_branch_tee_d_img_lbl.grid(row=0, column=2, padx=20, pady=10, sticky="nsew")
-    
-    
-
     
     
     rectangular_tee_d_img = resources.load_image("rectangular_tee_d.png", 
@@ -157,6 +156,12 @@ def diverging_junctions_menu(W, go_back):
     rectangular_main_and_tap_tee_d_img_lbl.image = rectangular_main_and_tap_tee_d_img
     rectangular_main_and_tap_tee_d_img_lbl.grid(row=4, column=0, padx=20, pady=10, sticky="nsew")
     
+    
+    rectangular_and_round_wye_2_img = resources.load_image("rectangular_and_round_wye_2.png",
+                                    size=(200, 200))
+    rectangular_and_round_wye_2_img_lbl = Label(middle_frame, image=rectangular_and_round_wye_2_img, bg='gray5')
+    rectangular_and_round_wye_2_img_lbl.image = rectangular_and_round_wye_2_img
+    rectangular_and_round_wye_2_img_lbl.grid(row=4, column=1, padx=20, pady=10, sticky="nsew")
     
     bottom_frame = Frame(W, bg='gray5')
     bottom_frame.pack(side='bottom', fill='x')

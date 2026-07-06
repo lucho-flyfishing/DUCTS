@@ -79,6 +79,12 @@ def junctions_menu(W, go_back, go_next):
                 command=on_select, **radio_style).grid(row=3, column=3, pady=5)
     
     
+    Radiobutton(middle_frame, text="9. Y rectangular y circular",
+                variable=app_state.selected_junction, value=9,
+                command=on_select, **radio_style).grid(row=5, column=0, pady=5)
+    
+    
+    
 
 
     wye_30_img = resources.load_image("30_wye.png",
@@ -131,6 +137,12 @@ def junctions_menu(W, go_back, go_next):
     rectangular_tap_rectangular_main_img_lbl = Label(middle_frame, image=rectangular_tap_rectangular_main_img, bg='gray5')
     rectangular_tap_rectangular_main_img_lbl.image = rectangular_tap_rectangular_main_img
     rectangular_tap_rectangular_main_img_lbl.grid(row=2, column=3, padx=20, pady=10, sticky="nsew")
+    
+    rectangular_and_round_wye_2_img = resources.load_image("rectangular_and_round_wye_2.png",
+                                    size=(200, 200))
+    rectangular_and_round_wye_2_img_lbl = Label(middle_frame, image=rectangular_and_round_wye_2_img, bg='gray5')
+    rectangular_and_round_wye_2_img_lbl.image = rectangular_and_round_wye_2_img
+    rectangular_and_round_wye_2_img_lbl.grid(row=4, column=0, padx=20, pady=10, sticky="nsew")
     
 
 

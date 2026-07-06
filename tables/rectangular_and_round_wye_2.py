@@ -1,62 +1,86 @@
-# rectangular_main_and_tap_tee_d.py
-# Tee, Diverging, Rectangular Main and Tap
-# SMACNA 1981, Table 10Q
+# rectangular_and_round_wye.py
+# Wye, Rectangular and Round (Converging)
+# Idelchik et al. 1986, Diagram 7-30
 
 # ---------------------------------------------------------
-# CONSTANT GEOMETRY
+# GEOMETRY
 # ---------------------------------------------------------
-# Ac = As
+# A1b = A2b
+# Ac = A1b + A2b
 #
-# Main coefficient (Cc,s):
-# See fitting 5-23
+# Returns Cc,1b or Cc,2b
+# (Both branches use the same table.)
 
 # ---------------------------------------------------------
-# TABLE: Branch, Cc,b
-# Inputs:
-#   Vb_Vc = Vb / Vc
-#   Qb_Qc = Qb / Qc
+# TABLE
 # ---------------------------------------------------------
 
-VB_VC_VALUES = [
-    0.2, 0.4, 0.6, 0.8,
-    1.0, 1.2, 1.4, 1.6, 1.8
+THETA_VALUES = [
+    15,
+    30,
+    45
 ]
 
 QB_QC_VALUES = [
-    0.1, 0.2, 0.3, 0.4,
-    0.5, 0.6, 0.7, 0.8, 0.9
+    0.0,
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.9,
+    1.0
 ]
-
-# Missing values are repeated so interpolation remains valid.
 
 CCB_TABLE = [
 
-    # Vb/Vc = 0.2
-    [1.03, 1.03, 1.03, 1.03, 1.03, 1.03, 1.03, 1.03, 1.03],
+    # θ = 15°
+    [
+        -2.6,
+        -1.9,
+        -1.3,
+        -0.77,
+        -0.30,
+         0.10,
+         0.41,
+         0.67,
+         0.85,
+         0.97,
+         1.00
+    ],
 
-    # Vb/Vc = 0.4
-    [1.04, 1.01, 1.01, 1.01, 1.01, 1.01, 1.01, 1.01, 1.01],
+    # θ = 30°
+    [
+        -2.1,
+        -1.5,
+        -1.0,
+        -0.53,
+        -0.10,
+         0.28,
+         0.69,
+         0.91,
+         1.10,
+         1.40,
+         1.60
+    ],
 
-    # Vb/Vc = 0.6
-    [1.11, 1.03, 1.05, 1.05, 1.05, 1.05, 1.05, 1.05, 1.05],
-
-    # Vb/Vc = 0.8
-    [1.16, 1.21, 1.17, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12],
-
-    # Vb/Vc = 1.0
-    [1.38, 1.40, 1.30, 1.36, 1.27, 1.27, 1.27, 1.27, 1.27],
-
-    # Vb/Vc = 1.2
-    [1.52, 1.61, 1.68, 1.91, 1.47, 1.66, 1.66, 1.66, 1.66],
-
-    # Vb/Vc = 1.4
-    [1.79, 2.01, 1.90, 2.31, 2.28, 2.20, 1.95, 1.95, 1.95],
-
-    # Vb/Vc = 1.6
-    [2.07, 2.28, 2.13, 2.71, 2.99, 2.81, 2.09, 2.20, 2.20],
-
-    # Vb/Vc = 1.8
-    [2.32, 2.54, 2.64, 3.09, 3.72, 2.48, 2.21, 2.57, 2.32],
+    # θ = 45°
+    [
+        -1.3,
+        -0.93,
+        -0.55,
+        -0.16,
+         0.20,
+         0.56,
+         0.92,
+         1.30,
+         1.60,
+         2.00,
+         2.30
+    ]
 ]
 
 
@@ -90,7 +114,6 @@ def interpolate_2d(x, y, x_values, y_values, table):
     interpolated_rows = []
 
     for row in table:
-
         interpolated_rows.append(
             interpolate_1d(y, y_values, row)
         )
@@ -106,12 +129,12 @@ def interpolate_2d(x, y, x_values, y_values, table):
 # BRANCH COEFFICIENT
 # =========================================================
 
-def get_co_rectangular_main_and_tap_tee_d(Vb_Vc, Qb_Qc):
+def get_co_rectangular_and_round_wye_2_branch(theta, Qb_Qc):
 
     return interpolate_2d(
-        Vb_Vc,
+        theta,
         Qb_Qc,
-        VB_VC_VALUES,
+        THETA_VALUES,
         QB_QC_VALUES,
         CCB_TABLE
     )

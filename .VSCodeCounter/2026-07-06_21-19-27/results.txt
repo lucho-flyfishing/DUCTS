@@ -1,0 +1,52 @@
+Date : 2026-07-06 21:19:27
+Directory : c:\Users\luisj\OneDrive\Documents\U\PG\DUCTS\menus
+Total : 28 files,  3690 codes, 347 comments, 1144 blanks, all 5181 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| Python   |         28 |      3,690 |        347 |      1,144 |      5,181 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                 | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                    |         28 |      3,690 |        347 |      1,144 |      5,181 |
++--------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                             | language | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| c:\Users\luisj\OneDrive\Documents\U\PG\DUCTS\menus\__init__.py                       | Python   |          0 |          1 |          0 |          1 |
+| c:\Users\luisj\OneDrive\Documents\U\PG\DUCTS\menus\accesories_menu.py                | Python   |        163 |          6 |         40 |        209 |
+| c:\Users\luisj\OneDrive\Documents\U\PG\DUCTS\menus\accesories_results_menu.py        | Python   |         71 |         10 |         16 |         97 |
+| c:\Users\luisj\OneDrive\Documents\U\PG\DUCTS\menus\alt_temp_menu.py                  | Python   |         91 |          0 |         22 |        113 |
+| c:\Users\luisj\OneDrive\Documents\U\PG\DUCTS\menus\bells_menu.py                     | Python   |        128 |          0 |         58 |        186 |
+| c:\Users\luisj\OneDrive\Documents\U\PG\DUCTS\menus\bells_specs_menu.py               | Python   |        216 |         36 |         43 |        295 |
+| c:\Users\luisj\OneDrive\Documents\U\PG\DUCTS\menus\branch_features_menu.py           | Python   |        100 |          5 |         28 |        133 |
+| c:\Users\luisj\OneDrive\Documents\U\PG\DUCTS\menus\branches_results_menu.py          | Python   |        142 |         20 |         46 |        208 |
+| c:\Users\luisj\OneDrive\Documents\U\PG\DUCTS\menus\corrections_menu.py               | Python   |        163 |         19 |         32 |        214 |
+| c:\Users\luisj\OneDrive\Documents\U\PG\DUCTS\menus\damper_menu.py                    | Python   |        117 |          1 |         50 |        168 |
+| c:\Users\luisj\OneDrive\Documents\U\PG\DUCTS\menus\damper_specs_menu.py              | Python   |        214 |         36 |         43 |        293 |
+| c:\Users\luisj\OneDrive\Documents\U\PG\DUCTS\menus\diverging_junctions_menu.py       | Python   |        135 |          1 |         61 |        197 |
+| c:\Users\luisj\OneDrive\Documents\U\PG\DUCTS\menus\diverging_junctions_specs_menu.py | Python   |        220 |         31 |         44 |        295 |
+| c:\Users\luisj\OneDrive\Documents\U\PG\DUCTS\menus\duct_number_menu.py               | Python   |         86 |          0 |         34 |        120 |
+| c:\Users\luisj\OneDrive\Documents\U\PG\DUCTS\menus\elbows_menu.py                    | Python   |        103 |          1 |         47 |        151 |
+| c:\Users\luisj\OneDrive\Documents\U\PG\DUCTS\menus\elbows_specs_menu.py              | Python   |        215 |         38 |         43 |        296 |
+| c:\Users\luisj\OneDrive\Documents\U\PG\DUCTS\menus\file_name_menu.py                 | Python   |         65 |          1 |         29 |         95 |
+| c:\Users\luisj\OneDrive\Documents\U\PG\DUCTS\menus\junctions_menu.py                 | Python   |        127 |          1 |         53 |        181 |
+| c:\Users\luisj\OneDrive\Documents\U\PG\DUCTS\menus\junctions_specs_menu.py           | Python   |        219 |         31 |         44 |        294 |
+| c:\Users\luisj\OneDrive\Documents\U\PG\DUCTS\menus\pre_dim_menu.py                   | Python   |        177 |         11 |        107 |        295 |
+| c:\Users\luisj\OneDrive\Documents\U\PG\DUCTS\menus\rectangular_eq_menu.py            | Python   |         88 |         29 |         31 |        148 |
+| c:\Users\luisj\OneDrive\Documents\U\PG\DUCTS\menus\roughness_menu.py                 | Python   |        141 |          1 |         42 |        184 |
+| c:\Users\luisj\OneDrive\Documents\U\PG\DUCTS\menus\start_menu.py                     | Python   |         27 |          1 |         11 |         39 |
+| c:\Users\luisj\OneDrive\Documents\U\PG\DUCTS\menus\transitions_menu.py               | Python   |        104 |          1 |         47 |        152 |
+| c:\Users\luisj\OneDrive\Documents\U\PG\DUCTS\menus\transitions_specs_menu.py         | Python   |        183 |         42 |         43 |        268 |
+| c:\Users\luisj\OneDrive\Documents\U\PG\DUCTS\menus\units_menu.py                     | Python   |         56 |          7 |         31 |         94 |
+| c:\Users\luisj\OneDrive\Documents\U\PG\DUCTS\menus\velocity_entry_menu.py            | Python   |        118 |          7 |         44 |        169 |
+| c:\Users\luisj\OneDrive\Documents\U\PG\DUCTS\menus\velocity_range_menu.py            | Python   |        221 |         10 |         55 |        286 |
+| Total                                                                                |          |      3,690 |        347 |      1,144 |      5,181 |
++--------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+

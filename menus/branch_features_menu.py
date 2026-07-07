@@ -1,5 +1,10 @@
 from tkinter import Label, Button, Frame, Entry
+import math
 from app_state import app_state
+
+# If there are more ramales than this, they get split into extra side-by-side
+# column groups (Ramal/Caudal/Longitud) instead of one long column.
+MAX_ENTRIES_PER_COLUMN = 20
 
 def branch_features_menu(W, go_back, go_next):
     for widget in W.winfo_children():
@@ -39,13 +44,24 @@ def branch_features_menu(W, go_back, go_next):
         3: ("Caudal (cfm)", "Longitud (ft)")
     }
     
+    # Decide how many side-by-side column groups we need. Above the
+    # threshold, ramales are split evenly instead of forming one tall column.
+    if duct_number > MAX_ENTRIES_PER_COLUMN:
+        num_column_groups = math.ceil(duct_number / MAX_ENTRIES_PER_COLUMN)
+        rows_per_group = math.ceil(duct_number / num_column_groups)
+    else:
+        num_column_groups = 1
+        rows_per_group = duct_number
+
     if selected in headers:
-        Label(middle_frame, text=headers[selected][0],
-            font=('Arial', 16,'bold'),
-            bg='grey5', fg='OrangeRed2').grid(row=0, column=1, padx=5, pady=5)
-        Label(middle_frame, text=headers[selected][1],
-            font=('Arial', 16,'bold'),
-            bg='grey5', fg='OrangeRed2').grid(row=0, column=2, padx=5, pady=5)
+        for group in range(num_column_groups):
+            offset = group * 3
+            Label(middle_frame, text=headers[selected][0],
+                font=('Arial', 16,'bold'),
+                bg='grey5', fg='OrangeRed2').grid(row=0, column=offset+1, padx=5, pady=5)
+            Label(middle_frame, text=headers[selected][1],
+                font=('Arial', 16,'bold'),
+                bg='grey5', fg='OrangeRed2').grid(row=0, column=offset+2, padx=5, pady=5)
     
     
     flowrate_entries = []
@@ -53,19 +69,24 @@ def branch_features_menu(W, go_back, go_next):
     placeholder = 'Escribe aquí...'
 
     for i in range(duct_number):
+        group = i // rows_per_group
+        row = i % rows_per_group
+        offset = group * 3
+        label_padx = (25, 3) if group > 0 else (3, 3)
+
         if app_state.main_branch.get() == i + 1:
             Label(middle_frame, text=f'Ramal {i+1} (Principal):',
                 font=('Arial', 14),
-                bg='grey5', fg='OrangeRed2').grid(row=i+1, column=0, padx=3, pady=1)
+                bg='grey5', fg='OrangeRed2').grid(row=row+1, column=offset, padx=label_padx, pady=1)
         else:
             Label(middle_frame, text=f'Ramal {i+1}:', 
                 font=('Arial', 14), 
-                bg='grey5', fg='grey80').grid(row=i+1, column=0, padx=3, pady=1)
+                bg='grey5', fg='grey80').grid(row=row+1, column=offset, padx=label_padx, pady=1)
             
             
         flowrate_entry = Entry(middle_frame, font=('Arial', 12),
                             width=10, bg='grey40', fg='gray80')
-        flowrate_entry.grid(row=i+1, column=1, padx=5, pady=1)
+        flowrate_entry.grid(row=row+1, column=offset+1, padx=5, pady=1)
         flowrate_entries.append(flowrate_entry)
 
         def on_focus_in(event, entry=flowrate_entry):
@@ -86,7 +107,7 @@ def branch_features_menu(W, go_back, go_next):
         
         length_entry = Entry(middle_frame, font=('Arial', 12),
                             width=10, bg='grey40', fg='gray80')
-        length_entry.grid(row=i+1, column=2, padx=5, pady=1)
+        length_entry.grid(row=row+1, column=offset+2, padx=5, pady=1)
         length_entries.append(length_entry)
         
         
@@ -110,7 +131,3 @@ def branch_features_menu(W, go_back, go_next):
                     font=('Arial', 20, 'bold'),
                     command=lambda: [save_branch_data(), go_next(W)])
     next_btn.pack(side='right', padx=10, pady=10)
-
-
-    
-

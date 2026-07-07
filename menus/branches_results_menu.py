@@ -1,4 +1,4 @@
-from tkinter import Button, Label, Frame, StringVar
+from tkinter import Button, Label, Frame, StringVar, Canvas, Scrollbar
 from app_state import app_state
 import math
 
@@ -145,8 +145,44 @@ def branches_results_menu(W, go_back):
                       font=('Arial', 22, 'bold'), bg='gray5', fg='OrangeRed2')
     title_lbl.pack(pady=(5, 5))
 
-    table_frame = Frame(W, bg='gray5')
-    table_frame.pack(pady=5)
+    table_container = Frame(W, bg='gray5')
+    table_container.pack(fill='both', expand=True, pady=5)
+
+    canvas = Canvas(table_container, bg='gray5', highlightthickness=0, bd=0)
+    scrollbar = Scrollbar(table_container, orient='vertical', command=canvas.yview,
+                          bg='gray30', troughcolor='gray12',
+                          activebackground='DodgerBlue2',
+                          highlightthickness=0, bd=0, width=14)
+    canvas.configure(yscrollcommand=scrollbar.set, yscrollincrement=34)
+
+    canvas.pack(side='left', fill='both', expand=True)
+    scrollbar.pack(side='right', fill='y')
+
+    table_frame = Frame(canvas, bg='gray5')
+    canvas.create_window((0, 0), window=table_frame, anchor='nw')
+
+    def _update_scrollregion(event):
+        canvas.configure(scrollregion=canvas.bbox('all'))
+    table_frame.bind('<Configure>', _update_scrollregion)
+
+    def _on_mousewheel(event):
+        if event.num == 4 or event.delta > 0:
+            canvas.yview_scroll(-1, 'units')
+        elif event.num == 5 or event.delta < 0:
+            canvas.yview_scroll(1, 'units')
+
+    def _bind_mousewheel(event):
+        canvas.bind_all('<MouseWheel>', _on_mousewheel)
+        canvas.bind_all('<Button-4>', _on_mousewheel)
+        canvas.bind_all('<Button-5>', _on_mousewheel)
+
+    def _unbind_mousewheel(event):
+        canvas.unbind_all('<MouseWheel>')
+        canvas.unbind_all('<Button-4>')
+        canvas.unbind_all('<Button-5>')
+
+    canvas.bind('<Enter>', _bind_mousewheel)
+    canvas.bind('<Leave>', _unbind_mousewheel)
 
     if selected == 1:
         col_headers = ['Ramal', 'Caudal (L/s)', 'Longitud (m)', 'Velocidad (m/s)', 'ΔP (Pa)', 'Diámetro (mm)']

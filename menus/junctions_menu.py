@@ -93,64 +93,64 @@ def junctions_menu(W, go_back, go_next):
 
 
     wye_30_img = resources.load_image("30_wye.png",
-                                    size=(200, 200))
+                                    size=(300, 300))
     wye_30_img_lbl = Label(middle_frame, image=wye_30_img, bg='gray5')
     wye_30_img_lbl.image = wye_30_img
     wye_30_img_lbl.grid(row=0, column=0, padx=20, pady=10, sticky="nsew")
     
     wye_45_img = resources.load_image("45_wye.png",
-                                    size=(200, 200))
+                                    size=(300, 300))
     wye_45_img_lbl = Label(middle_frame, image=wye_45_img, bg='gray5')
     wye_45_img_lbl.image = wye_45_img
     wye_45_img_lbl.grid(row=0, column=1, padx=20, pady=10, sticky="nsew")
 
     round_tee_img = resources.load_image("round_tee.png",
-                                    size=(200, 200))
+                                    size=(300, 300))
     round_tee_img_lbl = Label(middle_frame, image=round_tee_img, bg='gray5')
     round_tee_img_lbl.image = round_tee_img
     round_tee_img_lbl.grid(row=0, column=2, padx=20, pady=10, sticky="nsew")
     
     wye_30_conical_img = resources.load_image("30_conical_wye.png",
-                                    size=(200, 200))
+                                    size=(300, 300))
     wye_30_conical_img_lbl = Label(middle_frame, image=wye_30_conical_img, bg='gray5')
     wye_30_conical_img_lbl.image = wye_30_conical_img
     wye_30_conical_img_lbl.grid(row=0, column=3, padx=20, pady=10, sticky="nsew")
     
     wye_45_conical_img = resources.load_image("45_conical_wye.png",
-                                    size=(200, 200))
+                                    size=(300, 300))
     wye_45_conical_img_lbl = Label(middle_frame, image=wye_45_conical_img, bg='gray5')
     wye_45_conical_img_lbl.image = wye_45_conical_img
     wye_45_conical_img_lbl.grid(row=2, column=0, padx=20, pady=10, sticky="nsew")
     
     
     rectangular_tee_img = resources.load_image("rectangular_tee.png",
-                                    size=(200, 200))
+                                    size=(300, 300))
     rectangular_tee_img_lbl = Label(middle_frame, image=rectangular_tee_img, bg='gray5')
     rectangular_tee_img_lbl.image = rectangular_tee_img
     rectangular_tee_img_lbl.grid(row=2, column=1, padx=20, pady=10, sticky="nsew")
 
 
     round_tap_rectangular_main_img = resources.load_image("round_tap_rectangular_main_tee.png",
-                                    size=(200, 200))
+                                    size=(300, 300))
     round_tap_rectangular_main_img_lbl = Label(middle_frame, image=round_tap_rectangular_main_img, bg='gray5')
     round_tap_rectangular_main_img_lbl.image = round_tap_rectangular_main_img
     round_tap_rectangular_main_img_lbl.grid(row=2, column=2, padx=20, pady=10, sticky="nsew")
 
 
     rectangular_tap_rectangular_main_img = resources.load_image("rectangular_main_and_tap_tee.png",
-                                    size=(200, 200))
+                                    size=(300, 300))
     rectangular_tap_rectangular_main_img_lbl = Label(middle_frame, image=rectangular_tap_rectangular_main_img, bg='gray5')
     rectangular_tap_rectangular_main_img_lbl.image = rectangular_tap_rectangular_main_img
     rectangular_tap_rectangular_main_img_lbl.grid(row=2, column=3, padx=20, pady=10, sticky="nsew")
     
     rectangular_and_round_wye_2_img = resources.load_image("rectangular_and_round_wye_2.png",
-                                    size=(200, 200))
+                                    size=(300, 300))
     rectangular_and_round_wye_2_img_lbl = Label(middle_frame, image=rectangular_and_round_wye_2_img, bg='gray5')
     rectangular_and_round_wye_2_img_lbl.image = rectangular_and_round_wye_2_img
     rectangular_and_round_wye_2_img_lbl.grid(row=4, column=0, padx=20, pady=10, sticky="nsew")
     
     rectangular_dovetail_wye_img = resources.load_image("rectangular_dovetail_wye.png",
-                                    size=(200, 200))
+                                    size=(300, 300))
     rectangular_dovetail_wye_img_lbl = Label(middle_frame, image=rectangular_dovetail_wye_img, bg='gray5')
     rectangular_dovetail_wye_img_lbl.image = rectangular_dovetail_wye_img
     rectangular_dovetail_wye_img_lbl.grid(row=4, column=1, padx=20, pady=10, sticky="nsew")

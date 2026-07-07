@@ -61,7 +61,7 @@ def interpolate_1d(x, xp, fp):
 # BRANCH COEFFICIENT
 # =========================================================
 
-def get_co_round_tap_rectangular_main_tee(Vc_fpm, Qb_Qc):
+def get_co_round_tap_rectangular_main_tee_branch(Vc_fpm, Qb_Qc):
 
     # Select velocity row
     if Vc_fpm < 1200:

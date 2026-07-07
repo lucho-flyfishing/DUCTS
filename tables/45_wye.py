@@ -96,6 +96,8 @@ def bilinear_interp(x, y, x_vals, y_vals, table):
 # -----------------------------
 
 def get_co_45_wye_branch(Qb_Qc, Ab_Ac):
+    if not (0.0 <= Qb_Qc <= 1.0):
+        raise ValueError("Qb/Qc debe estar entre 0 y 1")
     return bilinear_interp(Ab_Ac, Qb_Qc, AB_AC_VALUES, QB_QC_VALUES, C_CB_TABLE)
 
 def get_co_45_wye_main(Qb_Qc, Ab_Ac):

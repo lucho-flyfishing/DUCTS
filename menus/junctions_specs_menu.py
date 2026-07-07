@@ -19,6 +19,7 @@ JUNCTION_FILE_MAP = {
     7: "round_tap_rectangular_main_tee",
     8: "rectangular_main_and_tap_tee",
     9: "rectangular_and_round_wye_2",
+    10: "rectangular_dovetail_wye",
 }
 
 # String params → rendered as dropdowns instead of text entries

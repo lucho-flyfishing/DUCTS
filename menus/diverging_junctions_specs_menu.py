@@ -20,6 +20,7 @@ DIVERGING_JUNCTION_FILE_MAP = {
     8:  "rectangular_main_to_round_tap_conical_tee_d",
     9:  "rectangular_main_and_tap_tee_d",
     10: "rectangular_and_round_wye_2_d",
+    11: "rectangular_dovetail_wye_d",
 }
 
 # String params → rendered as dropdowns instead of text entries

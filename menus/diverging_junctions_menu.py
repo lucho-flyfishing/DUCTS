@@ -88,6 +88,13 @@ def diverging_junctions_menu(W, go_back, go_next):
                 variable=app_state.selected_diverging_junction, value=9,
                 command=on_select, **radio_style).grid(row=5, column=0, pady=5)
     
+    Radiobutton(middle_frame, text="10.Y rectangular ó circular ",
+                variable=app_state.selected_diverging_junction, value=10,
+                command=on_select, **radio_style).grid(row=5, column=1, pady=5)
+    
+    Radiobutton(middle_frame, text="11. Y rectangular simetrica ",
+                variable=app_state.selected_diverging_junction, value=11,
+                command=on_select, **radio_style).grid(row=5, column=2, pady=5)
     
     
 
@@ -159,6 +166,13 @@ def diverging_junctions_menu(W, go_back, go_next):
     rectangular_and_round_wye_2_img_lbl = Label(middle_frame, image=rectangular_and_round_wye_2_img, bg='gray5')
     rectangular_and_round_wye_2_img_lbl.image = rectangular_and_round_wye_2_img
     rectangular_and_round_wye_2_img_lbl.grid(row=4, column=1, padx=20, pady=10, sticky="nsew")
+    
+    
+    rectangular_dovetail_wye_img = resources.load_image("rectangular_dovetail_wye.png",
+                                    size=(200, 200))
+    rectangular_dovetail_wye_img_lbl = Label(middle_frame, image=rectangular_dovetail_wye_img, bg='gray5')
+    rectangular_dovetail_wye_img_lbl.image = rectangular_dovetail_wye_img
+    rectangular_dovetail_wye_img_lbl.grid(row=4, column=2, padx=20, pady=10, sticky="nsew")
     
     bottom_frame = Frame(W, bg='gray5')
     bottom_frame.pack(side='bottom', fill='x')

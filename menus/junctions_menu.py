@@ -84,6 +84,11 @@ def junctions_menu(W, go_back, go_next):
                 command=on_select, **radio_style).grid(row=5, column=0, pady=5)
     
     
+    Radiobutton(middle_frame, text="10. Y rectangular simetrica",
+                variable=app_state.selected_junction, value=10,
+                command=on_select, **radio_style).grid(row=5, column=1, pady=5)
+
+    
     
 
 
@@ -143,6 +148,12 @@ def junctions_menu(W, go_back, go_next):
     rectangular_and_round_wye_2_img_lbl = Label(middle_frame, image=rectangular_and_round_wye_2_img, bg='gray5')
     rectangular_and_round_wye_2_img_lbl.image = rectangular_and_round_wye_2_img
     rectangular_and_round_wye_2_img_lbl.grid(row=4, column=0, padx=20, pady=10, sticky="nsew")
+    
+    rectangular_dovetail_wye_img = resources.load_image("rectangular_dovetail_wye.png",
+                                    size=(200, 200))
+    rectangular_dovetail_wye_img_lbl = Label(middle_frame, image=rectangular_dovetail_wye_img, bg='gray5')
+    rectangular_dovetail_wye_img_lbl.image = rectangular_dovetail_wye_img
+    rectangular_dovetail_wye_img_lbl.grid(row=4, column=1, padx=20, pady=10, sticky="nsew")
     
 
 

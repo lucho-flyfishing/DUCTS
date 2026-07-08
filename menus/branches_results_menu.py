@@ -36,17 +36,20 @@ def solve_diameter_equal_friction_ip(Q_ft3s, S_inwg_ft, density_ip, viscosity_ip
     Returns diameter in feet.
     """
     S_lbft2_ft = S_inwg_ft * 5.202  # convert inH₂O/ft → lb/ft² per ft
+    # BUG 2 FIX: en unidades US la ec. de Darcy y Reynolds requieren la densidad en
+    # slug/ft³ (la viscosidad ya viene en base slug). density_ip llega en lb-masa/ft³.
+    density_slug = density_ip / 32.174  # lb-masa/ft³ → slug/ft³
 
     f_guess = 0.02
-    D = ((8 * f_guess * density_ip * Q_ft3s**2) / (math.pi**2 * S_lbft2_ft)) ** (1/5)
+    D = ((8 * f_guess * density_slug * Q_ft3s**2) / (math.pi**2 * S_lbft2_ft)) ** (1/5)
 
     for _ in range(50):
         V = (4 * Q_ft3s) / (math.pi * D**2)
-        Re = (density_ip * V * D) / viscosity_ip
+        Re = (density_slug * V * D) / viscosity_ip
         if Re < 1:
             break
         f = 0.25 / (math.log10((epsilon_ft / (3.7 * D)) + (5.74 / Re**0.9)))**2
-        D_new = ((8 * f * density_ip * Q_ft3s**2) / (math.pi**2 * S_lbft2_ft)) ** (1/5)
+        D_new = ((8 * f * density_slug * Q_ft3s**2) / (math.pi**2 * S_lbft2_ft)) ** (1/5)
         if abs(D_new - D) < 1e-9:
             break
         D = D_new

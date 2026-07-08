@@ -27,7 +27,7 @@ def corrections_menu(W, go_back, go_accesories_menu, go_roughness_menu,
     top_frame = Frame(W, bg='gray5')
     top_frame.pack(side='top', fill='x')
 
-    pre_result_main = Label(top_frame, text='Menu de correciones',
+    pre_result_main = Label(top_frame, text='Menu de resultados, correciones y accesorios',
                             font=('Arial', 35), bg='gray5', fg='gray60')
     pre_result_main.pack(side='top', pady=1)
 

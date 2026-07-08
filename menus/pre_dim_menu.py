@@ -62,8 +62,14 @@ def pre_dim_menu(W, go_back, go_next):
     factor = 0.0000225577
     exponent = 5.2559
 
-    
-    P_pa = P0 * (1 - factor * float(H.get())) ** exponent # Pa
+    # BUG 3 FIX: la constante 'factor' es por metro; en la opcion imperial (3)
+    # la altitud se ingresa en ft, por lo que hay que convertirla a metros antes.
+    if selected == 3:
+        H_m = float(H.get()) * 0.3048  # ft → m
+    else:
+        H_m = float(H.get())           # ya esta en m
+
+    P_pa = P0 * (1 - factor * H_m) ** exponent # Pa
 
     
     if selected == 1 or selected == 2: # conversion y redondeo
@@ -92,7 +98,7 @@ def pre_dim_menu(W, go_back, go_next):
         T_R = float(T.get()) + 459.67  # °F → °R
         pressure_lbft2 = P * 144  # psi → lb/ft²
         R = 53.35  # ft·lb/(lb·°R) para aire seco
-        rho = pressure_lbft2 / (R * T_R)  # lb/ft³
+        rho = pressure_lbft2 / (R * T_R)  # lb/ft³ (lb-masa)
         
     
     app_state.rho = rho
@@ -158,8 +164,11 @@ def pre_dim_menu(W, go_back, go_next):
         
         
             velocity = float(V.get())  # fpm (feet per minute)
+            V_ft_s = velocity / 60  # convertir fpm → ft/s
             Q_ft3s = main_branch_flowrate / 60  # CFM → ft³/s
-            D_ft = math.sqrt((4 * Q_ft3s) / (math.pi * velocity))  # ft
+            # BUG 1 FIX: la continuidad debe usar el caudal y la velocidad en la misma
+            # base de tiempo. Se usa V_ft_s (ft/s) junto con Q_ft3s (ft³/s).
+            D_ft = math.sqrt((4 * Q_ft3s) / (math.pi * V_ft_s))  # ft
             diameter_in = D_ft * 12  # ft → in
             diameter = diameter_in
             
@@ -168,20 +177,22 @@ def pre_dim_menu(W, go_back, go_next):
             else:
                 epsilon_in = app_state.epsilon  # ya es float en in
             epsilon_ft = epsilon_in / 12  # convertir in → ft
-            density_ip = app_state.rho  # lb/ft³
+            density_ip = app_state.rho  # lb/ft³ (lb-masa)
             viscosity_ip = app_state.viscosity  # lb/ft·s
+            # BUG 2 FIX: en unidades US la ec. de Darcy y Reynolds requieren la
+            # densidad en slug/ft³ (la viscosidad ya esta en base slug).
+            rho_slug = density_ip / 32.174  # lb-masa/ft³ → slug/ft³
             
             
             D = D_ft  # ya en ft
-            V_ft_s = velocity / 60  # convertir fpm → ft/s
-            Re = (density_ip * V_ft_s * D) / viscosity_ip  # Reynolds number
+            Re = (rho_slug * V_ft_s * D) / viscosity_ip  # Reynolds number
             
             
             f_ip = 0.25 / (math.log10((epsilon_ft / (3.7 * D)) + (5.74 / Re**0.9))) ** 2 # factor de fricción para flujo turbulento
             
             
             # perdidas de presion por unidad de longitud
-            S_ip = f_ip * (1 / D) * (density_ip * V_ft_s ** 2) / 2  # lb/ft² por ft
+            S_ip = f_ip * (1 / D) * (rho_slug * V_ft_s ** 2) / 2  # lb/ft² por ft
             S = S_ip / 5.202  # convertir lb/ft² → in.wg por ft
             
             

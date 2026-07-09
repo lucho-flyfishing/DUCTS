@@ -5,7 +5,7 @@ from app_state import app_state
 # ASHRAE Handbook – HVAC Applications 2015, Table 8, Section 48
 # Main circular duct max velocities (m/s) by location and RC(N) level
 ASHRAE_MAIN_CIRCULAR = {
-    "Ducto vertical ó ducto sobre techo de panel yeso": {
+    "Ducto vertical ó ducto sobre\n techo de panel yeso": {
         "Baja  (RC 25)":   12.7,
         "Media (RC 35)":   17.8,
         "Alta  (RC 45)":   25.4,

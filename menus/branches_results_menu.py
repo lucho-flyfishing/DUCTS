@@ -10,7 +10,7 @@ def solve_diameter_equal_friction(Q, S, rho, viscosity, epsilon):
     air density rho (kg/m³), dynamic viscosity (Pa·s), roughness epsilon (m).
     Returns diameter in meters.
     """
-    # Initial guess from simplified formula (ignore friction factor, assume f~0.02)
+    # Initial guess from simplified formula (ignore friction factor, assume f~0.015)
     f_guess = 0.02
     D = ((8 * f_guess * rho * Q**2) / (math.pi**2 * S)) ** (1/5)
 
@@ -73,6 +73,13 @@ def branches_results_menu(W, go_back):
     # S from the main branch (set in pre_dim_menu) — design friction rate for all branches
     S_main = float(app_state.S)
 
+    # La rugosidad ya se coacciona a float/None en pre_dim_menu, pero si esta pantalla
+    # se alcanza sin pasar por alli, epsilon podria seguir siendo un StringVar. Se
+    # normaliza aqui para que los defaults por unidad de abajo funcionen sin error.
+    if isinstance(app_state.epsilon, StringVar):
+        val = app_state.epsilon.get().strip()
+        app_state.epsilon = float(val) if val else None
+
     diameters_values = []
     delta_p_values   = []
     velocity_values  = []
@@ -84,7 +91,9 @@ def branches_results_menu(W, go_back):
 
         if selected == 1:
             Q       = flow_value / 1000          # L/s → m³/s
-            epsilon = 1.5e-4                     # m (default roughness)
+            # rugosidad: valor del usuario (mm → m) o default 1.5e-4 m (≈0.15 mm).
+            # Misma fuente que pre_dim_menu para mantener el mismo material.
+            epsilon = 1.5e-4 if app_state.epsilon is None else app_state.epsilon / 1000  # m
 
             D_m       = solve_diameter_equal_friction(Q, S_main, density, viscosity, epsilon)
             diameters = D_m * 1000               # m → mm
@@ -92,7 +101,8 @@ def branches_results_menu(W, go_back):
 
         elif selected == 2:
             Q       = flow_value                 # already m³/s
-            epsilon = 1.5e-4                     # m
+            # rugosidad: valor del usuario (mm → m) o default 1.5e-4 m (≈0.15 mm)
+            epsilon = 1.5e-4 if app_state.epsilon is None else app_state.epsilon / 1000  # m
 
             D_m       = solve_diameter_equal_friction(Q, S_main, density, viscosity, epsilon)
             diameters = D_m * 1000               # m → mm
@@ -100,7 +110,11 @@ def branches_results_menu(W, go_back):
 
         elif selected == 3:
             Q_ft3s       = flow_value / 60       # CFM → ft³/s
-            epsilon_in   = 0.0059                # in (default roughness)
+            # rugosidad: valor del usuario ya en pulgadas, o default 0.0059 in.
+            # 0.0059 in ≡ 0.15 mm ≡ 1.5e-4 m: es el MISMO default fisico que en SI,
+            # expresado en la unidad que consume el solver imperial (NO usar 1.5e-4
+            # aqui: 1.5e-4 in ≈ 0.0038 mm, ~40x mas liso).
+            epsilon_in   = 0.0059 if app_state.epsilon is None else app_state.epsilon  # in
             epsilon_ft   = epsilon_in / 12       # in → ft
             density_ip   = density               # lb/ft³
             viscosity_ip = viscosity             # lb/(ft·s)

@@ -2,7 +2,6 @@
 # Exit, Round, with End Wall Transition
 # Idelchik 1986 – Diagram 5-8
 # Interpolates Co as a function of L/D
-
 # --------------------------
 # Table data
 # --------------------------
@@ -37,7 +36,6 @@ def interpolate_1d(x, xp, fp):
 # --------------------------
 # Main function
 # --------------------------
-
 def get_co_round_exit_wall_bell(L_D):
     """
     Computes Co for Exit, Round, with End Wall Transition.
@@ -45,9 +43,7 @@ def get_co_round_exit_wall_bell(L_D):
 
     Parameters:
         L_D (float): L/D geometric ratio.
-
     Returns:
         float: Co value.
     """
-
     return float(interpolate_1d(L_D, LD_values, Co_values))

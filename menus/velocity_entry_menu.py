@@ -46,7 +46,7 @@ def velocity_entry_menu(W, go_back, go_next):
     reference_frame.pack(pady=(10, 0))
 
     ref_title = Label(reference_frame,
-                    text='Velocidades máximas recomendadas — Ducto circular principal (ASHRAE)',
+                    text='Velocidades máximas recomendadas — Ducto circular principal',
                     font=('Arial', 22, 'bold'), bg='gray5', fg='OrangeRed2')
     ref_title.grid(row=0, column=0, columnspan=5, pady=(0, 6))
 

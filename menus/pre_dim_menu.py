@@ -296,7 +296,7 @@ def pre_dim_menu(W, go_back, go_next):
     back_btn.pack(side='left', padx=10, pady=10)
     
     
-    next_btn = Button(bottom_frame, text='Ir a correcciones y accesorios',
+    next_btn = Button(bottom_frame, text='Ir a resultados, correcciones y accesorios',
                     bg='White', fg='black',
                     relief='raised', 
                     activebackground='DodgerBlue2', 

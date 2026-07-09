@@ -21,6 +21,7 @@ class AppState:
         self.diameters_values = []
         self.S = None
         self.aspect_ratio = None
+        self.rectangular_eq_selection = {}
         self.selected_bell = None 
         self.selected_elbow = None
         self.selected_transition = None
@@ -33,4 +34,4 @@ class AppState:
         self.Co_bell = None 
 
 
-app_state = AppState()
+app_state = AppState()  

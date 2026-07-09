@@ -1,5 +1,6 @@
 from tkinter import Button, Label, Frame, messagebox, filedialog
 from app_state import app_state
+from tables.rectangular_eq import get_rectangular_eq
 from reportlab.lib.pagesizes import letter  # libreria para crear el pdf
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
@@ -90,7 +91,9 @@ def corrections_menu(W, go_back, go_accesories_menu, go_roughness_menu,
 
         flowrate_values = app_state.flowrate_entries
         length_values = app_state.length_entries
+        delta_p_values = getattr(app_state, "delta_p_values", [])
         diameters_values = getattr(app_state, "diameters_values", [])
+        rect_selection = getattr(app_state, "rectangular_eq_selection", {})
 
         # Shared design values (same for every branch) -> shown once on top.
         S = getattr(app_state, "S", None)            # friction rate
@@ -105,23 +108,31 @@ def corrections_menu(W, go_back, go_accesories_menu, go_roughness_menu,
                 "Primero debes calcular los diámetros antes de generar el reporte.")
             return
 
-        # --- Per-branch table (no Pérdidas column: that value is the same for all) ---
+        # --- Per-branch table ---
+        # Same unit rule used in rectangular_eq_menu.py: selected == 3 -> imperial, else SI.
         headers = {
-            1: ['Ramal', 'Caudal (L/s)',  'Longitud (m)',  'Diámetro (mm)'],
-            2: ['Ramal', 'Caudal (m³/s)', 'Longitud (m)',  'Diámetro (mm)'],
-            3: ['Ramal', 'Caudal (cfm)',  'Longitud (ft)', 'Diámetro (in)'],
+            1: ['Ramal', 'Caudal (L/s)',  'Longitud (m)',  'ΔP (Pa)', 'Diámetro (mm)', 'Eq. rectangular (mm)'],
+            2: ['Ramal', 'Caudal (m³/s)', 'Longitud (m)',  'ΔP (Pa)', 'Diámetro (mm)', 'Eq. rectangular (mm)'],
+            3: ['Ramal', 'Caudal (cfm)',  'Longitud (ft)', 'ΔP (inH₂O)', 'Diámetro (in)', 'Eq. rectangular (in)'],
         }
         data = [headers.get(selected, headers[1])]
 
         try:
             for i in range(rows):
+                delta_p = _num(delta_p_values[i])
+                D = _num(diameters_values[i])
+                ratio = rect_selection.get(i, 1)
+                a, b = get_rectangular_eq(D, ratio)
+
                 data.append([
                     i + 1,
                     f"{_num(flowrate_values[i]):.2f}",
                     f"{_num(length_values[i]):.2f}",
-                    f"{_num(diameters_values[i]):.1f}",
+                    f"{delta_p:.2f}",
+                    f"{D:.1f}",
+                    f"{a:.1f} x {b:.1f} ({ratio}:1)",
                 ])
-        except (ValueError, TypeError) as e:
+        except (ValueError, TypeError, ZeroDivisionError) as e:
             messagebox.showerror(
                 "Datos inválidos",
                 f"No se pudieron leer los valores de los ramales.\n{e}")
@@ -129,7 +140,7 @@ def corrections_menu(W, go_back, go_accesories_menu, go_roughness_menu,
 
         # --- Shared parameters block (label + value pairs) ---
         # Units follow the selected system (3 = imperial).
-        fric_unit = "inH₂O/ft" if selected == 3 else "Pa/m"
+        fric_unit = "inH2O/ft" if selected == 3 else "Pa/m"
         temp_unit = "°F" if selected == 3 else "°C"
 
         params = []
@@ -210,4 +221,3 @@ def corrections_menu(W, go_back, go_accesories_menu, go_roughness_menu,
 
     bottom_frame = Frame(W, bg='gray5')
     bottom_frame.pack(side='bottom', fill='x')
-    

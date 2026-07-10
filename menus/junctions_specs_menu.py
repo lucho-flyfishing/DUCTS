@@ -4,6 +4,7 @@ from tkinter import Label, Button, Entry, Frame, OptionMenu, StringVar, LEFT, X,
 import importlib
 import inspect
 from app_state import app_state
+from fitting_units import velocity_label, compute_delta_p_pa, format_delta_p, vel_unit, rho_unit
 
 
 # =========================================================
@@ -149,7 +150,7 @@ def junctions_specs_menu(W, go_back):
     if has_branch:
         vb_row = Frame(vel_frame, bg='gray5')
         vb_row.pack(fill=X, pady=5)
-        Label(vb_row, text="V_b - Velocidad ramal (m/s):",
+        Label(vb_row, text=velocity_label("V_b", "Velocidad ramal"),
               font=("Arial", 20), bg='gray5', fg='OrangeRed2').pack(side=LEFT, padx=10)
         vb_entry = Entry(vb_row, font=("Arial", 20), bg='white', fg='black',
                          relief='solid', bd=2, highlightthickness=2,
@@ -160,7 +161,7 @@ def junctions_specs_menu(W, go_back):
     if has_main:
         vs_row = Frame(vel_frame, bg='gray5')
         vs_row.pack(fill=X, pady=5)
-        Label(vs_row, text="V_s - Velocidad principal (m/s):",
+        Label(vs_row, text=velocity_label("V_s", "Velocidad principal"),
               font=("Arial", 20), bg='gray5', fg='OrangeRed2').pack(side=LEFT, padx=10)
         vs_entry = Entry(vs_row, font=("Arial", 20), bg='white', fg='black',
                          relief='solid', bd=2, highlightthickness=2,
@@ -226,30 +227,30 @@ def junctions_specs_menu(W, go_back):
                 branch_args    = [value_dict[p] for p in branch_params]
                 Co_branch      = branch_func(*branch_args)
                 V_b            = float(vb_entry.get())
-                delta_p_branch = Co_branch * rho * (V_b ** 2) / 2
+                delta_p_branch = compute_delta_p_pa(Co_branch, V_b)   # Pa
                 label_b        = branch_label_entry.get().strip() or "Sin nombre (ramal)"
                 app_state.fittings.append([label_b, fitting_type + " (ramal)", delta_p_branch])
 
                 Label(result_frame,
-                      text=f"ΔP ramal = {delta_p_branch:.4f} Pa",
+                      text=format_delta_p(delta_p_branch, "ΔP ramal"),
                       font=("Arial", 18, "bold"), bg='gray5', fg='DeepSkyBlue2').pack(pady=3)
                 Label(result_frame,
-                      text=f"(Co = {Co_branch:.4f}  |  V_b = {V_b} m/s  |  ρ = {rho} kg/m³)",
+                      text=f"(Co = {Co_branch:.4f}  |  V_b = {V_b} {vel_unit()}  |  ρ = {rho} {rho_unit()})",
                       font=("Arial", 14), bg='gray5', fg='gray60').pack()
 
             if has_main:
                 main_args    = [value_dict[p] for p in main_params]
                 Co_main      = main_func(*main_args)
                 V_s          = float(vs_entry.get())
-                delta_p_main = Co_main * rho * (V_s ** 2) / 2
+                delta_p_main = compute_delta_p_pa(Co_main, V_s)       # Pa
                 label_s      = main_label_entry.get().strip() or "Sin nombre (principal)"
                 app_state.fittings.append([label_s, fitting_type + " (principal)", delta_p_main])
 
                 Label(result_frame,
-                      text=f"ΔP principal = {delta_p_main:.4f} Pa",
+                      text=format_delta_p(delta_p_main, "ΔP principal"),
                       font=("Arial", 18, "bold"), bg='gray5', fg='DeepSkyBlue2').pack(pady=3)
                 Label(result_frame,
-                      text=f"(Co = {Co_main:.4f}  |  V_s = {V_s} m/s  |  ρ = {rho} kg/m³)",
+                      text=f"(Co = {Co_main:.4f}  |  V_s = {V_s} {vel_unit()}  |  ρ = {rho} {rho_unit()})",
                       font=("Arial", 14), bg='gray5', fg='gray60').pack()
 
             # Terminal

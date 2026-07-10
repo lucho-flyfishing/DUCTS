@@ -4,6 +4,7 @@ from tkinter import Label, Button, Entry, Frame, OptionMenu, StringVar, LEFT, RI
 import importlib
 import inspect
 from app_state import app_state
+from fitting_units import velocity_label, compute_delta_p_pa, format_delta_p, vel_unit, rho_unit
 
 
 # =========================================================
@@ -133,7 +134,7 @@ def elbows_specs_menu(W, go_back):
 
     Label(
         vel_row,
-        text="V (m/s):",
+        text=velocity_label(),
         font=("Arial", 20),
         bg='gray5', fg='OrangeRed2',
     ).pack(side=LEFT, padx=10)
@@ -211,14 +212,14 @@ def elbows_specs_menu(W, go_back):
             # Calcular Co
             Co = calc_func(*values)
 
-            # Velocidad
+            # Velocidad (m/s en SI, fpm en imperial)
             V = float(vel_entry.get())
 
-            # Densidad desde app_state
+            # Densidad desde app_state (solo para mostrar)
             rho = app_state.rho
 
-            # Calcular ΔP
-            delta_p = Co * rho * (V ** 2) / 2
+            # Calcular ΔP  -> siempre en Pa (convierte entradas imperiales)
+            delta_p = compute_delta_p_pa(Co, V)
 
             # Etiqueta
             label = name_entry.get().strip()
@@ -228,13 +229,13 @@ def elbows_specs_menu(W, go_back):
             # Tipo de fitting
             fitting_type = filename.replace('_', ' ').title()
 
-            # Guardar [etiqueta, tipo, ΔP]
+            # Guardar [etiqueta, tipo, ΔP en Pa]
             app_state.fittings.append([label, fitting_type, delta_p])
 
-            # Mostrar resultado
+            # Mostrar resultado (Pa en SI, inH2O en imperial)
             Label(
                 result_frame,
-                text=f"ΔP = {delta_p:.4f} Pa",
+                text=format_delta_p(delta_p),
                 font=("Arial", 18, "bold"),
                 bg='gray5',
                 fg='DeepSkyBlue2'
@@ -242,7 +243,7 @@ def elbows_specs_menu(W, go_back):
 
             Label(
                 result_frame,
-                text=f"(Co = {Co:.4f}  |  V = {V} m/s  |  ρ = {rho} kg/m³)",
+                text=f"(Co = {Co:.4f}  |  V = {V} {vel_unit()}  |  ρ = {rho} {rho_unit()})",
                 font=("Arial", 14),
                 bg='gray5',
                 fg='gray60'

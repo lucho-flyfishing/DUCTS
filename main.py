@@ -1,4 +1,4 @@
-from tkinter import Tk, StringVar, IntVar
+from tkinter import Tk, StringVar, IntVar, messagebox
 from app_state import app_state
 
 from menus.start_menu import start_menu
@@ -65,11 +65,56 @@ def main():
     app_state.D_bell = IntVar(W)
     app_state.Co_bell = IntVar(W)
 
-    
+    # --- Track B --- which door was used to reach accesories_menu:
+    # 'corrections' (Track A: sizing -> corrections -> accesorios) or
+    # 'fittings'    (Track B: start -> Accesorios -> units -> alt_temp -> accesorios).
+    # go_to_accesories_menu reads this to choose the correct "Regresar" target.
+    app_state.accesories_entry = 'corrections'
+
+
+    # --- Track B --- compute air density from units + altitude + temperature the
+    # SAME way pre_dim_menu does, and store it in app_state.rho. The fittings menus
+    # compute delta_p = Co * rho * V^2 / 2, so rho must exist even when the user
+    # skips the sizing chain. pre_dim itself is left untouched.
+    def compute_density_for_fittings():
+        def _read(v):                       # handle StringVar or plain str
+            return v.get() if hasattr(v, 'get') else v
+
+        selected = app_state.selected_option.get()
+        H_raw = _read(app_state.get_alt)
+        T_raw = _read(app_state.get_temp)
+
+        P0 = 101325.0
+        factor = 0.0000225577
+        exponent = 5.2559
+
+        if selected == 3:
+            H_m = float(H_raw) * 0.3048     # ft -> m
+        else:
+            H_m = float(H_raw)              # already m
+
+        P_pa = P0 * (1 - factor * H_m) ** exponent
+
+        if selected in (1, 2):
+            P = round(P_pa, 2)              # Pa
+            T_K = float(T_raw) + 273.15     # C -> K
+            R = 287.05
+            rho = P / (R * T_K)             # kg/m3
+        else:  # selected == 3
+            P = round(P_pa * 0.0001450377, 2)   # psi
+            T_R = float(T_raw) + 459.67         # F -> R
+            pressure_lbft2 = P * 144            # psi -> lb/ft2
+            R = 53.35
+            rho = pressure_lbft2 / (R * T_R)    # lb/ft3
+
+        app_state.rho = rho
+        print(f"[Accesorios] Densidad calculada: rho = {rho}")
+
     
     # navigation
     def go_to_start(W):
-        start_menu(W, go_next=go_to_file_name)
+        # --- Track B --- the start screen now forks into two tracks
+        start_menu(W, go_tramos=go_to_file_name, go_accesorios=go_to_units_fittings)
         
         
     def go_to_file_name(W):
@@ -100,7 +145,8 @@ def main():
     
     
     def go_to_corrections_menu(W):
-        corrections_menu(W, go_back=go_to_pre_dim, go_accesories_menu=go_to_accesories_menu,
+        # --- Track B --- accesorios reached from here is the Track A door
+        corrections_menu(W, go_back=go_to_pre_dim, go_accesories_menu=go_to_accesories_from_corrections,
                         go_roughness_menu=go_to_roughness_menu, go_rectangular_eq_menu=go_to_rectangular_eq_menu, 
                         go_branches_results_menu=go_to_branches_results_menu)
         
@@ -114,10 +160,41 @@ def main():
     
     def go_to_rectangular_eq_menu(W):
         rectangular_eq_menu(W, go_back=go_to_corrections_menu)
+
+
+    # --- Track B --- air-conditions front-end (reuses units_menu + alt_temp_menu
+    # unchanged; just wired to different next/back targets than Track A)
+    def go_to_units_fittings(W):
+        units_menu(W, go_back=go_to_start, go_next=go_to_alt_temp_fittings)
+
+    def go_to_alt_temp_fittings(W):
+        alt_temp_menu(W, go_back=go_to_units_fittings, go_next=go_to_accesories_from_fittings)
+
+    # --- Track B --- two doors into the same accesories_menu, each stamping the flag
+    def go_to_accesories_from_corrections(W):
+        app_state.accesories_entry = 'corrections'
+        go_to_accesories_menu(W)
+
+    def go_to_accesories_from_fittings(W):
+        app_state.accesories_entry = 'fittings'
+        try:
+            compute_density_for_fittings()      # rho must exist before fittings run
+        except (ValueError, TypeError):
+            messagebox.showwarning(
+                "Datos incompletos",
+                "Ingrese una altitud y una temperatura válidas antes de continuar.")
+            go_to_alt_temp_fittings(W)          # bounce back instead of crashing
+            return
+        go_to_accesories_menu(W)
     
     
     def go_to_accesories_menu(W):
-        accesories_menu(W, go_back=go_to_corrections_menu, go_bells_menu=go_to_bells_menu,
+        # --- Track B --- pick the "Regresar" target based on how we got here
+        if getattr(app_state, 'accesories_entry', 'corrections') == 'fittings':
+            back = go_to_alt_temp_fittings      # Track B: back through the air-conditions step
+        else:
+            back = go_to_corrections_menu       # Track A: back to the corrections hub
+        accesories_menu(W, go_back=back, go_bells_menu=go_to_bells_menu,
                         go_elbows_menu=go_to_elbows_menu, go_damper_menu=go_to_damper_menu,
                         go_transitions_menu=go_to_transitions_menu, go_junctions_menu=go_to_junctions_menu, 
                         go_diverging_junctions_menu=go_to_diverging_junctions_menu, 

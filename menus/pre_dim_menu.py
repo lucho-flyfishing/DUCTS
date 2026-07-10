@@ -6,20 +6,38 @@ def pre_dim_menu(W, go_back, go_next):
     # Clear the window
     for widget in W.winfo_children():
         widget.destroy()
-        
-        
+
+    selected = app_state.selected_option.get()
+
+    # Normalizar epsilon (rugosidad) al inicio.
+    # La primera vez es un StringVar; campo vacio -> None (se usa el default en el calculo).
+    if isinstance(app_state.epsilon, StringVar):
+        val = app_state.epsilon.get().strip()
+        app_state.epsilon = float(val) if val else None
+
+    # El titulo depende de si el usuario definio una rugosidad personalizada.
+    # La rugosidad solo se puede cambiar en el menu de correcciones (posterior a esta
+    # pantalla), asi que epsilon != None significa que el usuario ya la modifico.
+    #   epsilon is None -> primera pasada, rugosidad por defecto -> titulo generico
+    #   epsilon con valor -> el usuario la cambio -> titulo de "nuevo dimensionamiento"
+    epsilon_units = 'in' if selected == 3 else 'mm'
+    if app_state.epsilon is not None:
+        title_text = ('Nuevo dimensionamiento preliminar del ramal principal '
+                      f'con rugosidad de {app_state.epsilon} {epsilon_units}')
+    else:
+        title_text = ('Dimensionamiento preliminar del ramal principal '
+                      'dadas las condiciones del aire')
+
     top_frame = Frame(W, bg='gray5')
     top_frame.pack(side='top', fill='x')
-    
-    
-    pre_result_main = Label(top_frame, text='Dimensionamiento preliminar del ramal principal '
-                            'dadas las condiciones del aire', font=('Arial', 35), bg='gray5', fg='gray80')
+
+
+    pre_result_main = Label(top_frame, text=title_text, font=('Arial', 35), bg='gray5', fg='gray80')
     pre_result_main.pack(side='top', pady=1)
-    
-    
+
+
     #############################################################################################
     #calculos de los valores a mostrar en la pantalla de resultados
-    selected =  app_state.selected_option.get()
     T = StringVar(value=app_state.get_temp)
     H = StringVar(value=app_state.get_alt)
     V = StringVar(value=app_state.velocity)
@@ -102,9 +120,6 @@ def pre_dim_menu(W, go_back, go_next):
         
     
     app_state.rho = rho
-    if isinstance(app_state.epsilon, StringVar):
-        val = app_state.epsilon.get().strip()
-        app_state.epsilon = float(val) if val else None
     
     
     # Perdida de presion y diametro
@@ -231,7 +246,7 @@ def pre_dim_menu(W, go_back, go_next):
         H_lbl = Label(middle_frame, text=f'Altitud: {H.get()} ft', font=('Arial', 35), bg='gray5', fg='gray80')
         H_lbl.grid(row=1, column=0, pady=5, sticky='w')
         
-        V_lbl = Label(middle_frame, text=f'Velocidad: {V.get()} ft/s', font=('Arial', 35), bg='gray5', fg='gray80')
+        V_lbl = Label(middle_frame, text=f'Velocidad: {V.get()} fpm', font=('Arial', 35), bg='gray5', fg='gray80')
         V_lbl.grid(row=2, column=0, pady=5, sticky='w')
         
         F_lbl = Label(middle_frame, text=f'Caudal ramal principal: {main_branch_flowrate} cfm', 

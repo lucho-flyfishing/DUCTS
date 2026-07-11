@@ -12,7 +12,7 @@ def elbows_menu(W, go_back, go_next):
     top_frame.pack(side='top', fill='x')
 
 
-    elbows_lbl = Label(top_frame, text='Codos', font=('Arial', 35), bg='gray5', fg='white')
+    elbows_lbl = Label(top_frame, text='Escoja el tipo de codo y presione siguiente', font=('Arial', 25), bg='gray5', fg='gray60')
     elbows_lbl.pack(side='top', pady=1)
     
     
@@ -48,7 +48,7 @@ def elbows_menu(W, go_back, go_next):
     
     
     smooth_r_elbow_img = resources.load_image("round_smooth_elbow.png", 
-                                    size=(320, 350))  
+                                    size=(320, 300))  
     smooth_r_elbow_img_lbl = Label(middle_frame, image=smooth_r_elbow_img, bg='gray5')
     smooth_r_elbow_img_lbl.image = smooth_r_elbow_img
     smooth_r_elbow_img_lbl.grid(row=0, column=0, padx=20, pady=10, sticky="nsew")
@@ -60,7 +60,7 @@ def elbows_menu(W, go_back, go_next):
     
     
     round_mitered_elbow_img = resources.load_image("round_mitered_elbow.png", 
-                                    size=(320, 350))
+                                    size=(320, 300))
     round_mitered_elbow_img_lbl = Label(middle_frame, image=round_mitered_elbow_img, bg='gray5')
     round_mitered_elbow_img_lbl.image = round_mitered_elbow_img
     round_mitered_elbow_img_lbl.grid(row=0, column=1, padx=20, pady=10, sticky="nsew")
@@ -72,7 +72,7 @@ def elbows_menu(W, go_back, go_next):
     
     
     rectangular_mitered_elbow_img = resources.load_image("rectangular_mitered_elbow.png",
-                                    size=(320, 350))
+                                    size=(320, 300))
     rectangular_mitered_elbow_img_lbl = Label(middle_frame, image=rectangular_mitered_elbow_img, bg='gray5')
     rectangular_mitered_elbow_img_lbl.image = rectangular_mitered_elbow_img
     rectangular_mitered_elbow_img_lbl.grid(row=0, column=2, padx=20, pady=10, sticky="nsew")
@@ -84,7 +84,7 @@ def elbows_menu(W, go_back, go_next):
     
     
     no_vanes_smooth_elbow_img = resources.load_image("no_vanes_smooth_elbow.png",
-                                    size=(320, 350))
+                                    size=(320, 300))
     no_vanes_smooth_elbow_img_lbl = Label(middle_frame, image=no_vanes_smooth_elbow_img, bg='gray5')
     no_vanes_smooth_elbow_img_lbl.image = no_vanes_smooth_elbow_img
     no_vanes_smooth_elbow_img_lbl.grid(row=0, column=3, padx=20, pady=10, sticky="nsew")
@@ -97,7 +97,7 @@ def elbows_menu(W, go_back, go_next):
     
     
     no_vanes_sharp_elbow_img = resources.load_image("no_vanes_sharp_elbow.png",
-                                    size=(320, 350))
+                                    size=(320, 300))
     no_vanes_sharp_elbow_img_lbl = Label(middle_frame, image=no_vanes_sharp_elbow_img, bg='gray5')
     no_vanes_sharp_elbow_img_lbl.image = no_vanes_sharp_elbow_img
     no_vanes_sharp_elbow_img_lbl.grid(row=2, column=0, padx=20, pady=10, sticky="nsew")
@@ -109,7 +109,7 @@ def elbows_menu(W, go_back, go_next):
     
     
     z_30_elbow_img = resources.load_image("z_30_elbow.png",
-                                    size=(320, 350))
+                                    size=(320, 300))
     z_30_elbow_img_lbl = Label(middle_frame, image=z_30_elbow_img, bg='gray5')
     z_30_elbow_img_lbl.image = z_30_elbow_img
     z_30_elbow_img_lbl.grid(row=2, column=1, padx=20, pady=10, sticky="nsew")
@@ -121,7 +121,7 @@ def elbows_menu(W, go_back, go_next):
     
     
     round_3_4_5_pieces_elbow_img = resources.load_image("round_3_4_5_pieces_elbow.png",
-                                    size=(320, 350))
+                                    size=(320, 300))
     round_3_4_5_pieces_elbow_img_lbl = Label(middle_frame, image=round_3_4_5_pieces_elbow_img, bg='gray5')
     round_3_4_5_pieces_elbow_img_lbl.image = round_3_4_5_pieces_elbow_img
     round_3_4_5_pieces_elbow_img_lbl.grid(row=2, column=2, padx=20, pady=10, sticky="nsew")

@@ -12,7 +12,7 @@ def damper_menu(W, go_back, go_next):
     top_frame.pack(side='top', fill='x')
 
 
-    dampers_lbl = Label(top_frame, text='Dampers', font=('Arial', 35), bg='gray5', fg='gray60')
+    dampers_lbl = Label(top_frame, text='Escoja el tipo de damper y presione siguiente', font=('Arial', 25), bg='gray5', fg='gray60')
     dampers_lbl.pack(side='top', pady=1)
 
     middle_frame = Frame(W, bg='gray5')
@@ -47,7 +47,7 @@ def damper_menu(W, go_back, go_next):
     
     
     round_butterfly_damper_img = resources.load_image("round_butterfly_damper.png",
-                                    size=(380, 340))
+                                    size=(380, 300))
     round_butterfly_damper_img_lbl = Label(middle_frame, image=round_butterfly_damper_img, 
                                         bg='gray5')
     round_butterfly_damper_img_lbl.image = round_butterfly_damper_img
@@ -60,7 +60,7 @@ def damper_menu(W, go_back, go_next):
     
     
     rectangular_butterfly_damper_img = resources.load_image("rectangular_butterfly_damper.png",
-                                        size=(380, 340))
+                                        size=(380, 300))
     rectangular_butterfly_damper_img_lbl = Label(middle_frame, image=rectangular_butterfly_damper_img, 
                                                 bg='gray5')
     rectangular_butterfly_damper_img_lbl.image = rectangular_butterfly_damper_img
@@ -73,7 +73,7 @@ def damper_menu(W, go_back, go_next):
     
     
     rectangular_gate_damper_img = resources.load_image("rectangular_gate_damper.png",
-                                        size=(380, 340))
+                                        size=(380, 300))
     rectangular_gate_damper_img_lbl = Label(middle_frame, image=rectangular_gate_damper_img, bg='gray5')
     rectangular_gate_damper_img_lbl.image = rectangular_gate_damper_img
     rectangular_gate_damper_img_lbl.grid(row=0, column=2, padx=20, pady=10, sticky="nsew")
@@ -85,7 +85,7 @@ def damper_menu(W, go_back, go_next):
     
     
     round_gate_damper_img = resources.load_image("round_gate_damper.png",
-                                    size=(380, 340))
+                                    size=(380, 300))
     round_gate_damper_img_lbl = Label(middle_frame, image=round_gate_damper_img, bg='gray5')
     round_gate_damper_img_lbl.image = round_gate_damper_img
     round_gate_damper_img_lbl.grid(row=0, column=3, padx=20, pady=10, sticky="nsew")
@@ -97,7 +97,7 @@ def damper_menu(W, go_back, go_next):
     
     
     rectangular_parallel_blades_damper_img = resources.load_image("rectangular_parallel_blades_damper.png",
-                                                size=(380, 340))
+                                                size=(380, 300))
     rectangular_parallel_blades_damper_img_lbl = Label(middle_frame, image=rectangular_parallel_blades_damper_img, 
                                                     bg='gray5')
     rectangular_parallel_blades_damper_img_lbl.image = rectangular_parallel_blades_damper_img

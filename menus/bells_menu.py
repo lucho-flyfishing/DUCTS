@@ -13,7 +13,7 @@ def bells_menu(W, go_back, go_next):
     top_frame.pack(side='top', fill='x')
     
     
-    bells_lbl = Label(top_frame, text='Campanas', font=('Arial', 35), bg='gray5', fg='gray60')
+    bells_lbl = Label(top_frame, text='Escoja el tipo de campana y presione siguiente', font=('Arial', 25), bg='gray5', fg='gray60')
     bells_lbl.pack(side='top', pady=1)
     
     

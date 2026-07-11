@@ -12,8 +12,8 @@ def transitions_menu(W, go_back, go_next):
     top_frame.pack(side='top', fill='x')
     
     
-    reducers_lbl = Label(top_frame, text='Transiciones', 
-                            font=('Arial', 35), bg='gray5', fg='gray60')
+    reducers_lbl = Label(top_frame, text='Escoja el tipo de transición y presione siguiente', 
+                            font=('Arial', 25), bg='gray5', fg='gray60')
     reducers_lbl.pack(side='top', pady=1)
     
     

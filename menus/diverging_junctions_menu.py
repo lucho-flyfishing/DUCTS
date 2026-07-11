@@ -14,7 +14,7 @@ def diverging_junctions_menu(W, go_back, go_next):
     top_frame.pack(side='top', fill='x')
 
 
-    tees_lbl = Label(top_frame, text='Uniones divergentes', font=('Arial', 35), bg='gray5', fg='gray60')
+    tees_lbl = Label(top_frame, text='Escoja el tipo de unión divergente y presione siguiente', font=('Arial', 25), bg='gray5', fg='gray60')
     tees_lbl.pack(side='top', pady=1)
 
     middle_frame = Frame(W, bg='gray5')
@@ -99,77 +99,77 @@ def diverging_junctions_menu(W, go_back, go_next):
     
 
     round_conical_branch_tee_d_img = resources.load_image("round_conical_branch_tee_d.png",
-                                    size=(300, 300))
+                                    size=(300, 250))
     round_conical_branch_tee_d_img_lbl = Label(middle_frame, image=round_conical_branch_tee_d_img, bg='gray5')
     round_conical_branch_tee_d_img_lbl.image = round_conical_branch_tee_d_img
     round_conical_branch_tee_d_img_lbl.grid(row=0, column=0, padx=20, pady=10, sticky="nsew")
     
     
     _45_round_conical_branch_wye_d_img = resources.load_image("45_round_conical_branch_wye_d.png",
-                                    size=(300, 300))
+                                    size=(300, 250))
     _45_round_conical_branch_wye_d_img_lbl = Label(middle_frame, image=_45_round_conical_branch_wye_d_img, bg='gray5')
     _45_round_conical_branch_wye_d_img_lbl.image = _45_round_conical_branch_wye_d_img
     _45_round_conical_branch_wye_d_img_lbl.grid(row=0, column=1, padx=20, pady=10, sticky="nsew")
     
     
     _45_round_conical_branch_wye_d_img = resources.load_image("90_round_branch_to_main_with_45_elbow_tee_d.png",
-                                    size=(300, 300))
+                                    size=(300, 250))
     _45_round_conical_branch_wye_d_img_lbl = Label(middle_frame, image=_45_round_conical_branch_wye_d_img, bg='gray5')
     _45_round_conical_branch_wye_d_img_lbl.image = _45_round_conical_branch_wye_d_img
     _45_round_conical_branch_wye_d_img_lbl.grid(row=0, column=3, padx=20, pady=10, sticky="nsew")
     
     
     _90_round_conical_branch_tee_d_img = resources.load_image("90_round_branch_to_main_with_90_elbow_tee_d.png",
-                                    size=(300, 300))
+                                    size=(300, 250))
     _90_round_conical_branch_tee_d_img_lbl = Label(middle_frame, image=_90_round_conical_branch_tee_d_img, bg='gray5')
     _90_round_conical_branch_tee_d_img_lbl.image = _90_round_conical_branch_tee_d_img
     _90_round_conical_branch_tee_d_img_lbl.grid(row=0, column=2, padx=20, pady=10, sticky="nsew")
     
     
     rectangular_tee_d_img = resources.load_image("rectangular_tee_d.png", 
-                                    size=(300, 300))
+                                    size=(300, 250))
     rectangular_tee_d_img_lbl = Label(middle_frame, image=rectangular_tee_d_img, bg='gray5')
     rectangular_tee_d_img_lbl.image = rectangular_tee_d_img
     rectangular_tee_d_img_lbl.grid(row=2, column=0, padx=20, pady=10, sticky="nsew")
     
     
     rectangular_and_round_wye_d_img = resources.load_image("rectangular_and_round_wye_d.png",
-                                    size=(300, 300))
+                                    size=(300, 250))
     rectangular_and_round_wye_d_img_lbl = Label(middle_frame, image=rectangular_and_round_wye_d_img, bg='gray5')
     rectangular_and_round_wye_d_img_lbl.image = rectangular_and_round_wye_d_img
     rectangular_and_round_wye_d_img_lbl.grid(row=2, column=1, padx=20, pady=10, sticky="nsew")
     
     
     rectangular_main_to_round_tap_tee_d_img = resources.load_image("rectangular_main_to_round_tap_tee_d.png",
-                                    size=(300, 300))
+                                    size=(300, 250))
     rectangular_main_to_round_tap_tee_d_img_lbl = Label(middle_frame, image=rectangular_main_to_round_tap_tee_d_img, bg='gray5')
     rectangular_main_to_round_tap_tee_d_img_lbl.image = rectangular_main_to_round_tap_tee_d_img
     rectangular_main_to_round_tap_tee_d_img_lbl.grid(row=2, column=2, padx=20, pady=10, sticky="nsew")
     
     
     rectangular_main_to_round_tap_conical_tee_d_img = resources.load_image("rectangular_main_to_round_tap_conical_tee_d.png",
-                                    size=(300, 300))
+                                    size=(300, 250))
     rectangular_main_to_round_tap_conical_tee_d_img_lbl = Label(middle_frame, image=rectangular_main_to_round_tap_conical_tee_d_img, bg='gray5')
     rectangular_main_to_round_tap_conical_tee_d_img_lbl.image = rectangular_main_to_round_tap_conical_tee_d_img
     rectangular_main_to_round_tap_conical_tee_d_img_lbl.grid(row=2, column=3, padx=20, pady=10, sticky="nsew")
 
 
     rectangular_main_and_tap_tee_d_img = resources.load_image("rectangular_main_and_tap_tee_d.png",
-                                    size=(300, 300))
+                                    size=(300, 250))
     rectangular_main_and_tap_tee_d_img_lbl = Label(middle_frame, image=rectangular_main_and_tap_tee_d_img, bg='gray5')
     rectangular_main_and_tap_tee_d_img_lbl.image = rectangular_main_and_tap_tee_d_img
     rectangular_main_and_tap_tee_d_img_lbl.grid(row=4, column=0, padx=20, pady=10, sticky="nsew")
     
     
     rectangular_and_round_wye_2_img = resources.load_image("rectangular_and_round_wye_2.png",
-                                    size=(300, 300))
+                                    size=(300, 250))
     rectangular_and_round_wye_2_img_lbl = Label(middle_frame, image=rectangular_and_round_wye_2_img, bg='gray5')
     rectangular_and_round_wye_2_img_lbl.image = rectangular_and_round_wye_2_img
     rectangular_and_round_wye_2_img_lbl.grid(row=4, column=1, padx=20, pady=10, sticky="nsew")
     
     
     rectangular_dovetail_wye_img = resources.load_image("rectangular_dovetail_wye.png",
-                                    size=(300, 300))
+                                    size=(300, 250))
     rectangular_dovetail_wye_img_lbl = Label(middle_frame, image=rectangular_dovetail_wye_img, bg='gray5')
     rectangular_dovetail_wye_img_lbl.image = rectangular_dovetail_wye_img
     rectangular_dovetail_wye_img_lbl.grid(row=4, column=2, padx=20, pady=10, sticky="nsew")

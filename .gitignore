@@ -1,0 +1,12 @@
+build/
+dist/
+ 
+# Python bytecode / cache
+__pycache__/
+*.py[cod]
+ 
+# VSCode Counter reports
+.VSCodeCounter/
+ 
+# macOS Finder junk
+.DS_Store

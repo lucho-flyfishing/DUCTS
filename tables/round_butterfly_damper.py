@@ -59,13 +59,23 @@ def interp_2d(x, y, x_points, y_points, table):
     x = max(min(x, x_points[-1]), x_points[0])
     y = max(min(y, y_points[-1]), y_points[0])
 
-    # 1) Interpolate over θ for each row (fixed D/Do)
+    # 1) Interpolate over θ for each row (fixed D/Do), skipping rows whose
+    #    data is missing (ASHRAE marks D/Do=1.0 at θ>=70° as "—" / None).
+    valid_x = []
     co_at_theta = []
-    for row in table:
-        co_at_theta.append(interp_1d(y, y_points, row))
+    for xi, row in zip(x_points, table):
+        try:
+            v = interp_1d(y, y_points, row)
+        except TypeError:      # arithmetic touched a None cell
+            v = None
+        if v is not None:
+            valid_x.append(xi)
+            co_at_theta.append(v)
 
-    # 2) Interpolate over D/Do
-    return interp_1d(x, x_points, co_at_theta)
+    # 2) Interpolate over D/Do using only rows that have data; clamp the
+    #    query into the available range (falls back to D/Do=0.9 at θ>=70°).
+    x = max(min(x, valid_x[-1]), valid_x[0])
+    return interp_1d(x, valid_x, co_at_theta)
 
 
 # -------------------------------------------------------------

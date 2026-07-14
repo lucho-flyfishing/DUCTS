@@ -59,7 +59,10 @@ def get_co_rect_no_vanes_elbow(r_W, H_W, theta, use_Ktheta=True):
         [0.20, 0.18, 0.16, 0.15, 0.14, 0.13, 0.13, 0.14, 0.14, 0.15, 0.15], # r/W = 2.0
     ]
 
-    Cprime = bilinear_interp(r_W, H_W, H_W_vals, r_W_vals, Cprime_table)
+    # Rows of Cprime_table are r/W, columns are H/W. bilinear_interp
+    # interpolates its 1st arg along each row (H/W axis) and its 2nd arg
+    # across rows (r/W axis), so H_W goes first and r_W second.
+    Cprime = bilinear_interp(H_W, r_W, H_W_vals, r_W_vals, Cprime_table)
 
     # ===================================
     # FACTOR ANGULAR (solo smooth radius)
@@ -81,7 +84,7 @@ def get_co_rect_no_vanes_elbow(r_W, H_W, theta, use_Ktheta=True):
 
     Re_tab =  [1,   2,    3,    4,    6,    8,    10,   14,   20]   # Re × 10⁴
     # r/W < 0.75 usa tabla de 0.5
-    if r_W <= 0.75:
+    if r_W < 0.75:   # ASHRAE 3-5: r/W = 0.5 row; r/W >= 0.75 uses the 2.0 row
         KRe_vals = [1.40, 1.26, 1.19, 1.14, 1.09, 1.06, 1.04, 1.00, 1.00]
     else:
         KRe_vals = [2.00, 1.77, 1.64, 1.56, 1.46, 1.38, 1.30, 1.15, 1.00]

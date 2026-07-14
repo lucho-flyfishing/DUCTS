@@ -1,21 +1,24 @@
 """
-Round and Rectangular Screen Damper
-Source: Standard HVAC loss coefficient tables
+Round and Rectangular Screen Damper (Obstruction, Screen) — ASHRAE Fitting 6-7
+(Idelchik et al. 1986, Diagram 8-6)
 
 Inputs:
-    n : float → free area ratio of screen (A1/Ao)
-    A1_Ao : float → area ratio (A1/Ao)
+    n     : float -> free area ratio of the screen        (columns, 0.3 .. 1.0)
+    A1_Ao : float -> duct/fitting cross-section area ratio (rows,    0.2 .. 6.0)
 
 Output:
-    Co : float → loss coefficient
+    Co : float -> loss coefficient
+
+NOTE: in the ASHRAE table the ROWS are A1/Ao and the COLUMNS are n.
+A previous version of this file had the two axes swapped.
 """
 
-# Table grid
-_n_values = [0.2, 0.3, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 2.0, 2.5, 3.0, 4.0, 6.0]
+# Table grid (ASHRAE 6-7)
+_A1_Ao_values = [0.2, 0.3, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 2.0, 2.5, 3.0, 4.0, 6.0]
 
-_A1_Ao_values = [0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+_n_values = [0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
 
-# Co table rows keyed by n
+# Co table: rows keyed by A1/Ao, columns follow _n_values
 _Co_table = {
     0.2: [155, 75, 42, 24, 15, 8.0, 3.5, 0],
     0.3: [ 69, 33, 19, 11, 6.4, 3.6, 1.6, 0],
@@ -42,7 +45,7 @@ def _interp_1d(x, x0, x1, y0, y1):
 
 
 def _interp_table(x, x_list, y_table):
-    """Interpolates row-wise (for n)."""
+    """Interpolates row-wise (between A1/Ao rows)."""
     if x <= x_list[0]:
         return y_table[x_list[0]]
     if x >= x_list[-1]:
@@ -64,26 +67,26 @@ def _interp_table(x, x_list, y_table):
 
 def get_co_round_and_rectangular_screen_damper(n: float, A1_Ao: float) -> float:
     """
-    Returns Co for a round/rectangular screen damper.
+    Returns Co for a round/rectangular screen (ASHRAE 6-7).
 
     Bilinear interpolation:
-    Step 1 → interpolate between table rows by n
-    Step 2 → interpolate inside the row by A1/Ao
+    Step 1 -> interpolate between table ROWS by A1/Ao
+    Step 2 -> interpolate inside the row (COLUMNS) by n
     """
 
-    # Interpolate vertically (in n)
-    row = _interp_table(n, _n_values, _Co_table)
+    # Interpolate vertically (between A1/Ao rows)
+    row = _interp_table(A1_Ao, _A1_Ao_values, _Co_table)
 
-    # Now interpolate horizontally (in A1/Ao)
-    if A1_Ao <= _A1_Ao_values[0]:
+    # Now interpolate horizontally (in n)
+    if n <= _n_values[0]:
         return float(row[0])
-    if A1_Ao >= _A1_Ao_values[-1]:
+    if n >= _n_values[-1]:
         return float(row[-1])
 
-    for i in range(len(_A1_Ao_values) - 1):
-        x0 = _A1_Ao_values[i]
-        x1 = _A1_Ao_values[i + 1]
-        if x0 <= A1_Ao <= x1:
-            return float(_interp_1d(A1_Ao, x0, x1, row[i], row[i + 1]))
+    for i in range(len(_n_values) - 1):
+        x0 = _n_values[i]
+        x1 = _n_values[i + 1]
+        if x0 <= n <= x1:
+            return float(_interp_1d(n, x0, x1, row[i], row[i + 1]))
 
     return float(row[-1])

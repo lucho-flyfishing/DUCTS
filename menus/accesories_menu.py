@@ -28,7 +28,7 @@ def accesories_menu(W, go_back, go_bells_menu, go_elbows_menu, go_damper_menu,
     middle_frame.pack(side='top', fill='both', expand=True)
 
 
-    bells_btn = Button(middle_frame, text='1. Campanas',
+    bells_btn = Button(middle_frame, text='Campanas',
                         bg='white', fg='black',
                         relief='raised',
                         activebackground='DodgerBlue2',
@@ -39,7 +39,7 @@ def accesories_menu(W, go_back, go_bells_menu, go_elbows_menu, go_damper_menu,
     bells_btn.pack(padx=5, pady=10, anchor='n')
 
 
-    elbows_btn = Button(middle_frame, text='2. Codos',
+    elbows_btn = Button(middle_frame, text='Codos',
                             bg='white', fg='black',
                             relief='raised',
                             activebackground='DodgerBlue2',
@@ -49,7 +49,7 @@ def accesories_menu(W, go_back, go_bells_menu, go_elbows_menu, go_damper_menu,
                             command=lambda: go_elbows_menu(W))
     elbows_btn.pack(padx=5, pady=5)
 
-    damper_btn = Button(middle_frame, text='3. Dampers',
+    damper_btn = Button(middle_frame, text='Dampers',
                             bg='white', fg='black',
                             relief='raised',
                             activebackground='DodgerBlue2',
@@ -60,7 +60,7 @@ def accesories_menu(W, go_back, go_bells_menu, go_elbows_menu, go_damper_menu,
     damper_btn.pack(padx=5, pady=5)
 
 
-    reducers_btn = Button(middle_frame, text='5. Transiciones',
+    reducers_btn = Button(middle_frame, text='Transiciones',
                             bg='white', fg='black',
                             relief='raised',
                             activebackground='DodgerBlue2',
@@ -71,7 +71,7 @@ def accesories_menu(W, go_back, go_bells_menu, go_elbows_menu, go_damper_menu,
     reducers_btn.pack(padx=5, pady=5)
 
 
-    tees_btn = Button(middle_frame, text='6. Uniones convergentes',
+    tees_btn = Button(middle_frame, text='Uniones convergentes',
                             bg='white', fg='black',
                             relief='raised',
                             activebackground='DodgerBlue2',
@@ -81,7 +81,7 @@ def accesories_menu(W, go_back, go_bells_menu, go_elbows_menu, go_damper_menu,
                             command= lambda: go_junctions_menu(W))
     tees_btn.pack(padx=5, pady=5)
     
-    div_tees_btn = Button(middle_frame, text='7. Uniones divergentes',
+    div_tees_btn = Button(middle_frame, text='Uniones divergentes',
                             bg='white', fg='black',
                             relief='raised',
                             activebackground='DodgerBlue2',
@@ -91,7 +91,7 @@ def accesories_menu(W, go_back, go_bells_menu, go_elbows_menu, go_damper_menu,
                             command= lambda: go_diverging_junctions_menu(W))
     div_tees_btn.pack(padx=5, pady=5)
 
-    results_btn = Button(middle_frame, text='6. Resultados de accesorios',
+    results_btn = Button(middle_frame, text='Resultados de accesorios',
                             bg='white', fg='black',
                             relief='raised',
                             activebackground='DodgerBlue2',

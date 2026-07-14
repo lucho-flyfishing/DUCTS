@@ -1,6 +1,6 @@
 # accesories_results_menu.py
 
-from tkinter import Button, Label, Frame
+from tkinter import Button, Label, Frame, Canvas, Scrollbar
 from app_state import app_state
 
 
@@ -25,9 +25,45 @@ def accesories_results_menu(W, go_back):
     selected = app_state.selected_option.get()
     fittings = app_state.fittings   # each entry: [label, fitting_type, ΔP (Pa)]
 
-    # ── Tabla de resultados ───────────────────────────────────────────────────
-    table_frame = Frame(W, bg='gray5')
-    table_frame.pack(pady=15)
+    # ── Tabla de resultados (scrolleable) ─────────────────────────────────────
+    table_container = Frame(W, bg='gray5')
+    table_container.pack(fill='both', expand=True, pady=15)
+
+    canvas = Canvas(table_container, bg='gray5', highlightthickness=0, bd=0)
+    scrollbar = Scrollbar(table_container, orient='vertical', command=canvas.yview,
+                          bg='gray30', troughcolor='gray12',
+                          activebackground='DodgerBlue2',
+                          highlightthickness=0, bd=0, width=14)
+    canvas.configure(yscrollcommand=scrollbar.set, yscrollincrement=34)
+
+    canvas.pack(side='left', fill='both', expand=True)
+    scrollbar.pack(side='right', fill='y')
+
+    table_frame = Frame(canvas, bg='gray5')
+    canvas.create_window((0, 0), window=table_frame, anchor='nw')
+
+    def _update_scrollregion(event):
+        canvas.configure(scrollregion=canvas.bbox('all'))
+    table_frame.bind('<Configure>', _update_scrollregion)
+
+    def _on_mousewheel(event):
+        if event.num == 4 or event.delta > 0:
+            canvas.yview_scroll(-1, 'units')
+        elif event.num == 5 or event.delta < 0:
+            canvas.yview_scroll(1, 'units')
+
+    def _bind_mousewheel(event):
+        canvas.bind_all('<MouseWheel>', _on_mousewheel)
+        canvas.bind_all('<Button-4>', _on_mousewheel)
+        canvas.bind_all('<Button-5>', _on_mousewheel)
+
+    def _unbind_mousewheel(event):
+        canvas.unbind_all('<MouseWheel>')
+        canvas.unbind_all('<Button-4>')
+        canvas.unbind_all('<Button-5>')
+
+    canvas.bind('<Enter>', _bind_mousewheel)
+    canvas.bind('<Leave>', _unbind_mousewheel)
 
     # Encabezados según unidades
     if selected in (1, 2):

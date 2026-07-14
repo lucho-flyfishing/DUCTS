@@ -173,7 +173,7 @@ def interpolate_2d(x, y, x_values, y_values, table):
 # BRANCH COEFFICIENT
 # =========================================================
 
-def get_co_rectangular_and_round_wye_d(theta, Vb_Vc):
+def get_co_rectangular_and_round_wye_2_d_branch(theta, Vb_Vc):
 
     return interpolate_2d(
         theta,

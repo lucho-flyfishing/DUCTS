@@ -24,9 +24,9 @@ def rectangular_eq_menu(W, go_back):
     top_frame.pack(side='top', fill='x')
 
     title = Label(top_frame,
-                  text='En la siguiente tabla se muestran los equivalentes rectangulares para cada '
-                       'diámetro de ducto circular, considerando diferentes relaciones de aspecto '
-                       '(ancho:alto). Haz clic en el valor que quieras usar para cada ducto; ese '
+                  text='En la siguiente tabla se muestran los equivalentes rectangulares para cada \n '
+                       'diámetro de ducto circular, considerando diferentes relaciones de aspecto \n'
+                       '(ancho:alto). Haz clic en el valor que quieras usar para cada ducto; ese \n'
                        'será el que se incluya en el PDF.',
                   font=('Arial', 15),
                   bg='gray5',

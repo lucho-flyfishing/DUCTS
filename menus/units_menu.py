@@ -59,7 +59,7 @@ def units_menu(W, go_back, go_next):
                 command=on_select, **radio_style).pack(pady=10)
     
     
-    Radiobutton(middle_frame, text="3. cfm    : inH20/ft : in : fpm : ft",
+    Radiobutton(middle_frame, text="3. cfm    : inH2O/ft : in : fpm : ft",
                 variable=app_state.selected_option, value=3,
                 command=on_select, **radio_style).pack(pady=10)
     

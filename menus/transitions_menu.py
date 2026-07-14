@@ -76,7 +76,7 @@ def transitions_menu(W, go_back, go_next):
     round_transition_img_lbl.image = round_transition_img
     round_transition_img_lbl.grid(row=0, column=1, padx=20, pady=10, sticky="nsew")
 
-    Radiobutton(middle_frame, text="2. Transicion circular reductora",
+    Radiobutton(middle_frame, text="2. Transición circular reductora",
                 variable=app_state.selected_transition, value=2,
                 command=on_select, **radio_style).grid(row=1, column=1, pady=5)
 

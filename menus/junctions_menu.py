@@ -78,11 +78,11 @@ def junctions_menu(W, go_back, go_next):
                 variable=app_state.selected_junction, value=3,
                 command=on_select, **radio_style).grid(row=1, column=2, pady=5)
 
-    Radiobutton(middle_frame, text="4. Y 30° pricipal conico",
+    Radiobutton(middle_frame, text="4. Y 30° pricipal cónico",
                 variable=app_state.selected_junction, value=4,
                 command=on_select, **radio_style).grid(row=1, column=3, pady=5)
 
-    Radiobutton(middle_frame, text="5. Y 45° principal conico",
+    Radiobutton(middle_frame, text="5. Y 45° principal cónico",
                 variable=app_state.selected_junction, value=5,
                 command=on_select, **radio_style).grid(row=3, column=0, pady=5)
 
@@ -102,7 +102,7 @@ def junctions_menu(W, go_back, go_next):
                 variable=app_state.selected_junction, value=9,
                 command=on_select, **radio_style).grid(row=5, column=0, pady=5)
 
-    Radiobutton(middle_frame, text="10. Y rectangular simetrica",
+    Radiobutton(middle_frame, text="10. Y rectangular simétrica",
                 variable=app_state.selected_junction, value=10,
                 command=on_select, **radio_style).grid(row=5, column=1, pady=5)
 

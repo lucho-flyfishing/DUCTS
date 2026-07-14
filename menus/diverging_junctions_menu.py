@@ -106,7 +106,7 @@ def diverging_junctions_menu(W, go_back, go_next):
                 variable=app_state.selected_diverging_junction, value=10,
                 command=on_select, **radio_style).grid(row=5, column=1, pady=5)
 
-    Radiobutton(middle_frame, text="11. Y rectangular simetrica ",
+    Radiobutton(middle_frame, text="11. Y rectangular simétrica ",
                 variable=app_state.selected_diverging_junction, value=11,
                 command=on_select, **radio_style).grid(row=5, column=2, pady=5)
 

@@ -45,7 +45,7 @@ def corrections_menu(W, go_back, go_accesories_menu, go_roughness_menu,
                                 command=lambda: go_branches_results_menu(W))
     branches_results_btn.pack(padx=5, pady=5)
 
-    roughness_btn = Button(middle_frame, text='Correcion por rugosidad del material del ducto',
+    roughness_btn = Button(middle_frame, text='Corrección por rugosidad del material del ducto',
                                 bg='white', fg='black',
                                 relief='raised',
                                 activebackground='DodgerBlue2',
@@ -75,7 +75,7 @@ def corrections_menu(W, go_back, go_accesories_menu, go_roughness_menu,
                             command=lambda: go_back(W))
     re_design_btn.pack(padx=5, pady=5)
 
-    accesories_btn = Button(middle_frame, text='Calcular perdidas en accesorios',
+    accesories_btn = Button(middle_frame, text='Calcular pérdidas en accesorios',
                             bg='white', fg='black',
                             relief='raised',
                             activebackground='DodgerBlue2',

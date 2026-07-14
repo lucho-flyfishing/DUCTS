@@ -83,13 +83,13 @@ def interpolate_2d(Ao_A1, theta):
 # API PRINCIPAL
 # ============================
 
-def get_co_rectangular_3_side_transition(Ao_A1, theta):
+def get_co_rectangular_3_side_transition(A0_A1, theta):
     """
     Return the Co value for:
     Transition, Rectangular, Three Sides Straight.
 
     Inputs:
-        Ao_A1 → ratio Ao/A1
+        A0_A1 → ratio Ao/A1
         theta → degrees
     """
-    return interpolate_2d(Ao_A1, theta)
+    return interpolate_2d(A0_A1, theta)

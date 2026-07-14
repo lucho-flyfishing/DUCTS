@@ -50,14 +50,14 @@ Co_table = {
 }
 
 
-def get_co_rectangular_transition(AoA1, theta_deg):
+def get_co_rectangular_transition(A0_A1, theta):
     """Devuelve Co interpolado desde Idelchik."""
-    x0, x1 = get_neighbors(AoA1_values, AoA1)
-    y0, y1 = get_neighbors(theta_values, theta_deg)
+    x0, x1 = get_neighbors(AoA1_values, A0_A1)
+    y0, y1 = get_neighbors(theta_values, theta)
 
     q11 = Co_table[x0][theta_values.index(y0)]
     q12 = Co_table[x0][theta_values.index(y1)]
     q21 = Co_table[x1][theta_values.index(y0)]
     q22 = Co_table[x1][theta_values.index(y1)]
 
-    return bilinear(AoA1, theta_deg, x0, x1, y0, y1, q11, q12, q21, q22)
+    return bilinear(A0_A1, theta, x0, x1, y0, y1, q11, q12, q21, q22)

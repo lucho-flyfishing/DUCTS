@@ -4,7 +4,10 @@ from tkinter import Label, Button, Entry, Frame, OptionMenu, StringVar, LEFT, RI
 import importlib
 import inspect
 from app_state import app_state
-from fitting_units import velocity_label, compute_delta_p_pa, format_delta_p, vel_unit, rho_unit
+from fitting_units import (
+    velocity_label, compute_delta_p_pa, format_delta_p, vel_unit, rho_unit,
+    dim_unit, compute_Re, hydraulic_diameter_rect,
+)
 
 
 # =========================================================
@@ -20,9 +23,65 @@ ELBOW_FILE_MAP = {
     7: "round_3_4_5_pieces_elbow"
 }
 
-# Params that are strings → rendered as dropdowns instead of text entries
+# =========================================================
+# NOMBRE A MOSTRAR
+# Las opciones 4 y 5 comparten el mismo archivo, así que mostramos
+# un nombre específico (en vez del nombre de archivo) para que el
+# usuario confirme cuál eligió. Coincide con las etiquetas del menú.
+# =========================================================
+ELBOW_DISPLAY_NAME = {
+    4: "Codo sin aletas radio suave",
+    5: "Codo sin aletas agudo",
+}
+
+# =========================================================
+# PARÁMETROS QUE SE MUESTRAN COMO DROPDOWN (OptionMenu)
+# en lugar de una caja de texto.
+# =========================================================
 DROPDOWN_PARAMS = {
-    "número_piezas": ["3", "4", "5"],
+    "número_piezas": {
+        "options": ["3", "4", "5"],
+        "values": {"3": 3, "4": 4, "5": 5},
+    },
+}
+
+# =========================================================
+# PARÁMETROS AUTOMÁTICOS  (NO se le piden al usuario)
+# Su valor se deduce de la selección del codo.
+#   Opción 4  "radio suave" -> use_Ktheta = True   (Co = Kθ · KRe · C'o)
+#   Opción 5  "agudo/sharp"  -> use_Ktheta = False  (Co =      KRe · C'o)
+# =========================================================
+AUTO_PARAMS = {
+    "use_Ktheta": {
+        4: True,
+        5: False,
+    },
+}
+
+# =========================================================
+# CORRECCIÓN DE REYNOLDS  (KRe)
+# Solo algunos codos la usan (leen app_state.Re). Para esos pedimos
+# la dimensión física mínima y calculamos Dh y luego Re = ρ·V·Dh/μ,
+# aquí mismo (independiente de la parte de ramales/branches).
+#
+# ¿Cómo saber cuáles agregar? En tu proyecto corre:
+#       grep -rl "app_state.Re" tables/
+# y pon esos nombres de archivo aquí.
+#
+# Formas soportadas:
+#   "rectangular": pide W (ancho). H sale del ratio H/W ya ingresado.
+#                  Dh = 2·H·W / (H + W)   ->  "ratio_param" = nombre del
+#                  parámetro H/W en la firma de la función.
+#   "round":       pide D (diámetro).  Dh = D
+#
+# NOTA: verifica los codos redondos/segmentados con el grep de arriba
+#       y agrégalos según corresponda.
+# =========================================================
+REYNOLDS_FITTINGS = {
+    "rect_no_vanes_elbow":       {"shape": "rectangular", "ratio_param": "H_W"},
+    "rectangular_mitered_elbow": {"shape": "rectangular", "ratio_param": "H_W"},
+    "round_mitered_elbow":       {"shape": "round"},   # solo pide D -> Dh = D
+    "z_30_elbow":                {"shape": "round"},   # codo en Z redondo -> Dh = D
 }
 
 
@@ -48,7 +107,16 @@ def elbows_specs_menu(W, go_back):
     # Parámetros de la función
     sig = inspect.signature(calc_func)
     param_names = list(sig.parameters.keys())
-    num_params = len(param_names)
+
+    # Nombre a mostrar (más claro que el nombre de archivo cuando
+    # dos selecciones comparten el mismo archivo)
+    display_name = ELBOW_DISPLAY_NAME.get(
+        selected_elbow_value,
+        filename.replace('_', ' ').title()
+    )
+
+    # ¿Este codo necesita corrección de Reynolds?
+    re_cfg = REYNOLDS_FITTINGS.get(filename)
 
     # Frame superior
     top_frame = Frame(W, bg='gray5')
@@ -56,7 +124,7 @@ def elbows_specs_menu(W, go_back):
 
     Label(
         top_frame,
-        text=f"Codo seleccionado: {filename.replace('_', ' ').title()}",
+        text=f"Codo seleccionado: {display_name}",
         bg='gray5',
         fg='white',
         font=("Arial", 24, "bold")
@@ -71,15 +139,29 @@ def elbows_specs_menu(W, go_back):
     ).pack(pady=10)
 
     # Frame de parámetros dinámicos
-    entries = []
-    param_types = []   # "numeric" or "string"
+    value_getters = []    # una función por parámetro, EN ORDEN de la firma
+    numeric_entries = []  # solo para poner el foco en la primera caja
     params_frame = Frame(W, bg='gray5')
     params_frame.pack(pady=20)
 
     # Entradas dinámicas según firma de la función (para Co)
     for pname in param_names:
+
+        # ---- Parámetro automático: sin casilla, valor según selección ----
+        if pname in AUTO_PARAMS:
+            mapping = AUTO_PARAMS[pname]
+            if selected_elbow_value in mapping:
+                auto_value = mapping[selected_elbow_value]
+            else:
+                default = sig.parameters[pname].default
+                auto_value = None if default is inspect.Parameter.empty else default
+            value_getters.append(lambda av=auto_value: av)
+            continue
+
         row = Frame(params_frame, bg='gray5')
         row.pack(fill=X, pady=5)
+
+        config = DROPDOWN_PARAMS.get(pname)
 
         Label(
             row,
@@ -88,9 +170,11 @@ def elbows_specs_menu(W, go_back):
             bg='gray5', fg='OrangeRed2',
         ).pack(side=LEFT, padx=10)
 
-        if pname in DROPDOWN_PARAMS:
-            # String param → OptionMenu
-            options = DROPDOWN_PARAMS[pname]
+        if config:
+            # Parámetro tipo dropdown → OptionMenu
+            options = config["options"]
+            value_map = config.get("values", {opt: opt for opt in options})
+
             var = StringVar(W)
             var.set(options[0])
             menu = OptionMenu(row, var, *options)
@@ -105,10 +189,10 @@ def elbows_specs_menu(W, go_back):
             )
             menu["menu"].config(font=("Arial", 16), bg='white', fg='black')
             menu.pack(side=LEFT, padx=10)
-            entries.append(var)
-            param_types.append("string")
+
+            value_getters.append(lambda v=var, vm=value_map: vm[v.get()])
         else:
-            # Numeric param → regular Entry
+            # Parámetro numérico → Entry normal
             entry = Entry(
                 row,
                 font=("Arial", 20),
@@ -123,8 +207,43 @@ def elbows_specs_menu(W, go_back):
                 insertbackground='black'
             )
             entry.pack(side=LEFT, padx=10)
-            entries.append(entry)
-            param_types.append("numeric")
+
+            numeric_entries.append(entry)
+            value_getters.append(lambda e=entry: float(e.get()))
+
+    # -------------------------
+    # (Solo si aplica) Dimensión física para el número de Reynolds
+    # Rectangular -> pide W ; Round -> pide D
+    # -------------------------
+    dim_entry = None
+    if re_cfg is not None:
+        dim_row = Frame(params_frame, bg='gray5')
+        dim_row.pack(fill=X, pady=5)
+
+        if re_cfg["shape"] == "round":
+            dim_label = f"D - diámetro ducto ({dim_unit()}):"
+        else:
+            dim_label = f"W - ancho ducto ({dim_unit()}):"
+
+        Label(
+            dim_row,
+            text=dim_label,
+            font=("Arial", 20),
+            bg='gray5', fg='OrangeRed2',
+        ).pack(side=LEFT, padx=10)
+
+        dim_entry = Entry(
+            dim_row,
+            font=("Arial", 20),
+            width=10,
+            bg='white', fg='black',
+            relief='solid', bd=2,
+            highlightthickness=2,
+            highlightbackground='white',
+            highlightcolor='DeepSkyBlue2',
+            insertbackground='black'
+        )
+        dim_entry.pack(side=LEFT, padx=10)
 
     # -------------------------
     # Entry → Velocidad
@@ -182,8 +301,7 @@ def elbows_specs_menu(W, go_back):
     )
     name_entry.pack(padx=10)
 
-    # Focus first numeric entry
-    numeric_entries = [e for e, t in zip(entries, param_types) if t == "numeric"]
+    # Focus primera caja de texto numérica (los dropdowns no son Entry)
     if numeric_entries:
         W.after(100, lambda: numeric_entries[0].focus_set())
 
@@ -196,29 +314,32 @@ def elbows_specs_menu(W, go_back):
             widget.destroy()
 
         try:
-            # Parse each param according to its type
-            values = []
-            for e, t in zip(entries, param_types):
-                if t == "string":
-                    values.append(int(e.get()))   # número_piezas needs int
-                else:
-                    values.append(float(e.get()))
+            # 1) Valores de los parámetros del codo (orden de la firma)
+            values = [get() for get in value_getters]
 
-            if len(values) != num_params:
-                raise ValueError(
-                    f"La función requiere {num_params} valores, pero ingresaste {len(values)}"
-                )
-
-            # Calcular Co
-            Co = calc_func(*values)
-
-            # Velocidad (m/s en SI, fpm en imperial)
+            # 2) Velocidad
             V = float(vel_entry.get())
 
-            # Densidad desde app_state (solo para mostrar)
-            rho = app_state.rho
+            # 3) Si el codo usa KRe, calcular Re AHORA (la función lee
+            #    app_state.Re). Independiente de la parte de ramales.
+            Re_value = None
+            if re_cfg is not None:
+                if re_cfg["shape"] == "round":
+                    Dh = float(dim_entry.get())                 # Dh = D
+                else:
+                    W_dim = float(dim_entry.get())              # ancho real
+                    H_W = values[param_names.index(re_cfg["ratio_param"])]
+                    H_dim = H_W * W_dim                         # alto real
+                    Dh = hydraulic_diameter_rect(H_dim, W_dim)  # Dh = 2HW/(H+W)
 
-            # Calcular ΔP  -> siempre en Pa (convierte entradas imperiales)
+                Re_value = compute_Re(V, Dh)
+                app_state.Re = Re_value                          # float en app_state
+
+            # 4) Coeficiente Co
+            Co = calc_func(*values)
+
+            # 5) Densidad (solo para mostrar) y ΔP
+            rho = app_state.rho
             delta_p = compute_delta_p_pa(Co, V)
 
             # Etiqueta
@@ -226,8 +347,8 @@ def elbows_specs_menu(W, go_back):
             if label == "":
                 label = "Sin nombre"
 
-            # Tipo de fitting
-            fitting_type = filename.replace('_', ' ').title()
+            # Tipo de fitting (nombre claro; distingue 4 vs 5)
+            fitting_type = display_name
 
             # Guardar [etiqueta, tipo, ΔP en Pa]
             app_state.fittings.append([label, fitting_type, delta_p])
@@ -241,9 +362,15 @@ def elbows_specs_menu(W, go_back):
                 fg='DeepSkyBlue2'
             ).pack(pady=5)
 
+            # Detalle (incluye Re si se calculó)
+            detail = f"(Co = {Co:.4f}  |  V = {V} {vel_unit()}  |  ρ = {rho} {rho_unit()}"
+            if Re_value is not None:
+                detail += f"  |  Re = {Re_value:,.0f}"
+            detail += ")"
+
             Label(
                 result_frame,
-                text=f"(Co = {Co:.4f}  |  V = {V} {vel_unit()}  |  ρ = {rho} {rho_unit()})",
+                text=detail,
                 font=("Arial", 14),
                 bg='gray5',
                 fg='gray60'

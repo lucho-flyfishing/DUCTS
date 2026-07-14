@@ -23,14 +23,6 @@ def accesories_menu(W, go_back, go_bells_menu, go_elbows_menu, go_damper_menu,
                             fg='gray60')
     accesories__main.pack(side='top', pady=1)
 
-    accesories_aux = Label(top_frame, text='Se ha concluido el calculo de perdidas en tramos rectos, a continuación \n'
-                        ' se calcularan las perdidas por accesorios, cada accesorio se debe identificar \n'
-                        ' con un codigo el cual se ingresa en el menu de cada accesorio',
-                            font=('Arial', 20),
-                            bg='gray5',
-                            fg='gray60')
-    accesories_aux.pack(side='top', pady=1)
-
 
     middle_frame = Frame(W, bg='gray5')
     middle_frame.pack(side='top', fill='both', expand=True)

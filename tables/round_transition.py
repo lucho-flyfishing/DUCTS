@@ -73,11 +73,11 @@ def bilinear_lookup(x, y, table):
 
 
 # ---- FUNCIÓN PRINCIPAL ----
-def get_co_round_transition(area_ratio, theta_deg):
+def get_co_round_transition(A0_A1, theta_deg):
     """
-    area_ratio = Ao / A1
+    A0_A1 = Ao / A1
         < 1 → reductor (área decrece)
         > 1 → expansor (área crece)
     theta_deg = θ en grados
     """
-    return bilinear_lookup(area_ratio, theta_deg, co_table)
+    return bilinear_lookup(A0_A1, theta_deg, co_table)

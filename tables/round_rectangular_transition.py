@@ -57,9 +57,9 @@ def bilinear_lookup(x, y, table):
     return P
 
 # ---- FUNCIÓN PRINCIPAL ----
-def get_co_round_rectangular_transition(area_ratio, theta_deg):
+def get_co_round_rectangular_transition(A1_A0, theta):
     """
-    area_ratio = A1 / Ao
-    theta_deg = ángulo θ en grados
+    A1_A0 = A1 / Ao
+    theta = ángulo θ en grados
     """
-    return bilinear_lookup(area_ratio, theta_deg, co_table)
+    return bilinear_lookup(A1_A0, theta, co_table)

@@ -51,21 +51,32 @@ def rectangular_eq_menu(W, go_back):
 
     canvas = Canvas(scroll_container, bg='gray5', highlightthickness=0)
     scrollbar = Scrollbar(scroll_container, orient='vertical', command=canvas.yview)
-    middle_frame = Frame(canvas, bg='gray5')
 
-    middle_frame.bind(
+    # CENTRADO: holder ocupa todo el ancho del canvas y middle_frame (la tabla)
+    # se empaqueta centrado dentro de el. Mover el item del canvas a (ancho/2)
+    # no sirve: con -confine activo el canvas repega el scrollregion al borde
+    # izquierdo y la tabla se vuelve a ir a la izquierda.
+    holder = Frame(canvas, bg='gray5')
+
+    holder.bind(
         "<Configure>",
         lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
     )
 
-    canvas_window = canvas.create_window((0, 0), window=middle_frame, anchor="nw")
+    canvas_window = canvas.create_window((0, 0), window=holder, anchor="nw")
     canvas.configure(yscrollcommand=scrollbar.set)
 
     canvas.pack(side='left', fill='both', expand=True)
     scrollbar.pack(side='right', fill='y')
 
+    middle_frame = Frame(holder, bg='gray5')   # <- la tabla en si
+    middle_frame.pack(anchor='center')
+
     def _resize_inner(event):
-        canvas.itemconfig(canvas_window, width=event.width)
+        # holder: nunca mas angosto que el canvas (para poder centrar) ni que la
+        # tabla (para no recortarla si no cabe).
+        canvas.itemconfig(canvas_window,
+                          width=max(event.width, holder.winfo_reqwidth()))
 
     canvas.bind('<Configure>', _resize_inner)
 
@@ -125,6 +136,9 @@ def rectangular_eq_menu(W, go_back):
     # -------------------------
     # SELECTION STATE (app_state)
     # -------------------------
+    # OJO: este dict es la senal que usa branches_results_menu para saber si esta
+    # pantalla ya fue abierta (vacio == nunca se abrio == no muestra la columna
+    # de equivalente rectangular). Se llena aqui abajo con el default 1:1.
     if not hasattr(app_state, "rectangular_eq_selection"):
         app_state.rectangular_eq_selection = {}
 

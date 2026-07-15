@@ -39,12 +39,26 @@ def accesories_results_menu(W, go_back):
     canvas.pack(side='left', fill='both', expand=True)
     scrollbar.pack(side='right', fill='y')
 
-    table_frame = Frame(canvas, bg='gray5')
-    canvas.create_window((0, 0), window=table_frame, anchor='nw')
+    # CENTRADO: table_holder ocupa TODO el ancho del canvas y table_frame (la
+    # tabla real) se empaqueta centrado dentro de el. Mover el item del canvas a
+    # (ancho/2) con anchor='n' no sirve: con -confine activo el canvas repega el
+    # borde izq. del scrollregion al borde izq. de la ventana.
+    table_holder = Frame(canvas, bg='gray5')
+    table_window = canvas.create_window((0, 0), window=table_holder, anchor='nw')
+
+    table_frame = Frame(table_holder, bg='gray5')
+    table_frame.pack(anchor='center')
 
     def _update_scrollregion(event):
         canvas.configure(scrollregion=canvas.bbox('all'))
-    table_frame.bind('<Configure>', _update_scrollregion)
+    table_holder.bind('<Configure>', _update_scrollregion)
+
+    def _fit_holder(event):
+        # el holder nunca mas angosto que el canvas (para poder centrar) ni que la
+        # tabla (para no recortarla si no cabe).
+        canvas.itemconfig(table_window,
+                          width=max(event.width, table_holder.winfo_reqwidth()))
+    canvas.bind('<Configure>', _fit_holder)
 
     def _on_mousewheel(event):
         if event.num == 4 or event.delta > 0:

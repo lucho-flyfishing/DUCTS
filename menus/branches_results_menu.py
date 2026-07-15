@@ -1,5 +1,6 @@
 from tkinter import Button, Label, Frame, StringVar, Canvas, Scrollbar
 from app_state import app_state
+from tables.rectangular_eq import get_rectangular_eq
 import math
 
 
@@ -141,6 +142,16 @@ def branches_results_menu(W, go_back):
     app_state.velocity_values  = velocity_values
 
 
+    # ── ¿Mostrar la columna de equivalente rectangular? ────────────────────────
+    # rectangular_eq_menu llena rectangular_eq_selection con un default (1:1) para
+    # CADA ramal apenas se abre esa pantalla, y es el unico sitio que lo escribe.
+    # Entonces: dict inexistente o vacio == el usuario nunca entro ahi == no se
+    # muestra la columna. Se evalua la verdad del dict (no hasattr) para que
+    # tambien funcione si app_state lo define vacio de fabrica.
+    rect_selection = getattr(app_state, 'rectangular_eq_selection', None) or {}
+    show_rect_eq   = bool(rect_selection)
+
+
     # ── S label ───────────────────────────────────────────────────────────────
     if selected in (1, 2):
         s_text = f'Tasa de fricción de diseño (S): {round(S_main, 4)} Pa/m'
@@ -175,12 +186,27 @@ def branches_results_menu(W, go_back):
     canvas.pack(side='left', fill='both', expand=True)
     scrollbar.pack(side='right', fill='y')
 
-    table_frame = Frame(canvas, bg='gray5')
-    canvas.create_window((0, 0), window=table_frame, anchor='nw')
+    # CENTRADO: table_holder es un contenedor que ocupa TODO el ancho del canvas y
+    # table_frame (la tabla real) se empaqueta centrado dentro de el.
+    # No sirve mover el item del canvas a (ancho/2) con anchor='n': el canvas trae
+    # -confine activo y vuelve a pegar el borde izq. del scrollregion al borde izq.
+    # de la ventana, deshaciendo el centrado.
+    table_holder = Frame(canvas, bg='gray5')
+    table_window = canvas.create_window((0, 0), window=table_holder, anchor='nw')
+
+    table_frame = Frame(table_holder, bg='gray5')
+    table_frame.pack(anchor='center')
 
     def _update_scrollregion(event):
         canvas.configure(scrollregion=canvas.bbox('all'))
-    table_frame.bind('<Configure>', _update_scrollregion)
+    table_holder.bind('<Configure>', _update_scrollregion)
+
+    def _fit_holder(event):
+        # el holder nunca mas angosto que el canvas (para poder centrar) ni que la
+        # tabla (para no recortarla si no cabe).
+        canvas.itemconfig(table_window,
+                          width=max(event.width, table_holder.winfo_reqwidth()))
+    canvas.bind('<Configure>', _fit_holder)
 
     def _on_mousewheel(event):
         if event.num == 4 or event.delta > 0:
@@ -203,12 +229,20 @@ def branches_results_menu(W, go_back):
 
     if selected == 1:
         col_headers = ['Ramal', 'Caudal (L/s)', 'Longitud (m)', 'Velocidad (m/s)', 'ΔP (Pa)', 'Diámetro (mm)']
+        eq_unit     = 'mm'
     elif selected == 2:
         col_headers = ['Ramal', 'Caudal (m³/s)', 'Longitud (m)', 'Velocidad (m/s)', 'ΔP (Pa)', 'Diámetro (mm)']
+        eq_unit     = 'mm'
     else:
         col_headers = ['Ramal', 'Caudal (cfm)', 'Longitud (ft)', 'Velocidad (fpm)', 'ΔP (inH₂O)', 'Diámetro (in)']
+        eq_unit     = 'in'
 
     col_widths = [18, 18, 18, 18, 20, 18]
+
+    # Columna extra solo si el usuario ya paso por la pantalla de equivalentes
+    if show_rect_eq:
+        col_headers.append(f'Eq. rectangular ({eq_unit})')
+        col_widths.append(24)
 
     # Header row
     for col, (header, width) in enumerate(zip(col_headers, col_widths)):
@@ -235,6 +269,18 @@ def branches_results_menu(W, go_back):
             f'{delta_p_values[i]:.4f}',
             f'{diameters_values[i]:.1f}',
         ]
+
+        if show_rect_eq:
+            # misma logica que generate_pdf: ratio elegido por el usuario, 1:1 por
+            # defecto si ese ramal no tiene seleccion (p. ej. ramales agregados
+            # despues de abrir la pantalla de equivalentes).
+            ratio = rect_selection.get(i, 1)
+            try:
+                a, b = get_rectangular_eq(diameters_values[i], ratio)
+                row_data.append(f'{a:.1f} x {b:.1f} ({ratio}:1)')
+            except (ValueError, TypeError, KeyError, IndexError, ZeroDivisionError):
+                # diametro fuera de la tabla -> no se cae la pantalla completa
+                row_data.append('—')
 
         for col, (value, width) in enumerate(zip(row_data, col_widths)):
             fg = name_fg if col == 0 else val_fg
